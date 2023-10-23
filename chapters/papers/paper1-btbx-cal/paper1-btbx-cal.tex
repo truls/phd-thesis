@@ -1,0 +1,75 @@
+\documentclass[../../../main.tex]{subfiles}
+
+\newcommand{\Description}[1]{}
+
+\begin{document}
+
+
+\chapter{Paper A - BTB-X: A Storage-Effective BTB Organization}
+
+\noindent \textbf{Authors}
+
+\vspace*{0.3cm}
+
+\noindent Truls Asheim, Boris Grot and Rakesh Kumar
+
+\vspace*{0.7cm}
+
+\noindent \textbf{Published in}
+
+\vspace*{0.3cm}
+
+\noindent IEEE Computer Architecture Letters, Volume: 20, Issue: 2, July-December 2021
+
+\vspace*{0.7cm}
+
+\noindent \textbf{Copyright}
+
+\vspace*{0.3cm}
+
+\noindent Copyright ©2021 IEEE
+
+\newpage
+
+\vspace*{0.1cm}
+
+\begin{center}
+
+\Huge{BTB-X: A Storage-Effective BTB Organization}
+
+\vspace{0.6cm}
+
+\large{Truls Asheim$^{1}$, Boris Grot$^{2}$, Rakesh Kumar$^{1}$}
+
+\vspace{0.1cm}
+
+\small{1) Norwegian University of Science and Technology, Norway}\\
+\small{2) University of Edinburgh, UK}
+
+
+\end{center}
+
+\vspace{0.2cm}
+
+\begin{center}
+  \textbf{Abstract}
+  \end{center}
+\begin{changemargin}{0.75cm}{0.75cm}
+Many contemporary applications feature multi-megabyte instruction footprints that overwhelm the capacity of branch target buffers (BTB) and instruction caches (L1-I), causing frequent front-end stalls that inevitably hurt performance. BTB is crucial for performance as it enables the front-end to accurately resolve the upcoming execution path and steer instruction fetch appropriately. Moreover, it also enables highly effective fetch-directed instruction prefetching that can eliminate many L1-I misses. For these reasons, commercial processors allocate vast amounts of storage capacity to BTBs. This work aims to reduce BTB storage requirements by optimizing the organization of BTB entries. Our key insight is that today's BTBs store the full target address for each branch, yet the vast majority of dynamic branches have short offsets requiring just a handful of bits to encode. Based on this insight, we organize the BTB as an ensemble of smaller BTBs, each storing offsets within a particular range. Doing so enables a dramatic reduction in storage for target addresses. We also compress tags to reduce the tag storage cost. Our final design, called BTB-X, uses an ensemble of five BTBs with compressed tags that enables it to track 2.8x more branches than a conventional BTB with the same storage budget.
+ \end{changemargin}
+
+\vspace{1cm}
+
+%-------------------------------------------------------------------------
+\begin{refsection}[btbx-cal]
+  \input{main.tex}
+  \printbibliography[heading=refs]
+\end{refsection}
+\FloatBarrier
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

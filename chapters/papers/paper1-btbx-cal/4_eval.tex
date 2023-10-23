@@ -1,0 +1,167 @@
+\section{Evaluation}
+\label{sec:eval}
+
+We use ChampSim~\cite{champsim}, an open-source trace-driven simulator, to evaluate the efficacy of BTB-X on server and client workload traces from IPC-1~\cite{ipc1}. We warm up microarchitectural structures for 50M instructions and collect statistics over the next 50M. The microarchitectural parameters for the modeled processor are listed in \Cref{table:microParam}.
+
+\begin{table}[t]
+	\centering 
+	\caption{Microarchitectural parameters}
+	\vspace{-0.1in}
+	{\small
+		\scalebox{0.8} {		
+		\begin{tabular}{|c|c|}
+			\hline  
+			\hline  
+			Core       & 
+            \begin{tabular}{@{}c@{}}
+			6-wide OoO, 128-entry FTQ, 128 reservation stations, \\352-entry ROB, 128-entry load queue, 72-entry store queue
+            \end{tabular} \\			
+
+			\hline  			
+            Branch Predictor& Hashed Perceptron \\
+			\hline
+			L1-I & 
+            \begin{tabular}{@{}c@{}}
+            32 KB, 8-way, 4 cycle latency, 8 MSHRs
+            \end{tabular} \\
+			\hline
+			L1-D & 
+            \begin{tabular}{@{}c@{}}
+            48 KB, 12-way, 5 cycle latency, 16 MSHRs
+            \end{tabular} \\
+            \hline
+			L2 & 
+            \begin{tabular}{@{}c@{}}
+            512 KB, 8-way, 14/15 cycle latency, 32 MSHRs
+            \end{tabular} \\
+			\hline
+			LLC & 
+			\begin{tabular}{@{}c@{}}
+			2MB, 16-way, 34/35 cycle latency, 64 MSHRs
+			\end{tabular}\\
+			\hline
+			\hline  			
+		\end{tabular}
+	  }
+	}
+	\label{table:microParam}
+\end{table}
+
+\subsection{Storage Breakdown}
+
+The storage requirements for a conventional BTB for different number of BTB entries are presented in \Cref{table:metadata} assuming a 48-bit virtual address space. We increase the number of sets in the BTB to increase the number of entries while keeping the associativity same (8-way). Notice that the entry size reduces by one bit while doubling the number of entries. This is because the tag size reduces as more bits are needed to index the BTB.
+
+\begin{scriptsize}
+\begin{table}[t!]
+  \centering
+  \caption{Storage breakdown for conventional BTB}
+  \label{table:metadata}
+  \vspace{-0.1in}
+  \begin{tabular}{lrrr} \hline
+    \textbf{Entries} & \textbf{Organization} & \textbf{Entry size (bits)}
+    & \textbf{Total (bytes)} \\\hline
+    1K & 128-set, 8-way & 87 & 10.875K\\\hline
+    2K & 256-set, 8-way & 86 & 21.5K\\\hline
+    4K & 512-set, 8-way & 85 & 42.5K\\\hline
+    8K & 1024-set, 8-way & 84 & 84K\\\hline
+    16K & 2048-set, 8-way & 83 & 166K\\\hline
+  \end{tabular}
+\end{table}
+\end{scriptsize}
+
+\begin{scriptsize}
+\begin{table}[t!]
+  \centering
+  \caption{Storage breakdown for BTB-X. The storage budget is comparable to that of a 1K-entry conventional BTB.}
+  \label{table:metadata-fdipx}
+  \vspace{-0.1in}
+
+    \begin{tabular}{lrrr} \hline
+    \textbf{Partition}&\textbf{Entry size}&\textbf{Entries}&\textbf{Storage}\\\hline
+    0-bit offset&16-bits&768&1.5KB\\
+    7-bit offset&25-bits&768&2.34KB\\
+    14-bit offset&32-bits&640&2.5KB\\
+    24-bit offset&42-bits&640&3.28KB \\
+    46-bit offset&64-bits&80& 0.625KB\\\hline
+    \textbf{Total}&&2,896&10.25KB\\\hline
+    \end{tabular}
+
+\end{table}
+\end{scriptsize}
+
+\begin{scriptsize}
+\begin{table}[t!]
+  \centering
+  \caption{Storage and entries in conventional BTB and BTB-X}
+  \label{table:btbComp}
+  \vspace{-0.1in}
+  \begin{tabular}{cc} \hline
+    \textbf{Conventional BTB} & \textbf{BTB-X}\\\hline
+    \begin{tabular}{rr} 
+    \textbf{Storage}&\textbf{Entries}\\\hline
+    10.875KB&1K\\
+    21.5KB&2K\\
+    42.5KB&4K\\
+    84KB&8K\\
+    166KB&16K
+    \end{tabular}
+    
+    &
+    \begin{tabular}{rr} 
+    \textbf{Storage}&\textbf{Entries}\\\hline
+    10.25KB&2,896\\
+    20.5KB&5,792\\
+    41KB&11,584\\
+    82KB&23,168\\
+    164KB&46,336
+    \end{tabular}\\\hline
+    
+  \end{tabular}
+\end{table}
+\end{scriptsize}
+
+\Cref{table:metadata-fdipx} presents the allocation of the storage budget among the five BTB-X partitions. For this analysis, the storage budget is capped at that of a 1K-entry conventional BTB. As the table shows, the partition for 46-bit offsets gets the smallest amount of storage as very few branches need to be allocated there. Meanwhile, the remaining partitions get relatively more storage with a roughly similar number of entries in each partition. 
+
+When presented with a larger storage budget, we follow the same strategy for scaling up BTB-X as for a conventional BTB. Thus, we double the number of sets in each BTB partition to double the capacity while maintaining the associativity (i.e., 0-bit and 7-bit offset partitions are 6-way, others are 5-way).
+
+\Cref{table:btbComp} shows the number of entries that a conventional BTB and BTB-X can accommodate for several storage budgets. As is evident from the table, for a given storage budget, BTB-X can store about 2.8x more entries than the conventional BTB. Note that since the number of sets have to be a power of 2, we are not able to precisely match the storage of conventional BTB and BTB-X -- the conventional BTB gets a slightly higher storage.
+
+\subsection{Performance}
+
+To assess the effectiveness of BTB-X, we compare its performance to that of a conventional BTB across different storage budgets.  
+Recall from \Cref{sec:background} that a larger BTB can deliver two distinct benefits: 1) reduce the incidence of pipeline flushes by detecting branches in the upcoming control flow and 2) facilitate instruction prefetching when coupled with FDIP. Thus, we compare the performance gains achieved by the two competing BTB designs by evaluating them with FDIP. 
+
+\Cref{fig:perf} presents the performance gains obtained on server and client traces. Each bar in the figure shows the contribution to performance of having fewer pipeline flushes and from better instruction prefetching stemming from larger BTB capacities. The results are normalized to the performance of a core with a 1K-entry conventional BTB (10.875KB storage budget) and no instruction prefetching. 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[t]{0.8\columnwidth}
+        \centering
+        \includegraphics[width=\columnwidth, trim=70 235 60 250, clip]{figures/serverRes3.pdf}
+        \caption{Server workloads.}
+        \vspace{-0.3in}
+        \label{fig:serverPerf}
+    \end{subfigure}
+    
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[t]{0.8\columnwidth}
+        \centering
+        \includegraphics[width=\columnwidth, trim=70 230 60 230, clip]{figures/clientRes3.pdf}
+        \caption{Client workloads.}
+        \label{fig:clientPerf}
+    \end{subfigure}
+    \caption{Performance gain for conventional BTB and BTB-X (both with FDIP) on (a) \textbf{server} and (b) \textbf{client} traces. Baseline is no-prefetch 1K-entry conventional BTB. X-axis is storage for a 1K-, 2K-, 4K-, 8K-, and 16K-entry conventional BTB.}
+    \label{fig:perf}
+\end{figure}
+
+As the figure shows, BTB-X provides significantly higher overall performance than the conventional BTB for equal storage budgets of up to several tens of kilobytes. The performance advantage of BTB-X is particularly pronounced on server traces whose large instruction footprints pressure the BTB and L1-I. For instance, BTB-X provides 63\% performance gain over the baseline compared to 38\% of conventional BTB with 21.5KB storage budget.
+At large BTB storage budgets, the branch working sets of many workloads start to fit in the available BTB capacity, at which point the performance gap between the two designs diminishes.
+
+A key take-away from the figure is that BTB-X provides same or higher performance than the conventional BTB even when BTB-X is given just half the storage budget of its conventional counterpart. For example, in \Cref{fig:serverPerf}, the conventional BTB improves performance by 38\% with a 21.5KB budget whereas BTB-X provides a 44\% improvement with just 10.875KB of storage. The reason for this phenomenon is that BTB-X accommodates 2.8x more entries than a conventional BTB of equal storage budget; thus, halving BTB-X's budget still gives a capacity advantage over the conventional design. 
+
+Ignoring instruction prefetching and looking exclusively at performance gains stemming from reduced pipeline flushes, the trends are similar to above. 
+For storage budgets of up to several tens of KBs, BTB-X outperforms a conventional BTB even with half of the latter's storage budget. For instance, \Cref{fig:serverPerf} (blue segments of the bars) shows that BTB-X provides 13\% gain with a 10.875KB budget whereas a conventional BTB with twice the budget (21.5KB) gains only 10\%.
+
+\subsection{Impact of Tag Compression}
+For assessing the performance loss due to compressed tags, we compare the performance of BTB-X with 16-bit tags versus full tags for the smallest BTB size (10.875 KB). We focus on the smallest BTB as it is likely to suffer the highest degree of aliasing due to tag compression. Our results show that, full tags provide 38.21\% performance gain, geo-mean across server and client traces, over the baseline compared to 38.16\% with compressed tags, a difference of only 0.05\%. This indicates that our tag compression scheme is able to preserve the entropy of higher-order bits.

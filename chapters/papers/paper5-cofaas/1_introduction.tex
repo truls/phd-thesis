@@ -1,0 +1,90 @@
+\section{Introduction}
+Function-as-a-Service (FaaS) computing is becoming an increasingly popular cloud computing model that simplifies the cloud application lifecycle by moving critical decisions about application deployment from the developer to the provider. The unit of composition in the FaaS model is a \emph{function}. A FaaS function is stateless and therefore produces a deterministic mapping from input to output. When a function is deployed, it is configured to be triggered based on specific events, such as an incoming HTTP request. In the FaaS model, building complex functions that perform multiple tasks are generally discouraged. Instead, the FaaS computing model encourages assigning each function a single well-defined purpose and interface as this promotes code reuse, simplifies maintenance and enhances testability~\cite{williams16_growin_need_micros_bioin}. Larger FaaS \emph{applications} are built by composing individual functions. FaaS adaptation is increasing in industry and is currently used by 50\% of organizations that rely on cloud computing technologies \cite{serverless_state}.
+
+
+A key advantage of the FaaS computing model is that applications can be composed of functions written in any language. Language independence is attractive for three reasons. Firstly, it allows a function to be written in the language that supports the purpose of the function in the best possible way. Secondly, it allows applications to be gradually rewritten and ported to other languages function by function. Finally, it allows applications to continue relying on tested and stable units of functionality even if the implementation language of other parts of the application changes.
+
+When developing traditional monolithic applications, combining languages is typically cumbersome because it requires crufty low-level foreign function interfaces that are complex and error-prone to use. In FaaS, programming language interoperability is achieved by design. This is because FaaS functions use highly abstract and language-independent Remote Procedure Call (RPC) interfaces to communicate across a network fabric, for example Google's gRPC~\cite{grpc}. Enabling functions to communicate, regardless of language and internal implementation details, fundamentally requires that external interfaces are specified in a formal, language-independent and declarative manner. Modern RPC interfaces hence provide Interface Definition Languages (IDLs) to specify the contract of each function, i.e., encoding the specifics of the calls that the function supports. Code generators then take the IDL definition as input and outputs a concrete function interface.
+
+% In real-world deployments, a popular choice for this purpose is Google's gRPC framework . gRPC is a high-performance RPC model that uses Google's Protobuf \cite{protobuf} for data (de-) serialization and is specified using the protobuf Interface Definition Language (IDL). An IDL is purely declarative and specifies the contract of a component that other components need to follow in order to interoperate. In this context, a contract specifies the procedure calls that are made available by a function, including the types of its parameters and return values. \truls{Rewrite more generally: Tnere is a general need for communication mechanisms, some kind of RPC e.g. google's grpc}
+
+% \magnus{There are good things and there are bad things. When we talk about overheads we need to also in the same sentence need to reiterate the benefits. Language-independence is one, the XXX is intended to refer to the other desirable traits (as discussed in the first paragraph). Also, to what extent is the overhead a consequence of the FaaS model or the RPC-centric communication model? Can replace 'RPC-centric communication model' with FaaS below? (I did this below, but it is easy to revert if necessary.) And where do the latencies come from? Can we reference something?}\rakesh{I guess we are specifically talking about RPC and not FaaS, so we cannot do that. But we can certainly say something like - Despite its all benefits, the RPC-centric communication model come with a severe performance penalty.}
+
+Unfortunately, FaaS' attractive properties of simplified deployment, modular design and language-independence come with a severe performance penalty, in part due to its reliance on RPC for inter-function communication. Whereas a local function call in a monolithic application incurs a latency of less than a single microsecond, an RPC call in a FaaS application can incur a latency of several milliseconds --- a difference of several orders of magnitude.  When a client issues an RPC request, the request is first serialized to the RPC wire  format, then the serialized request is send across the network and on the receiver's side, the request is deserialized and processed. Each of these steps take time, however, the primary contributor to the overhead of issuing an RPC request comes from accessing the network transport layer.
+% \magnus{Here it would be good to add a sentence which describes what happens to an RPC request as it passes through the network layer and thereby explain why it takes time.}
+%The primary overhead of issuing an RPC request comes from accessing the network transport layer.
+%used to get the RPC request from point a to b. 
+%Secondarily, common RPC frameworks adds overheads originating from dispatching functions and (de-)serializing request data.
+
+% Apart from the actual RPC communication latency, an RPC call also involves overheads related to dispatching/receiving function calls and serializing/de-serializing data between the internal data structures and a wire-transport format. \truls{State that networking is the dominating overhead. The networking overhead is not needed if containers run on the same machine which is a common case.}
+
+Alleviating inter-function communication overheads in FaaS applications is hence critically important, and a rich body of prior work has investigated this issue~\cite{kotni21_faast, mahgoub22_wisef, barcelona-pons19_faas_track,sreekanti20_cloud,shillaker20_faasm,jia21_night}. While these proposals effectively reduce communication latencies, they do this by relinquishing one or more of the properties that make FaaS attractive in the first place. In particular,  they either \begin{inparaenum}[1)] \item provide a non-standard API demanding that existing functions need to be rewritten, \item restrict FaaS applications to be implemented in a single language or \item propose entirely new FaaS programming models or runtime environments that do not readily integrate with the current cloud computing platforms. \end{inparaenum} 
+
+There is hence a need for an approach that reduces inter-function communication overhead while using standard APIs, retaining language independence {\it and} being easily integratable with current cloud computing platforms --- and our goal in this work is to provide such a system. Towards that end, we leverage that inter-function RPC communication interfaces are statically defined.
+%we do so by exploiting that the inter-function RPC communication interface is statically defined. 
+%An essential property of FaaS applications that prior work fails to exploit is that FaaS functions have, by design, a contract that specifies how it can interoperate with other functions in a FaaS application.  
+More specifically, the developer specifies the interface of each function using an established IDL which means that we have significant leeway in how to generate function interfaces while respecting the IDL specification. In particular, accessing the network layer --- which we demonstrate is the key contributor to inter-function communication overhead --- is entirely unnecessary when the functions are deployed on the same compute node.
+
+
+% For example, consider the scenario where a FaaS function needs to be rewritten in order to be compatible with a low-latency FaaS communication model \rakesh{You might want to cite a work here that requires rewriting functions.}. \magnus{I will say the same thing a bit stronger. You must explain how each of the referenced prior works breaks one or more of these properties. The full discussion should be in related work I think, but it should be summarized here (possibly with a forward reference to Section~\ref{sec:related-work}).} Now, this function is no longer compatible with the FaaS ecosystem at large and the resulting code maintenance overhead and the risk of introducing untested components can inhibit the adoption of new FaaS communication models. \rakesh{It is not clear how rewriting makes a function incompatible with the FaaS ecosystem. It is good that you give an example; however, the example needs to be a bit more clear.}
+
+
+% As with any programming abstraction, FaaS comes with its own unique set of limitations and overheads. For FaaS, these limitations mainly originate form its main strength; that decisions related to deployment orchestration are moved from the developer to the provider. The modularity of FaaS applications can be both an advantage or a disadvantage for application performance. The advantage is that individual functions can be distributed across multiple nodes to unlock massive parallelism and computing power beyond what can be offered by a single node. The main disadvantage is that the cost of cross-function communication is significantly increased. The functionality of monolith applications are composed using libraries. Calling functionality provided by a library does not add any overhead in most cases. In FaaS applications where the unit of composition is a function. Since functions need to know how to communicate, their external interfaces must be defined in a language-neutral way. A popular choice for this purpose is the
+
+
+% [Motivate why tackling intra-function communication latency is an important problem]
+
+% \magnus{Our key observation is that... If you clearly introduce the 'contract' earlier on, explaining the key observation will be straightforward (and easy to understand for the reader).}
+
+
+
+% Our key observation is... We exploit that the external interfaces of FaaS functions are formally defined IDFs that can be transformed into anything we want. This makes it crucial that any proposed optimization of FaaS functions preserve language independence. \rakesh{The link between these two sentences is not clear. For example, if the interfaces are formally defined, wouldn't transforming them in any way break this formal definition? How does it relate to language neutrality.}
+
+% Our work is based on the key observation that the functions that FaaS applications are composed from each have formally defined APIs. Furthermore, these APIs are language-neutral allowing functions to interact regardless of their implementation language. These APIs are defined using an Interface Definition Language (IDL), a popular choice being Google's Protobuf language. For intra-0function communication, gRPC provides RPC capabilities built on top of protobuf.
+
+% [Emphasize that since CoFaaS is based on Wasm, it is ready for emerging FaaS platforms that run Wasm exclusively. Since Wasm is a bytecode language the binaries transformed using CoFaaS enables unrestricted function mobility across the cloud and edge computing domains.]
+
+% [Concisely summarize what we do and what we achieve]
+
+% \magnus{Here I think we should just introduce CoFaaS and explain how it exploits the above key observation to reduce inter-function communication latency.}
+
+% To achieve this, we present an approach centered around the observation that, in order to communicate, FaaS functions must provide formally defined external interfaces. [By exploring the nature of these interfaces, we can deploy functions to different settings while, at the same time, ensure that we do not change the semantics or public-facing APIs of these functions]. Ensuring compatibility with existing code is crucial to facilitate adoptation of a new model since [peopole hate rewriting code and it's expensive]
+
+%\rakesh{"consolidates" here sounds like we are somehow making sure that the functions are scheduled on the same compute node. If I am right, we do not do that rather once the functions are scheduled on the same node then CoFaaS kicks in, right?}
+%\magnus{I think this is what we do, see Figure \ref{fig:cofaas-transformation}. The discussion in Section 5.2 argues that this is not a fundamental limitation and the arguments make sense to me. }
+
+We hence propose CoFaaS which automatically consolidates FaaS functions --- while respecting the semantics of the function's IDL specification --- and thereby completely avoids accessing the network layer when functions are scheduled on the same node.
+%contract a powerful transformation of FaaS applications that reduces the interaction latency between FaaS functions in a fully-automated and semantics-preserving fashion.
+% This work seeks to significantly reduce the inter-function communication latencies between FaaS functions without requiring existing code to be rewritten and without sacrificing any of the key advantages of the FaaS computing model. \rakesh{The next phrase needs to be simplified, this is summarizing the whole work and it is not easy to understand it.}
+More specifically, CoFaaS first transforms the IDL description used by the target RPC interface to WebAssembly Interface Types (WIT). This enables us to leverage the WebAssembly (Wasm) ecosystem and co-locate FaaS functions on a single Wasm runtime; each function is hosted in its own container to maintain isolation. %Performing the function interface transformation on the IDL level ensures that the external interface of the functions remains correct. 
+In this way, CoFaaS uses the Wasm runtime to provide inter-function communication and thereby avoids accessing the network layer when functions are deployed on the same node. Our evaluation shows that this strategy yields significant speedups. CoFaaS reduces inter-function communication latency by up to $100\times$ and application-level request round-trip time by up to $6\times$. The overhead of applying CoFaaS in production scenarios is minimal because it is fully automatic and only slightly increases compilation and deployment times (see Section~\ref{sec:evaluation} for details).
+
+%slow network-backed RPC interfaces for inter-interpreter function calls with near-native performance.
+
+%\rakesh{We probably want the first bullet point to be about what we observed about the problem and the second point about what insight inspired our solution.}
+%\magnus{Another possible foundational insight is that accessing the network layer is the key overhead in inter-function RPC communication, but I guess this is well-known in the domain?}
+
+To summarize, we present the following key contributions:
+\begin{itemize}
+
+\item We observe that the well-defined interface definitions of existing FaaS applications provide significant leeway in how to generate function interfaces and that this, in turn, can be leveraged to implement powerful, automated transformations of FaaS applications.
+
+\item We exploit the above insight to design CoFaaS, the first automatic function transformation framework that significantly reduces inter-function communication latencies while being standard API compliant, language-independent {\it and} compatible with current cloud computing platforms.
+%CoFaaS leverages WebAssembly to allow FaaS functions written in different languages to communicate with little overhead
+%\item We introduce the CoFaaS methodology that allows up to 100$\times$  decrease in intra-function message latency and 6$\times$ reduction  in application request round-trip time without manually changing existing code
+
+\item We demonstrate that CoFaaS yields significant speed\-ups, i.e., it reduces inter-function message latency by up to 100$\times$ and application request round-trip time by up to 6$\times$.
+%without manually changing existing code
+\end{itemize}
+
+
+
+% \magnus{I don't think we need the below paragraph here any more, do you agree?}
+
+% A cornerstone of the CoFaaS approach that sets it apart from previews solutions is that it preserves the language-independence of FaaS functions. It does this by leveraging existing compiler support for Wasm. As such, any language with sufficient compiler support for Wasm is supported by CoFaaS. Since Wasm is currently single-threaded, we execute FaaS applications sequentially and we only support executing on a single host. However, as the CoFaaS transformation significantly reduces binary sizes the need for distributing FaaS applications over multiple hosts. Parallel processing can be achieved by spawning multiple instances of the CoFaaS -transformed applications.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

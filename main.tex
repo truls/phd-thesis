@@ -1,14 +1,111 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+\pdfminorversion=7
+\documentclass[10pt,b5paper,twoside,openright,onecolumn,titlepage]{thesis}
 
-\title{PhD thesis}
-\author{truls.asheim }
-\date{October 2023}
+% Library includes
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{rotating}
+\usepackage{hyperref}
+\def\UrlBreaks{\do\/\do-}
+\usepackage{pdfpages}
+\usepackage{subcaption}
+\usepackage{scrextend}
+\usepackage{lipsum}
+\usepackage{appendix}
+% \usepackage[ruled,vlined]{algorithm2e}
+%\usepackage[resetlabels]{multibib}
+\usepackage{fancyhdr}
+\usepackage{styles}
+\usepackage{mathptm}
+\usepackage{lscape} % vertical tables
+\usepackage{array}
+\usepackage{hhline} % double horizontal line in table
+%\usepackage{tabto}
+\usepackage{mathtools}
+\usepackage{bigfoot}
+\usepackage{placeins}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\usepackage{blindtext}
+\usepackage{minted}
+\setminted{fontsize=\footnotesize}
+\usepackage[draft]{fixme}
+\setminted{fontsize=\small,baselinestretch=1}
+%\usepackage{tablefootnote}
+%\usepackage{refcount} % ability to refer to same table footnotes
+%\captionsetup{compatibility=false}
+\usepackage{framed,multirow}
+\usepackage{paralist}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{dblfloatfix}
+\usepackage[nameinlink]{cleveref}
+\RequirePackage[backend=bibtex,sorting=none, style=numeric-comp,eprint=false, url=false,natbib]{biblatex}
+
+
+\newcommand{\Description}[1]{}
+
+\usepackage{caption}
+    \captionsetup{font=small,labelfont=bf}
+
+% Custom commands
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist
+
+
+\defbibheading{refs}{\section{References}}
+\defbibheading{refs2}{\section{References}}
+
+% Multibib functionality
+%https://tex.stackexchange.com/questions/383484/package-biblatex-error-incompatible-package-multibib
+
+\addbibresource[label=main-bib]{./bibliography.bib}
+\addbibresource[label=btbx-cal]{chapters/papers/paper1-btbx-cal/refs.bib}
+\addbibresource[label=btbx-pact]{chapters/papers/paper2-btbx-pact/refs.bib}
+\addbibresource[label=faas-profiling]{chapters/papers/paper3-faas-profiling/refs.bib}
+\addbibresource[label=btbx-hpca]{chapters/papers/paper4-btbx-hpca/refs.bib}
+\addbibresource[label=cofaas]{chapters/papers/paper5-cofaas/bibliography.bib}
+
+\usepackage{subfiles}
 
 \begin{document}
 
-\maketitle
+\subfile{chapters/00-coverpage}
+\subfile{chapters/01-abstract}
+\subfile{chapters/02-preface}
+\subfile{chapters/03-acknowledgements}
 
-\section{Introduction}
+
+\tableofcontents
+\newpage
+
+\mainmatter
+
+\part{Research Overview}
+
+\subfile{chapters/04-introduction}
+\subfile{chapters/05-background}
+\subfile{chapters/06-Methodology}
+\subfile{chapters/07-contributions}
+\subfile{chapters/08-discussion}
+\subfile{chapters/09-conclusion}
+
+% \bibliographystyle{unsrt}
+% \bibliography{references.bib}
+
+\part{Selected Publications}
+
+\subfile{chapters/papers/paper1-btbx-cal/paper1-btbx-cal}
+\subfile{chapters/papers/paper2-btbx-pact/paper2-btbx-pact}
+\subfile{chapters/papers/paper3-faas-profiling/paper3-faas-profiling}
+\subfile{chapters/papers/paper4-btbx-hpca/paper4-btbx-hpca}
+\subfile{chapters/papers/paper5-cofaas/paper5-cofaas}
+
+
+% \appendix
+% \input{appendices/a-appendix.tex}
 
 \end{document}

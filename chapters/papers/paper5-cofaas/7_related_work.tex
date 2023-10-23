@@ -1,0 +1,46 @@
+\section{Related Work}
+\label{sec:related-work}
+
+\subsection{Communication Latency Reduction}
+
+In recent years, academic research has presented numerous proposals that aim to change the way FaaS functions communicate with the intention of reducing their communication latency. Surveying this work reveals several design properties to be considered:
+\begin{itemize}
+\item {\bf Code modification.} Can unmodified FaaS functions continue to be used or do they need to be rewritten to be compatible with an improved execution model?
+\item {\bf Language independence.} Is the cross-language interoperability of FaaS functions preserved?
+\item {\bf Data transfer.} How is data transfer handled? Is information passed directly between functions or uploaded to an external location?
+\item {\bf Function isolation.} Is function isolation maintained or can unintentional data sharing occur?
+\end{itemize}
+While CoFaaS retains all of these properties, we will now explain that prior work that alleviates inter-function communication latencies~\cite{kotni21_faast, mahgoub22_wisef, barcelona-pons19_faas_track,sreekanti20_cloud,shillaker20_faasm,jia21_night} falls short with respect to at least one of these properties. 
+
+% \citet{kotni21_faast} proposes a method that allows unmodified functions to run inside a single container and communicate using shared memory. Compared to running functions in separate containers that communicate over the network their transformation yields significant reductions in communication latencies. However, their approach is fundamentally tied to single language (in this case Python) which makes the method impossible to apply to many existing FaaS applications. Similarly, \cite{mahgoub22_wisef} only support applications written in a single language. Taking a different approach \cite{akkus18_sand, mahgoub21_sonic} optimizes how functions communicate with each other, they each leave significant room for improvement keeping each function in a separate container and not changing the communication protocol.
+
+\citet{kotni21_faast} proposes FaastLane that seeks to reduce the communication latency by replacing Serverless Workflow~\cite{slessworkflow} descriptions with a workload compositor that transfers the results of preceding functions to the input of succeeding functions. In a native execution, each component in the serverless workflow description is executed in a separate container causing excessive inter-function communication latency. The FaastLane approach optimizes application communication latency by generating a static Python orchestration that executes the functions and weaves their inputs and outputs together. Normally, the security implications of this transformation would be quite severe, moving functions that were previously running in separate containers onto the same interpreter. To alleviate this, FaastLane patches the Python interpreter with a custom memory allocator that constraints memory access to the function that made the allocation using Intel's Memory Protection keys. While FaastLane is able to work on unmodified code, the design has a number of significant drawbacks. Particularly, since their implementation is Python-centric it only works with FaaS functions written in Python. Furthermore, its security model is implemented by modifying a critical component of the Python interpreter, potentially introducing bugs while also adding code maintenance. By leveraging the language-independence and strong isolation guarantees offered by the Wasm component model, CoFaaS avoids these issues.
+
+
+FaaS Track~\cite{barcelona-pons19_faas_track} proposes a custom data store and programming model that allows FaaS applications to communicate more efficiently. While their method does reduce communication latency, it is constrained to a single language \emph{and} requires existing functions to be rewritten. Thus, it, unlike CoFaaS, breaks two of the properties that make the FaaS computing model attractive.
+
+The custom runtimes introduced by \cite{jia21_night, shillaker20_faasm} enable low-latency inter-function communication across functions written in different languages. However, they do this by introducing custom APIs that applications are required to implement. This requires existing code to be rewritten. Furthermore, their implementation are highly complex and fails to leverage state-of-the-art developments.
+
+WiseFuse \cite{mahgoub22_wisef} propose several different transformations of FaaS application workflows. One of these, called fusion, merges several functions into one by combining dependencies and weaving the inputs and outputs of user-defined entry point functions together. While this design effectively removes communication overhead, it is limited to acting on functions written in a single programming language. Furthermore, it handles security by allowing users to specify that functions handling sensitive data should not be fused. This approach is highly error prone as a user could simply forget to appropriately flag a function or be unaware that their application is transformed in a way that changes isolation assumptions.
+
+
+\subsection{Communication Orchestration}
+A proposal that takes a different approach is SAND~\cite{akkus18_sand}. Instead of fundamentally changing how functions communicate, SAND introduces a hierarchical message bus where a high-performance local message bus runs on each host and a slower global message bus moves messages between hosts. Since SAND maintains the function container as an unmodifiable unit, it only changes how data is moved between the containers; it hence does not require code modification, retains language independence and provides function isolation. However, preserving the function container as an unmodifiable unit means that SAND still has to access the network layer on inter-function communication and it is hence unable to address the main source of overhead targeted by CoFaaS.
+%large overheads related to message passing. Like SAND, CoFaaS preserves language-independence, is able to run unmodified code and it provides strong function isolation. At the same time, since it eliminates much of the overhead of passing messages between functions, CoFaaS achieves much higher interaction latency speedups than SAND.
+
+SONIC \cite{mahgoub21_sonic} also alters how functions communicate with each other but does so by introducing a custom data store. This approach enables unmodified functions to continue to function but like SAND, unblocking the highest reductions in communication latencies require that functions are more tightly coupled.
+
+Cloudburst~\cite{sreekanti20_cloud} leverages an auto-scaling key-value store called Anna to implement a platform for executing stateful FaaS functions. As with the other proposals described in this section, Cloudburst leave room for improvement of communication latencies. Furthermore, they introduce a custom API that require functions to be modified and their API is only implemented for Python.
+
+
+% I don't think we need the last paragraph --Magnus
+
+%Compared to these previous proposals, CoFaaS is unique in providing low interaction latency between functions written in different language without requiring existing code to be rewritten and without sacrificing function compatibility with conventional FaaS deployment techniques.
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

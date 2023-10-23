@@ -1,0 +1,74 @@
+\documentclass[../../../main.tex]{subfiles}
+
+\begin{document}
+
+
+\chapter{Paper B - A Specialized BTB Organization for Servers}
+
+\noindent \textbf{Authors}
+
+\vspace*{0.3cm}
+
+\noindent Truls Asheim, Boris Grot and Rakesh Kumar
+
+\vspace*{0.7cm}
+
+\noindent \textbf{Published in}
+
+\vspace*{0.3cm}
+
+\noindent Proceedings of the International Conference on Parallel Architectures and Compilation Techniques, 2022
+
+\vspace*{0.7cm}
+
+\noindent \textbf{Copyright}
+
+\vspace*{0.3cm}
+
+\noindent Copyright ©2022 The Authors
+
+\newpage
+
+\vspace*{0.1cm}
+
+\begin{center}
+
+\Huge{A Specialized BTB Organization for Servers}
+
+\vspace{0.6cm}
+
+\large{Truls Asheim$^{1}$, Boris Grot$^{2}$, Rakesh Kumar$^{1}$}
+
+\vspace{0.1cm}
+
+\small{1) Norwegian University of Science and Technology, Norway}\\
+\small{2) University of Edinburgh, UK}
+
+
+\end{center}
+
+\vspace{0.2cm}
+
+\begin{center}
+  \textbf{Abstract}
+  \end{center}
+\begin{changemargin}{0.75cm}{0.75cm}
+Contemporary server applications feature massive instruction footprints stemming from deeply layered software stacks. These footprints far exceed the capacity of the branch target buffer (BTB) and instruction cache (L1-I), resulting in the so-called front-end bottleneck. BTB misses may lead to wrong-path execution, triggering a pipeline flush when misspeculation is detected. Such pipeline flushes not only throw away tens of cycles of work but also expose the fill latency of the pipeline. Similarly, L1-I misses cause the core front-end to stall for tens of cycles while the miss is being served from lower-level caches.
+\end{changemargin}
+
+\vspace{1cm}
+
+%-------------------------------------------------------------------------
+\begin{refsection}[btbx-pact]
+%\begin{refsection}[chapters/papers/paper2-btbx-pact/refs]
+  \input{main.tex}
+  \printbibliography[heading=refs2]
+\end{refsection}
+\FloatBarrier
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

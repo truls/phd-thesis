@@ -1,0 +1,538 @@
+@inproceedings{stojkovic23_specf,
+  author =       {Stojkovic, Jovan and Xu, Tianyin and Franke,
+                  Hubertus and Torrellas, Josep},
+  title =        {SpecFaaS: Accelerating Serverless Applications with
+                  Speculative Function Execution},
+  booktitle =    {2023 IEEE International Symposium on
+                  High-Performance Computer Architecture (HPCA)},
+  year =         2023,
+  pages =        {814-827},
+  ISSN =         {2378-203X},
+  abstract =     {Serverless computing has emerged as a popular cloud
+                  computing paradigm. Serverless environments are
+                  convenient to users and efficient for cloud
+                  providers. However, they can induce substantial
+                  application execution overheads, especially in
+                  applications with many functions.In this paper, we
+                  propose to accelerate serverless applications with a
+                  novel approach based on software-supported
+                  speculative execution of functions. Our proposal is
+                  termed Speculative Function-as-a-Service
+                  (SpecFaaS). It is inspired by out-of-order execution
+                  in modern processors, and is grounded in a
+                  characterization analysis of FaaS applications. In
+                  SpecFaaS, functions in an application are executed
+                  early, speculatively, before their control and data
+                  dependences are resolved. Control dependences are
+                  predicted like in pipeline branch prediction, and
+                  data dependences are speculatively satisfied with
+                  memoization. With this support, the execution of
+                  downstream functions is overlapped with that of
+                  upstream functions, substantially reducing the
+                  end-to-end execution time of applications. We
+                  prototype SpecFaaS on Apache OpenWhisk, an
+                  open-source serverless computing platform. For a set
+                  of applications in a warmed-up environment, SpecFaaS
+                  attains an average speedup of 4.6$\times$. Further,
+                  on average, the application throughput increases by
+                  3.9$\times$ and the tail latency decreases by 58.7
+                  \%.},
+  month =        {Feb},
+}
+
+@misc{tinygo_gc,
+  title = {Go language features},
+  howpublished = {\url{https://archive.ph/AFlUi}},
+  author = {TinyGo},
+  note = {Accessed: 2023-10-14}
+}
+
+@article{mahgoub22_wisef,
+  author =       {Mahgoub, Ashraf and Yi, Edgardo Barsallo and
+                  Shankar, Karthick and Minocha, Eshaan and Elnikety,
+                  Sameh and Bagchi, Saurabh and Chaterji, Somali},
+  title =        {Wisefuse: Workload Characterization and Dag
+                  Transformation for Serverless Workflows},
+  journal =      {Proc. ACM Meas. Anal. Comput. Syst.},
+  volume =       6,
+  number =       2,
+  year =         2022,
+  doi =          {10.1145/3530892},
+  abstract =     {We characterize production workloads of serverless
+                  DAGs at a major cloud provider. Our analysis
+                  highlights two major factors that limit performance:
+                  (a) lack of efficient communication methods between
+                  the serverless functions in the DAG, and (b)
+                  stragglers when a DAG stage invokes a set of
+                  parallel functions that must complete before
+                  starting the next DAG stage. To address these
+                  limitations, we propose WISEFUSE, an automated
+                  approach to generate an optimized execution plan for
+                  serverless DAGs for a user-specified latency
+                  objective or budget. We introduce three
+                  optimizations: (1) Fusion combines in-series
+                  functions together in a single VM to reduce the
+                  communication overhead between cascaded
+                  functions. (2) Bundling executes a group of parallel
+                  invocations of a function in one VM to improve
+                  resource sharing among the parallel workers to
+                  reduce skew. (3) Resource Allocation assigns the
+                  right VM size to each function or function bundle in
+                  the DAG to reduce the E2E latency and cost. We
+                  implement WISEFUSE to evaluate it experimentally
+                  using three popular serverless applications with
+                  different DAG structures, memory footprints, and
+                  intermediate data sizes. Compared to competing
+                  approaches and other alternatives, WISEFUSE shows
+                  significant improvements in E2E latency and
+                  cost. Specifically, for a machine learning pipeline,
+                  WISEFUSE achieves P95 latency that is 67\% lower
+                  than Photons, 39\% lower than Faastlane, and 90\%
+                  lower than SONIC without increasing the cost.},
+  address =      {New York, NY, USA},
+  articleno =    26,
+  issue_date =   {June 2022},
+  keywords =     {serverless, workload characterization, dag
+                  transformation},
+  month =        {jun},
+  numpages =     28,
+  publisher =    {Association for Computing Machinery},
+}
+
+@techreport{rossberg22_webas_core_specif,
+  date =         {2022-04-19},
+  year = 2022,
+  author =       {{Andreas Rossberg (editor)}},
+  institution =  {{W3C}},
+langid =       {english},
+  note =
+                  {https://webassembly.github.io/spec/core/\_download/WebAssembly.pdf},
+  title =        {{WebAssembly Core Specification}},
+  url =          {https://www.w3.org/TR/wasm-core-2/},
+  version =      {2.0},
+}
+
+@inproceedings{du20_catal,
+  author =       {Du, Dong and Yu, Tianyi and Xia, Yubin and Zang,
+                  Binyu and Yan, Guanglu and Qin, Chenggang and Wu,
+                  Qixuan and Chen, Haibo},
+  title =        {Catalyzer: Sub-Millisecond Startup for Serverless
+                  Computing with Initialization-Less Booting},
+  booktitle =    {Proceedings of the Twenty-Fifth International
+                  Conference on Architectural Support for Programming
+                  Languages and Operating Systems},
+  year =         2020,
+  pages =        {467-481},
+  doi =          {10.1145/3373376.3378512},
+  url =          {https://doi.org/10.1145/3373376.3378512},
+  abstract =     {Serverless computing promises cost-efficiency and
+                  elasticity for high-productive software
+                  development. To achieve this, the serverless sandbox
+                  system must address two challenges: strong isolation
+                  between function instances, and low startup latency
+                  to ensure user experience. While strong isolation
+                  can be provided by virtualization-based sandboxes,
+                  the initialization of sandbox and application causes
+                  non-negligible startup overhead. Conventional
+                  sandbox systems fall short in low-latency startup
+                  due to their application-agnostic nature: they can
+                  only reduce the latency of sandbox initialization
+                  through hypervisor and guest kernel customization,
+                  which is inadequate and does not mitigate the
+                  majority of startup overhead.This paper proposes
+                  Catalyzer, a serverless sandbox system design
+                  providing both strong isolation and extremely fast
+                  function startup. Instead of booting from scratch,
+                  Catalyzer restores a virtualization-based function
+                  instance from a well-formed checkpoint image and
+                  thereby skips the initialization on the critical
+                  path (init-less). Catalyzer boosts the restore
+                  performance by on-demand recovering both user-level
+                  memory state and system state. We also propose a new
+                  OS primitive, sfork (sandbox fork), to further
+                  reduce the startup latency by directly reusing the
+                  state of a running sandbox instance. Fundamentally,
+                  Catalyzer removes the initialization cost by reusing
+                  state, which enables general optimizations for
+                  diverse serverless functions. The evaluation shows
+                  that Catalyzer reduces startup latency by orders of
+                  magnitude, achieves < 1ms latency in the best case,
+                  and significantly reduces the end-to-end latency for
+                  real-world workloads. Catalyzer has been adopted by
+                  Ant Financial, and we also present lessons learned
+                  from industrial development.},
+  address =      {New York, NY, USA},
+  isbn =         9781450371025,
+  keywords =     {startup latency, serverless computing, checkpoint
+                  and restore, operating system},
+  location =     {Lausanne, Switzerland},
+  numpages =     15,
+  publisher =    {Association for Computing Machinery},
+  series =       {ASPLOS '20},
+}
+
+@misc{serverless_state,
+  author = {Datalog},
+  title = {The state of serverless},
+  howpublished = "\url{https://www.datadoghq.com/state-of-serverless-2022/}",
+  year         = 2022
+}
+
+@inproceedings{kotni21_faast,
+  author =       {Swaroop Kotni and Ajay Nayak and Vinod Ganapathy and
+                  Arkaprava Basu},
+  title =        {Faastlane: Accelerating {Function-as-a-Service}
+                  Workflows},
+  booktitle =    {2021 USENIX Annual Technical Conference (USENIX ATC
+                  21)},
+  year =         2021,
+  pages =        {805--820},
+  url =
+                  {https://www.usenix.org/conference/atc21/presentation/kotni},
+  isbn =         {978-1-939133-23-6},
+  month =        jul,
+  publisher =    {USENIX Association},
+  }
+
+@inproceedings{akkus18_sand,
+  author =       {Istemi Ekin Akkus and Ruichuan Chen and Ivica Rimac
+                  and Manuel Stein and Klaus Satzke and Andre Beck and
+                  Paarijaat Aditya and Volker Hilt},
+  title =        {{SAND}: Towards {High-Performance} Serverless
+                  Computing},
+  booktitle =    {2018 USENIX Annual Technical Conference (USENIX ATC
+                  18)},
+  year =         2018,
+  pages =        {923--935},
+  url =
+                  {https://www.usenix.org/conference/atc18/presentation/akkus},
+  address =      {Boston, MA},
+  isbn =         {978-1-939133-01-4},
+  month =        jul,
+  publisher =    {USENIX Association},
+}
+
+@inproceedings{mahgoub21_sonic,
+  author =       {Ashraf Mahgoub and Karthick Shankar and Subrata
+                  Mitra and Ana Klimovic and Somali Chaterji and
+                  Saurabh Bagchi},
+  title =        {{SONIC}: Application-aware Data Passing for Chained
+                  Serverless Applications},
+  booktitle =    {2021 USENIX Annual Technical Conference (USENIX ATC
+                  21)},
+  year =         2021,
+  pages =        {285--301},
+  url =
+                  {https://www.usenix.org/conference/atc21/presentation/mahgoub},
+  isbn =         {978-1-939133-23-6},
+  month =        jul,
+  publisher =    {USENIX Association},
+}
+@inproceedings{barcelona-pons19_faas_track,
+  author =       {Barcelona-Pons, Daniel and S\'{a}nchez-Artigas, Marc
+                  and Par\'{\i}s, Gerard and Sutra, Pierre and
+                  Garc\'{\i}a-L\'{o}pez, Pedro},
+  title =        {On the FaaS Track: Building Stateful Distributed
+                  Applications with Serverless Architectures},
+  booktitle =    {Proceedings of the 20th International Middleware
+                  Conference},
+  year =         {2019},
+  pages =        {41-54},
+  doi =          {10.1145/3361525.3361535},
+  url =          {https://doi.org/10.1145/3361525.3361535},
+  abstract =     {Serverless computing is an emerging paradigm that
+                  greatly simplifies the usage of cloud resources and
+                  suits well to many tasks. Most notably,
+                  Function-as-a-Service (FaaS) enables programmers to
+                  develop cloud applications as individual functions
+                  that can run and scale independently. Yet, due to
+                  the disaggregation of storage and compute resources
+                  in FaaS, applications that require fine-grained
+                  support for mutable state and synchronization, such
+                  as machine learning and scientific computing, are
+                  hard to build.In this work, we present Crucial, a
+                  system to program highly-concurrent stateful
+                  applications with serverless architectures. Its
+                  programming model keeps the simplicity of FaaS and
+                  allows to port effortlessly multi-threaded
+                  algorithms to this new environment. Crucial is built
+                  upon the key insight that FaaS resembles to
+                  concurrent programming at the scale of a data
+                  center. As a consequence, a distributed shared
+                  memory layer is the right answer to the need for
+                  fine-grained state management and coordination in
+                  serverless. We validate our system with the help of
+                  micro-benchmarks and various applications. In
+                  particular, we implement two common machine learning
+                  algorithms: k-means clustering and logistic
+                  regression. For both cases, Crucial obtains superior
+                  or comparable performance to an equivalent Spark
+                  cluster.},
+  address =      {New York, NY, USA},
+  isbn =         {9781450370097},
+  keywords =     {FaaS, stateful, in-memory, synchronization,
+                  Serverless},
+  location =     {Davis, CA, USA},
+  numpages =     {14},
+  publisher =    {Association for Computing Machinery},
+  series =       {Middleware '19},
+}
+
+@article{sreekanti20_cloud,
+  author =       {Sreekanti, Vikram and Wu, Chenggang and Lin, Xiayue
+                  Charles and Schleier-Smith, Johann and Gonzalez,
+                  Joseph E. and Hellerstein, Joseph M. and Tumanov,
+                  Alexey},
+  title =        {Cloudburst: Stateful Functions-As-A-service},
+  journal =      {Proc. VLDB Endow.},
+  volume =       13,
+  number =       12,
+  pages =        {2438-2452},
+  year =         2020,
+  doi =          {10.14778/3407790.3407836},
+  url =          {https://doi.org/10.14778/3407790.3407836},
+  abstract =     {Function-as-a-Service (FaaS) platforms and
+                  "serverless" cloud computing are becoming
+                  increasingly popular due to ease-of-use and
+                  operational simplicity. Current FaaS offerings are
+                  targeted at stateless functions that do minimal I/O
+                  and communication. We argue that the benefits of
+                  serverless computing can be extended to a broader
+                  range of applications and algorithms while
+                  maintaining the key benefits of existing FaaS
+                  offerings. We present the design and implementation
+                  of Cloudburst, a stateful FaaS platform that
+                  provides familiar Python programming with
+                  low-latency mutable state and communication, while
+                  maintaining the autoscaling benefits of serverless
+                  computing. Cloudburst accomplishes this by
+                  leveraging Anna, an autoscaling key-value store, for
+                  state sharing and overlay routing combined with
+                  mutable caches co-located with function executors
+                  for data locality. Performant cache consistency
+                  emerges as a key challenge in this architecture. To
+                  this end, Cloudburst provides a combination of
+                  lattice-encapsulated state and new definitions and
+                  protocols for distributed session
+                  consistency. Empirical results on benchmarks and
+                  diverse applications show that Cloudburst makes
+                  stateful functions practical, reducing the
+                  state-management overheads of current FaaS platforms
+                  by orders of magnitude while also improving the
+                  state of the art in serverless consistency.},
+  issn =         {2150-8097},
+  issue_date =   {August 2020},
+  month =        {jul},
+  numpages =     15,
+  publisher =    {VLDB Endowment},
+}
+
+@inproceedings{shillaker20_faasm,
+  author =       {Simon Shillaker and Peter Pietzuch},
+  title =        {Faasm: Lightweight Isolation for Efficient Stateful
+                  Serverless Computing},
+  booktitle =    {2020 USENIX Annual Technical Conference (USENIX ATC
+                  20)},
+  year =         2020,
+  pages =        {419--433},
+  url =
+                  {https://www.usenix.org/conference/atc20/presentation/shillaker},
+  isbn =         {978-1-939133-14-4},
+  month =        jul,
+  publisher =    {USENIX Association},
+}
+
+
+@inproceedings{jia21_night,
+  author =       {Jia, Zhipeng and Witchel, Emmett},
+  title =        {Nightcore: Efficient and Scalable Serverless
+                  Computing for Latency-Sensitive, Interactive
+                  Microservices},
+  booktitle =    {Proceedings of the 26th ACM International Conference
+                  on Architectural Support for Programming Languages
+                  and Operating Systems},
+  year =         {2021},
+  pages =        {152-166},
+  doi =          {10.1145/3445814.3446701},
+  url =          {https://doi.org/10.1145/3445814.3446701},
+  abstract =     {The microservice architecture is a popular software
+                  engineering approach for building flexible,
+                  large-scale online services. Serverless functions,
+                  or function as a service (FaaS), provide a simple
+                  programming model of stateless functions which are a
+                  natural substrate for implementing the stateless RPC
+                  handlers of microservices, as an alternative to
+                  containerized RPC servers. However, current
+                  serverless platforms have millisecond-scale runtime
+                  overheads, making them unable to meet the strict
+                  sub-millisecond latency targets required by existing
+                  interactive microservices. We present Nightcore, a
+                  serverless function runtime with microsecond-scale
+                  overheads that provides container-based isolation
+                  between functions. Nightcore's design carefully
+                  considers various factors having microsecond-scale
+                  overheads, including scheduling of function
+                  requests, communication primitives, threading models
+                  for I/O, and concurrent function
+                  executions. Nightcore currently supports serverless
+                  functions written in C/C++, Go, Node.js, and
+                  Python. Our evaluation shows that when running
+                  latency-sensitive interactive microservices,
+                  Nightcore achieves 1.36\texttimes{}-2.93\texttimes{}
+                  higher throughput and up to 69 \% reduction in tail
+                  latency.},
+  address =      {New York, NY, USA},
+  isbn =         {9781450383172},
+  keywords =     {microservices, Cloud computing, serverless
+                  computing, function-as-a-service},
+  location =     {Virtual, USA},
+  numpages =     {15},
+  publisher =    {Association for Computing Machinery},
+  series =       {ASPLOS '21},
+}
+
+@misc{bindgen-todo,
+  title = {wit-bindgen github issue 499: Go bindgen todos},
+  howpublished = {\url{https://archive.ph/mjnRV}},
+  author = {Mossaka},
+  note = {Accessed: 2023-10-18}
+}
+
+@misc{bindgen,
+  title = {wit-bindgen readme},
+  howpublished = {\url{https://archive.ph/wjeV2}},
+  note = {Accessed: 2023-10-19}
+}
+
+@misc{wasm64,
+  title = {Memory64 Proposal for WebAssembly},
+  howpublished = {\url{https://archive.ph/wpvrp}},
+  author = {WebAssembly Propsals},
+  note = {Accessed: 2023-10-18}
+}
+
+@misc{wasmtime,
+  title = {Wasmtime: A fast and secure runtime for WebAssembly},
+  howpublished = {\url{https://wasmtime.dev/}},
+  author = {Bytecode Alliance},
+  note = {Accessed: 2023-10-18}
+}
+
+
+@misc{slessworkflow,
+  title = {Specify low-code, event-driven workflow orchestrations},
+  howpublished = {\url{https://serverlessworkflow.io/}},
+  author = {Serverelss Workflow},
+  note = {Accessed: 2023-10-18}
+}
+
+@misc{compmodel,
+   title = {Componet Model design and specification},
+   howpublished = {\url{https://archive.ph/jHHgn}},
+   note = {Accessed: 2023-10-18}
+ }
+
+
+@inproceedings{ustiugov:benchmarking,
+  author    = {Dmitrii Ustiugov and
+               Plamen Petrov and
+               Marios Kogias and
+               Edouard Bugnion and
+               Boris Grot},
+  title     = {Benchmarking, Analysis, and Optimization of Serverless Function Snapshots},
+  booktitle = {Proceedings of the 26th ACM International Conference on
+               Architectural Support for Programming Languages and Operating Systems (ASPLOS'21)},
+  publisher = {{ACM}},
+  year      = {2021},
+  doi       = {10.1145/3445814.3446714},
+}
+
+
+@article{williams16_growin_need_micros_bioin,
+  author =       {Christopher L. Williams and Jeffrey C. Sica and
+                  Robert T. Killen and Ulysses G.J. Balis},
+  title =        {The Growing Need for Microservices in
+                  Bioinformatics},
+  journal =      {Journal of Pathology Informatics},
+  volume =       7,
+  number =       1,
+  pages =        45,
+  year =         2016,
+  doi =          {10.4103/2153-3539.194835},
+  url =
+                  {https://www.sciencedirect.com/science/article/pii/S2153353922005636},
+  issn =         {2153-3539},
+  keywords =     {Bioinformatics, crowd sourcing, defect analysis,
+                  failure mode analysis, information technology,
+                  microservices, pathology, reliability engineering,
+                  software engineering},
+}
+
+@inproceedings{gan19_open_sourc_bench_suite_micros,
+  author =       {Gan, Yu and Zhang, Yanqi and Cheng, Dailun and
+                  Shetty, Ankitha and Rathi, Priyal and Katarki, Nayan
+                  and Bruno, Ariana and Hu, Justin and Ritchken, Brian
+                  and Jackson, Brendon and Hu, Kelvin and Pancholi,
+                  Meghna and He, Yuan and Clancy, Brett and Colen,
+                  Chris and Wen, Fukang and Leung, Catherine and Wang,
+                  Siyuan and Zaruvinsky, Leon and Espinosa, Mateo and
+                  Lin, Rick and Liu, Zhongling and Padilla, Jake and
+                  Delimitrou, Christina},
+  title =        {An Open-Source Benchmark Suite for Microservices and
+                  Their Hardware-Software Implications for Cloud
+                  \& Edge Systems},
+  booktitle =    {Proceedings of the Twenty-Fourth International
+                  Conference on Architectural Support for Programming
+                  Languages and Operating Systems},
+  year =         2019,
+  pages =        {3--18},
+  doi =          {10.1145/3297858.3304013},
+  url =          {https://doi.org/10.1145/3297858.3304013},
+  acmid =        3304013,
+  address =      {New York, NY, USA},
+  isbn =         {978-1-4503-6240-5},
+  keywords =     {acceleration, cloud computing, cluster management,
+                  datacenters, fpga, microservices, qos, serverless},
+  location =     {Providence, RI, USA},
+  numpages =     16,
+  publisher =    {ACM},
+  series =       {ASPLOS '19},
+}
+
+@misc{grpc,
+  title = {A high performance, open source universal RPC framework},
+  howpublished = {\url{https://grpc.io/}},
+  author = {gRPC},
+  note = {Accessed: 2023-10-19}
+}
+
+@misc{protobuf,
+  title = {Protocol Buffers},
+  howpublished = {\url{https://protobuf.dev/}},
+  author = {Protobuf},
+  note = {Accessed: 2023-10-19}
+}
+
+@misc{thrift,
+  title = {Apache Thrigt},
+  howpublished = {\url{https://thrift.apache.org/}},
+  note = {Accessed: 2023-10-19}
+}
+
+@misc{golang,
+  title = {The Go Programming Language},
+  howpublished = {\url{https://go.dev/}},
+  note = {Accessed: 2023-10-19}
+}
+
+@misc{rust,
+  title = {Rust Programming Language},
+  howpublished = {\url{https://rust-lang.org/}},
+  note = {Accessed: 2023-10-19}
+}
+
+@misc{compdesign,
+  title = {Component model desing goals},
+  howpublished = {\url{https://archive.ph/swiyS}},
+  note = {Accessed: 2023-10-19},
+  }

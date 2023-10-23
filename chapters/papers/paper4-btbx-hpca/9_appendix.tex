@@ -1,0 +1,66 @@
+\section{Artifact Appendix}
+\label{sec:appendix}
+
+\subsection{Abstract}
+We implement BTB-X in Champsim simulator. Our artifacts provide the following: 1) BTB-X implementation in Champsim, 2) Link to workload traces, 3) Scripts for generating configuration files, launching simulations, and collecting results, and 4) Excel file for plotting the most important results. We identify three key results for artifact evaluation: a) Branch Target Offset distribution (Figure 4), b) BTB MPKI reduction (Figure 9), and c) Performance improvement (Figure 10).
+
+\subsection{Meta-information}
+\begin{itemize}
+\item \textbf{Compilation} Tested with GCC 8.5.0. It should also work with other recent GCC versions.
+
+\item \textbf{Code/Workloads} Download code/workloads from the provided link.
+
+\item \textbf{Experiments} Modify the provided scripts (as described below) to run simulations. 
+
+\item \textbf{Metrics} IPC, BTB MPKI, Branch Target Offset distribution.
+
+\item \textbf{Time needed to run experiments} Less than 30 minutes when running all traces in parallel.
+
+\item \textbf{Plotting graphs} Excel file, \emph{BTBX\_artifact\_results.xlsx}, is provided to plot graphs.
+\end{itemize}
+
+\subsection{Access to artifacts}
+
+\begin{itemize}
+\item \textbf{Code} Download BTB-X implementation from~\cite{btbx-artifacts}. 
+
+\item \textbf{Workloads} The workloads can be downloaded from  
+
+\url{https://drive.google.com/file/d/1qs8t8-YWc7lLoYbjbH\_d3lf1xdoYBznf/view?usp=sharing}
+
+Place the workloads in \emph{\textless Path\_to\_code/dpc3\_traces/}.
+
+\item \textbf{Excel file} For plotting the graphs, download excel file, \emph{BTBX\_artifact\_results.xlsx}, from~\cite{btbx-artifacts}.
+
+\end{itemize}
+
+\subsection{System requirements}
+Any hardware capable of running Champsim is sufficient. SLURM is recommended to run simulation on a cluster. The scripts are written in bash.
+
+\subsection{Experiment workflow}
+
+\begin{itemize}
+\item \textbf{Compilation} Champsim needs to be compiled with three BTB designs (convBTB, pdede, and BTBX) and two instruction prefetchers (no, fdip). Follow the instructions at~\cite{btbx-artifacts} to compile the code.
+
+
+\textbf{\textit{Important note on compilation}} IFETCH\_BUFFER needs to be 128 entries when compiling with “fdip” prefetcher and “FETCH\_WIDTH*2” entries when compiling with “no” prefetcher. This is because of how instruction fetch is implemented in baseline Champsim. IFETCH\_BUFFER size is defined in line 63 of \emph{\textless Path\_to\_code\textgreater/inc/ooo\_cpu.h}. 
+
+\item \textbf{Generating configuration files} 
+Go to directory \emph{\textless Path\_to\_code\textgreater/launch/scripts/}. In the script file \emph{createConfig.sh}, point PATH\_TO\_CHAMPSIM to \textless Path\_to\_code\textgreater. Run this script (\emph{./createConfig.sh}) to generate config files needed by Champsim.
+
+\item \textbf{Running simulations}
+
+\noindent \textit{Running all workloads:} Go to the directory \emph{\textless Path\_to\_code\textgreater/launch/}. In script file \emph{launch.sh}, replace the line \textless cluster\_launch\_command\_here\textgreater (line 64) with the command to run experiments on your cluster. A sample command is given that runs experiments on our cluster. Running this script (\emph{./launch.sh}) will run simulations, and the stats will be stored in directory \emph{\textless Path\_to\_code\textgreater/results\_50M/}.
+
+\noindent \textit{Running a single workload:} An example command to run simulation for a single workload is provided at~\cite{btbx-artifacts}.
+
+\end{itemize}
+
+\subsection{Results}
+\begin{itemize}
+\item \textbf{Collecting results}
+Go to \emph{\textless Path\_to\_code\textgreater/collectStats/}. Run the script \emph{getResults.sh}, and it will collect results from all workloads and save them in a file \emph{all\_res}.
+
+\item \textbf{Plotting Results}
+Download the \emph{all\_res} file. Open the provided excel file \emph{BTBX\_artifact\_results.xlsx}. Click on “Data” in MS-Excel top menu bar. Click on “Refresh All” in “Queries and Connections” ribbon, go to the folder where you stored \emph{all\_res} and double click on \emph{all\_res}. Now “Offset Distribution”, “MPKI”, and “Performance” sheets in the excel file should have plots for Figure 4, Figure 9, and Figure 10 respectively. 
+\end{itemize}

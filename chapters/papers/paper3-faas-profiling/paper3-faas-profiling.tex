@@ -1,0 +1,80 @@
+\pdfminorversion=7
+\documentclass[../../../main.tex]{subfiles}
+
+
+\begin{document}
+
+
+\chapter{Paper C - Impact of Microarchitectural State Reuse on Serverless Functions}
+
+\noindent \textbf{Authors}
+
+\vspace*{0.3cm}
+
+\noindent Truls Asheim, Tanvir Ahmed Khan, Baris Kasicki and Rakesh Kumar
+
+\vspace*{0.7cm}
+
+\noindent \textbf{Published in}
+
+\vspace*{0.3cm}
+
+\noindent Proceedings of the Eighth International Workshop on Serverless Computing, 2022
+
+\vspace*{0.7cm}
+
+\noindent \textbf{Copyright}
+
+\vspace*{0.3cm}
+
+\noindent Copyright ©2022 Association for Computing Machinery. Published Open Access and licensed CC-BY 4.0 by the Association for Computing Machinery.
+
+\newpage
+
+\vspace*{0.1cm}
+
+\begin{center}
+
+\Huge{Impact of Microarchitectural State Reuse on Serverless Functions}
+
+\vspace{0.6cm}
+
+\large{Truls Asheim$^{1}$, Tanvir Ahmed Khan$^{2}$, Baris Kasicki$^{2,3}$, Rakesh Kumar$^{1}$}
+
+\vspace{0.1cm}
+
+\small{1) Norwegian University of Science and Technology, Norway}\\
+\small{2) University of Michigan, USA}\\
+\small{3) Google, USA}\\
+
+
+\end{center}
+
+\vspace{0.2cm}
+
+\begin{center}
+  \textbf{Abstract}
+  \end{center}
+\begin{changemargin}{0.75cm}{0.75cm}
+
+ Serverless computing has seen rapid growth in the past few years due to its seamless scalability and zero resource provisioning overhead for developers. In serverless, applications are composed of a set of very short-running functions which are invoked in response to events such as HTTP requests. For better resource utilization, cloud providers interleave the execution of thousands of serverless functions on a single server.
+
+Recent work argues that this interleaved execution and short run-times cause the serverless functions to perform poorly on modern processors. This is because interleaved execution thrashes the microarchitectural state of a function, thus forcing its subsequent execution to start from a cold state. Further, due to their short-running nature, serverless functions are unable to amortize the warm-up latency of microarchitectural structures, meaning that most the function execution happen from cold state.
+
+In this work, we analyze a function's performance sensitivity to microarchitectural state thrashing induced by interleaved execution. Unlike prior work, our analysis reveals that not all functions experience performance degradation because of microarchitectural state thrashing. The two dominating factors that dictate the impact of thrashing on function performance are function execution time and code footprint. For example, we observe that only the functions with short execution times (< 1 ms) show performance degradation due to thrashing and that this degradation is exacerbated for functions with large code footprints.
+\end{changemargin}
+
+\vspace{1cm}
+
+%-------------------------------------------------------------------------
+\begin{refsection}[faas-profiling]
+  \input{main.tex}
+  \printbibliography[heading=refs]
+\end{refsection}
+\FloatBarrier
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

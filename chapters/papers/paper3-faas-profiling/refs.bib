@@ -1,0 +1,490 @@
+@inproceedings{kanev15_profil,
+  author =       {Svilen Kanev and Juan Pablo Darago and Kim Hazelwood
+                  and Parthasarathy Ranganathan and Tipp Moseley and
+                  Gu-Yeon Wei and David Brooks},
+  title =        {Profiling a warehouse-scale computer},
+  booktitle =    {Proceedings of the 42nd Annual International
+                  Symposium on Computer Architecture - ISCA '15},
+  year =         2015,
+  pages =        {158-169},
+  doi =          {10.1145/2749469.2750392},
+  date_added =   {Mon May 6 13:01:12 2019},
+  numpages =     12,
+}
+
+@article{ferdman12_clear_cloud,
+  author =       {Ferdman, Michael and Falsafi, Babak and Adileh,
+                  Almutaz and Kocberber, Onur and Volos, Stavros and
+                  Alisafaee, Mohammad and Jevdjic, Djordje and Kaynak,
+                  Cansu and Popescu, Adrian Daniel and Ailamaki,
+                  Anastasia},
+  title =        {Clearing the Clouds},
+  volume =       40,
+  number =       1,
+  pages =        37,
+  year =         2012,
+  doi =          {10.1145/2189750.2150982},
+  issn =         {0163-5964},
+  journaltitle = {ACM SIGARCH Computer Architecture News},
+  month =        {Apr},
+  publisher =    {Association for Computing Machinery (ACM)},
+}
+
+
+@inproceedings{shahrad19_archit_implic_funct_servic_comput,
+  author =       {Shahrad, Mohammad and Balkind, Jonathan and
+                  Wentzlaff, David},
+  title =        {Architectural Implications of Function-as-a-Service
+                  Computing},
+  booktitle =    {Proceedings of the 52nd Annual IEEE/ACM
+                  International Symposium on Microarchitecture},
+  year =         2019,
+  pages =        {1063-1075},
+  doi =          {10.1145/3352460.3358296},
+  abstract =     {Serverless computing is a rapidly growing cloud
+                  application model, popularized by Amazon's Lambda
+                  platform. Serverless cloud services provide
+                  fine-grained provisioning of resources, which scale
+                  automatically with user
+                  demand. Function-as-a-Service (FaaS) applications
+                  follow this serverless model, with the developer
+                  providing their application as a set of functions
+                  which are executed in response to a user- or
+                  system-generated event. Functions are designed to be
+                  short-lived and execute inside containers or virtual
+                  machines, introducing a range of system-level
+                  overheads. This paper studies the architectural
+                  implications of this emerging paradigm. Using the
+                  commercial-grade Apache OpenWhisk FaaS platform on
+                  real servers, this work investigates and identifies
+                  the architectural implications of FaaS serverless
+                  computing. The workloads, along with the way that
+                  FaaS inherently interleaves short functions from
+                  many tenants frustrates many of the
+                  locality-preserving architectural structures common
+                  in modern processors. In particular, we find that:
+                  FaaS containerization brings up to 20x slowdown
+                  compared to native execution, cold-start can be over
+                  10x a short function's execution time, branch
+                  mispredictions per kilo-instruction are 20x higher
+                  for short functions, memory bandwidth increases by
+                  6x due to the invocation pattern, and IPC decreases
+                  by as much as 35 \% due to inter-function
+                  interference. We open-source FaaSProfiler, the FaaS
+                  testing and profiling platform that we developed for
+                  this work.},
+  address =      {New York, NY, USA},
+  isbn =         9781450369381,
+  keywords =     {serverless, function-as-a-service, faas, cloud,
+                  architecture, OpenWhisk},
+  location =     {Columbus, OH, USA},
+  numpages =     13,
+  publisher =    {Association for Computing Machinery},
+  series =       {MICRO '52},
+}
+
+
+@inproceedings{lukewarm_serverless,
+  author =       {Schall, David and Margaritov, Artemiy and Ustiugov
+                  Dimitrii and Sandberg, Andreas and Grot, Boris},
+  title =        {Lukewarm Serverless Functions: Characterization and
+                  Optimization},
+  booktitle =    {Proceeding of the 49st Annual International
+                  Symposium on Computer Architecuture},
+  year =         2022,
+  pages =        {??},
+  abstract =     {Serverless computing has emerged as a widely-used
+                  paradigm for deploying services in the cloud. In
+                  serverless, developers organize their applications
+                  as a collection of functions, which are invoked
+                  on-demand in response to a trigger, such as a user
+                  request or an invocation by another function. To
+                  avoid long start-up delays associated with booting a
+                  new function instance, cloud providers tend to keep
+                  recently-triggered functions idle (or warm) on the
+                  server for some time after the most recent
+                  invocation in anticipation of another
+                  invocation. Thus, at any given moment on a server,
+                  there may be thousands of distinct warm function
+                  instances whose executions are interleaved in time
+                  based on incoming invocations.  This paper observes
+                  that (1) there is a high degree of interleav- ing
+                  among warm functions on a given server; (2) the
+                  individual warm functions are invoked relatively
+                  infrequently, often at the granularity of seconds or
+                  minutes; and (3) many functions complete within a
+                  few milliseconds. The infrequent invocations of a
+                  function instance on a busy server leads to
+                  thrashing of the function’s microarchitectural state
+                  between invocations.  Meanwhile, the short execution
+                  time of the function impedes amortization of the
+                  warm-up latency of the cache hierarchy, causing a
+                  31-114\% increase in CPI compared to execution with
+                  warm microarchitectural state. We identify on-chip
+                  misses for instructions as a major contributor to
+                  the performance loss and propose Jukebox, a
+                  record-and-replay instruction prefetcher
+                  specifically designed for reducing the start-up
+                  latency of warm function instances. Jukebox requires
+                  just 32KB of metadata per function instance, and
+                  boosts performance by an average of 18.7\% for the
+                  evaluated functions, which translates into a
+                  corresponding throughput improvement at the server
+                  level.,},
+                  isbn =         9781479943944,
+  location =     {New York, New York, USA},
+  numpages =     13,
+  publisher =    {IEEE Press},
+  series =       {ISCA '22},
+}
+
+@INPROCEEDINGS{splash2,
+  author={Woo, S.C. and Ohara, M. and Torrie, E. and Singh, J.P. and Gupta, A.},
+  booktitle={Proceedings 22nd Annual International Symposium on Computer Architecture},
+  title={The SPLASH-2 programs: characterization and methodological considerations},
+  year={1995},
+  volume={},
+  number={},
+  pages={24-36}
+}
+
+
+@inproceedings{yasin14_top_down,
+  author =       {A. {Yasin}},
+  title =        {A Top-Down method for performance analysis and
+                  counters architecture},
+  booktitle =    {2014 IEEE International Symposium on Performance
+                  Analysis of Systems and Software (ISPASS)},
+  year =         2014,
+  pages =        {35-44},
+  abstract =     {Optimizing an application's performance for a given
+                  microarchitecture has become painfully
+                  difficult. Increasing microarchitecture complexity,
+                  workload diversity, and the unmanageable volume of
+                  data produced by performance tools increase the
+                  optimization challenges. At the same time resource
+                  and time constraints get tougher with recently
+                  emerged segments. This further calls for accurate
+                  and prompt analysis methods. The insights from this
+                  method guide a proposal for a novel performance
+                  counters architecture that can determine the true
+                  bottlenecks of a general out-of-order
+                  processor. Unlike other approaches, our analysis
+                  method is low-cost and already featured in
+                  in-production systems - it requires just eight
+                  simple new performance events to be added to a
+                  traditional PMU. It is comprehensive - no
+                  restriction to predefined set of performance
+                  issues. It accounts for granular bottlenecks in
+                  super-scalar cores, missed by earlier approaches.},
+  keywords =     {Pipelines;Radiation detectors;Out of order;Electric
+                  breakdown;Measurement;Bandwidth;Microarchitecture},
+  month =        {March}
+}
+
+
+@inproceedings{shahrad20_server_wild,
+  author =       {Mohammad Shahrad and Rodrigo Fonseca and Inigo Goiri
+                  and Gohar Chaudhry and Paul Batum and Jason Cooke
+                  and Eduardo Laureano and Colby Tresness and Mark
+                  Russinovich and Ricardo Bianchini},
+  title =        {Serverless in the Wild: Characterizing and
+                  Optimizing the Serverless Workload at a Large Cloud
+                  Provider},
+  booktitle =    {2020 {USENIX} Annual Technical Conference ({USENIX}
+                  {ATC} 20)},
+  year =         2020,
+  pages =        {205--218},
+  isbn =         {978-1-939133-14-4},
+  month =        jul,
+  publisher =    {{USENIX} Association},
+}
+
+@misc{serverless_state,
+  author = {Datalog},
+  title = {The state of serverless},
+  howpublished = "\url{https://www.datadoghq.com/state-of-serverless-2021/}",
+  year         = 2021
+}
+
+@inproceedings{du20_catal,
+  author =       {Du, Dong and Yu, Tianyi and Xia, Yubin and Zang,
+                  Binyu and Yan, Guanglu and Qin, Chenggang and Wu,
+                  Qixuan and Chen, Haibo},
+  title =        {Catalyzer: Sub-Millisecond Startup for Serverless
+                  Computing with Initialization-Less Booting},
+  booktitle =    {Proceedings of the Twenty-Fifth International
+                  Conference on Architectural Support for Programming
+                  Languages and Operating Systems},
+  year =         2020,
+  pages =        {467-481},
+  doi =          {10.1145/3373376.3378512},
+  abstract =     {Serverless computing promises cost-efficiency and
+                  elasticity for high-productive software
+                  development. To achieve this, the serverless sandbox
+                  system must address two challenges: strong isolation
+                  between function instances, and low startup latency
+                  to ensure user experience. While strong isolation
+                  can be provided by virtualization-based sandboxes,
+                  the initialization of sandbox and application causes
+                  non-negligible startup overhead. Conventional
+                  sandbox systems fall short in low-latency startup
+                  due to their application-agnostic nature: they can
+                  only reduce the latency of sandbox initialization
+                  through hypervisor and guest kernel customization,
+                  which is inadequate and does not mitigate the
+                  majority of startup overhead.This paper proposes
+                  Catalyzer, a serverless sandbox system design
+                  providing both strong isolation and extremely fast
+                  function startup. Instead of booting from scratch,
+                  Catalyzer restores a virtualization-based function
+                  instance from a well-formed checkpoint image and
+                  thereby skips the initialization on the critical
+                  path (init-less). Catalyzer boosts the restore
+                  performance by on-demand recovering both user-level
+                  memory state and system state. We also propose a new
+                  OS primitive, sfork (sandbox fork), to further
+                  reduce the startup latency by directly reusing the
+                  state of a running sandbox instance. Fundamentally,
+                  Catalyzer removes the initialization cost by reusing
+                  state, which enables general optimizations for
+                  diverse serverless functions. The evaluation shows
+                  that Catalyzer reduces startup latency by orders of
+                  magnitude, achieves < 1ms latency in the best case,
+                  and significantly reduces the end-to-end latency for
+                  real-world workloads. Catalyzer has been adopted by
+                  Ant Financial, and we also present lessons learned
+                  from industrial development.},
+  address =      {New York, NY, USA},
+  isbn =         9781450371025,
+  keywords =     {startup latency, serverless computing, checkpoint
+                  and restore, operating system},
+  location =     {Lausanne, Switzerland},
+  numpages =     15,
+  publisher =    {Association for Computing Machinery},
+  series =       {ASPLOS '20},
+}
+
+@inproceedings{ustiugov21_bench_analy_optim_server_funct_snaps,
+  author =       {Dmitrii Ustiugov and Plamen Petrov and Marios Kogias
+                  and Edouard Bugnion and Boris Grot},
+  title =        {Benchmarking, Analysis, and Optimization of
+                  Serverless Function Snapshots},
+  booktitle =    {Proceedings of the 26th ACM International Conference
+                  on Architectural Support for Programming Languages
+                  and Operating Systems (ASPLOS'21)}
+  
+}
+
+@inproceedings{lloyd18_server_comput,
+  author =       {W. {Lloyd} and S. {Ramesh} and S. {Chinthalapati}
+                  and L. {Ly} and S. {Pallickara}},
+  title =        {Serverless Computing: An Investigation of Factors
+                  Influencing Microservice Performance},
+  booktitle =    {2018 IEEE International Conference on Cloud
+                  Engineering (IC2E)},
+  year =         2018,
+  pages =        {159-169},
+  doi =          {10.1109/IC2E.2018.00039},
+  abstract =     {Serverless computing platforms provide
+                  function(s)-as-a-Service (FaaS) to end users while
+                  promising reduced hosting costs, high availability,
+                  fault tolerance, and dynamic elasticity for hosting
+                  individual functions known as
+                  microservices. Serverless Computing environments,
+                  unlike Infrastructure-as-a-Service (IaaS) cloud
+                  platforms, abstract infrastructure management
+                  including creation of virtual machines (VMs),
+                  operating system containers, and request load
+                  balancing from users. To conserve cloud server
+                  capacity and energy, cloud providers allow hosting
+                  infrastructure to go COLD, deprovisioning containers
+                  when service demand is low freeing infrastructure to
+                  be harnessed by others. In this paper, we present
+                  results from our comprehensive investigation into
+                  the factors which influence microservice performance
+                  afforded by serverless computing. We examine hosting
+                  implications related to infrastructure elasticity,
+                  load balancing, provisioning variation,
+                  infrastructure retention, and memory reservation
+                  size. We identify four states of serverless
+                  infrastructure including: provider cold, VM cold,
+                  container cold, and warm and demonstrate how
+                  microservice performance varies up to 15x based on
+                  these states.},
+  keywords =     {cloud computing;resource allocation;virtual
+                  machines;serverless computing platforms;hosting
+                  costs;fault tolerance;dynamic elasticity;individual
+                  functions;microservices;virtual machines;operating
+                  system containers;cloud server capacity;cloud
+                  providers;service demand;influence microservice
+                  performance;infrastructure elasticity;load
+                  balancing;infrastructure retention;serverless
+                  infrastructure
+                  including;infrastructure-as-a-service;infrastructure
+                  management;serverless computing
+                  environments;FaaS;IaaS;VM;Containers;Cloud
+                  computing;Load
+                  management;Elasticity;Servers;Operating
+                  systems;Fault tolerance;Resource Management and
+                  Performance;Serverless
+                  Computing;Function-as-a-Service;Provisioning
+                  Variation},
+  month =        {April},
+}
+
+@inproceedings{wang18_peekin_behin_curtain_server_platf,
+  author =       {Liang Wang and Mengyuan Li and Yinqian Zhang and
+                  Thomas Ristenpart and Michael Swift},
+  title =        {Peeking Behind the Curtains of Serverless Platforms},
+  booktitle =    {2018 {USENIX} Annual Technical Conference ({USENIX}
+                  {ATC} 18)},
+  year =         2018,
+  pages =        {133--146},
+  address =      {Boston, MA},
+  isbn =         {ISBN 978-1-939133-01-4},
+  month =        jul,
+  publisher =    {{USENIX} Association},
+}
+
+@inproceedings{lee18_evaluat_produc_server_comput_envir,
+  author =       {H. {Lee} and K. {Satyam} and G. {Fox}},
+  title =        {Evaluation of Production Serverless Computing
+                  Environments},
+  booktitle =    {2018 IEEE 11th International Conference on Cloud
+                  Computing (CLOUD)},
+  year =         2018,
+  pages =        {442-450},
+  doi =          {10.1109/CLOUD.2018.00062},
+  ISSN =         {2159-6190},
+  abstract =     {Serverless computing provides a small runtime
+                  container to execute lines of codes without
+                  infrastructure management which is similar to
+                  Platform as a Service (PaaS) but a functional
+                  level. Amazon started the event-driven compute named
+                  Lambda functions in 2014 with a 25 concurrent
+                  limitation, but it now supports at least a thousand
+                  of concurrent invocation to process event messages
+                  generated by resources like databases, storage and
+                  system logs. Other providers, i.e., Google,
+                  Microsoft, and IBM offer a dynamic scaling manager
+                  to handle parallel requests of stateless functions
+                  in which additional containers are provisioning on
+                  new compute nodes for distribution. However, while
+                  functions are often developed for microservices and
+                  lightweight workload, they are associated with
+                  distributed data processing using the concurrent
+                  invocations. We claim that the current serverless
+                  computing environments can support dynamic
+                  applications in parallel when a partitioned task is
+                  executable on a small function instance. We present
+                  results of throughput, network bandwidth, a file I/O
+                  and compute performance regarding the concurrent
+                  invocations. We deployed a series of functions for
+                  distributed data processing to address the
+                  elasticity and then demonstrated the differences
+                  between serverless computing and virtual machines
+                  for cost efficiency and resource utilization.},
+  keywords =     {cloud computing;virtual machines;distributed data
+                  processing;stateless functions;parallel
+                  requests;dynamic scaling manager;concurrent
+                  invocation;Lambda functions;event-driven
+                  compute;infrastructure management;production
+                  serverless computing
+                  environments;Google;Throughput;Cloud
+                  computing;Databases;Containers;Runtime;Data
+                  processing;FaaS, Serverless, Event-driven Computing,
+                  Amazon Lambda, Google Functions, Microsoft Azure
+                  Functions, IBM OpenWhisk},
+  month =        {July},
+}
+
+@misc{branch_predictor,
+  author = {Marek Majkowski},
+  title = {Branch predictor: How many "if"s are too many? Including x86 and M1 benchmarks!},
+  howpublished = "\url{https://blog.cloudflare.com/branch-predictor/}",
+  year         = 2021
+}
+
+@inproceedings{shotgun,
+author = {Kumar, Rakesh and Grot, Boris and Nagarajan, Vijay},
+title = {Blasting through the Front-End Bottleneck with Shotgun},
+year = {2018},
+isbn = {9781450349116},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+doi = {10.1145/3173162.3173178},
+abstract = {The front-end bottleneck is a well-established problem in server workloads owing to their deep software stacks and large instruction working sets. Despite years of research into effective L1-I and BTB prefetching, state-of-the-art techniques force a trade-off between performance and metadata storage costs. This work introduces Shotgun, a BTB-directed front-end prefetcher powered by a new BTB organization that maintains a logical map of an application's instruction footprint, which enables high-efficacy prefetching at low storage cost. To map active code regions, Shotgun precisely tracks an application's global control flow (e.g., function and trap routine entry points) and summarizes local control flow within each code region. Because the local control flow enjoys high spatial locality, with most functions comprised of a handful of instruction cache blocks, it lends itself to a compact region-based encoding. Meanwhile, the global control flow is naturally captured by the application's unconditional branch working set (calls, returns, traps). Based on these insights, Shotgun devotes the bulk of its BTB capacity to branches responsible for the global control flow and a spatial encoding of their target regions. By effectively capturing a map of the application's instruction footprint in the BTB, Shotgun enables highly effective BTB-directed prefetching. Using a storage budget equivalent to a conventional BTB, Shotgun outperforms the state-of-the-art BTB-directed front-end prefetcher by up to 14\% on a set of varied commercial workloads.},
+booktitle = {Proceedings of the Twenty-Third International Conference on Architectural Support for Programming Languages and Operating Systems},
+pages = {30–42},
+numpages = {13},
+keywords = {servers, branch target buffer (btb), control flow, prefeteching, BTB organization, instruction cache},
+location = {Williamsburg, VA, USA},
+series = {ASPLOS '18}
+}
+
+@INPROCEEDINGS{boomerang,
+  author={Kumar, Rakesh and Huang, Cheng-Chieh and Grot, Boris and Nagarajan, Vijay},
+  booktitle={2017 IEEE International Symposium on High Performance Computer Architecture (HPCA)}, 
+  title={Boomerang: A Metadata-Free Architecture for Control Flow Delivery}, 
+  year={2017},
+  volume={},
+  number={},
+  pages={493-504},
+  doi={10.1109/HPCA.2017.53}
+}
+
+@ARTICLE{btbx-cal,
+  author={Asheim, Truls and Grot, Boris and Kumar, Rakesh},
+  journal={IEEE Computer Architecture Letters},
+  title={BTB-X: A Storage-Effective BTB Organization},
+  year={2021},
+  volume={20},
+  number={2},
+  pages={134-137},
+  doi={10.1109/LCA.2021.3109945}
+}
+
+@INPROCEEDINGS{btbx-pact,
+  author={Asheim, Truls and Grot, Boris and Kumar, Rakesh},
+  booktitle={Proceedings of the 31st International Conference on Parallel Architectures and Compilation Techniques}, 
+  title={A Specialized BTB Organization for Servers}, 
+  year={2022},
+  volume={},
+  number={},
+  location = {Chicago, IL, USA},
+  series = {PACT '22}
+}
+
+@inproceedings{10.1145/2370816.2370895,
+author = {Kumar, Rakesh and Mart\'{\i}nez, Alejandro and Gonz\'{a}lez, Antonio},
+title = {Speculative Dynamic Vectorization for HW/SW Co-Designed Processors},
+year = {2012},
+isbn = {9781450311823},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+doi = {10.1145/2370816.2370895},
+abstract = {Hardware/Software (HW/SW) co-designed processors have emerged as a promising solution to the power and complexity problems of modern microprocessors. These processors utilize dynamic optimizations to improve the performance. However, vectorization, one of the most potent optimizations, has not yet received the deserved attention. This paper presents a speculative dynamic vectorization algorithm to explore its potential.},
+booktitle = {Proceedings of the 21st International Conference on Parallel Architectures and Compilation Techniques},
+pages = {459–460},
+numpages = {2},
+keywords = {vectorization, hw/sw co-designed processor, speculation},
+location = {Minneapolis, Minnesota, USA},
+series = {PACT '12}
+}
+
+@inproceedings{twig,
+author = {Khan, Tanvir Ahmed and Brown, Nathan and Sriraman, Akshitha and Soundararajan, Niranjan K and Kumar, Rakesh and Devietti, Joseph and Subramoney, Sreenivas and Pokam, Gilles A and Litz, Heiner and Kasikci, Baris},
+title = {Twig: Profile-Guided BTB Prefetching for Data Center Applications},
+year = {2021},
+isbn = {9781450385572},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+doi = {10.1145/3466752.3480124},
+booktitle = {MICRO-54: 54th Annual IEEE/ACM International Symposium on Microarchitecture},
+pages = {816–829},
+numpages = {14},
+keywords = {branch target buffer, Prefetching, frontend stalls, data center},
+location = {Virtual Event, Greece},
+series = {MICRO '21}
+}

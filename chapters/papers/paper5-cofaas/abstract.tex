@@ -1,0 +1,9 @@
+The attractive property of decoupling deployment decisions from application development has led to fast adoption of the Function-as-a-Service (FaaS) cloud computing model. FaaS applications are typically highly modular with each function having a specific purpose and well-defined interface as this enables code reuse, simplifies maintenance, improves testability and provides language independence. To enable these attractive features, FaaS applications often use Remote Procedure Call (RPC) interfaces for inter-function communication --- which comes at the cost of orders of magnitude higher latency than native function calls. Prior works that alleviate this overhead are unattractive because they either require non-standard APIs, only support a single language, or rely on futuristic languages or runtimes.
+
+Our key insight is that we can exploit the well-defined RPC interfaces to perform code transformations that alleviate inter-function communication overhead. We hence propose CoFaaS which leverages this insight to consolidate FaaS functions on top of a WebAssembly runtime and thereby avoid accessing the network layer when functions are deployed on the same compute node. Our evaluation shows that this strategy is highly effective and reports that CoFaaS reduces inter-function communication latency by up to $100\times$ and application-level request round-trip time by up to $6\times$.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:

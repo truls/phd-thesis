@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="i_btb.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.3416246"
+     inkscape:cx="302.61818"
+     inkscape:cy="491.94089"
+     inkscape:window-width="3072"
+     inkscape:window-height="1659"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="50.388828"
+       y="40.142281"
+       id="text31122"><tspan
+         sodipodi:role="line"
+         id="tspan31120"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="50.388828"
+         y="40.142281">Tag: 12</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.4;stroke-opacity:1"
+       id="rect33036"
+       width="30.056982"
+       height="11.142429"
+       x="42.804836"
+       y="33.440388" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="75.576424"
+       y="40.142281"
+       id="text31122-2"><tspan
+         sodipodi:role="line"
+         id="tspan31120-9"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="75.576424"
+         y="40.142281">Type: 2</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.4;stroke-opacity:1"
+       id="rect33036-3"
+       width="20.181782"
+       height="11.142429"
+       x="72.861824"
+       y="33.440388" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.4;stroke-opacity:1"
+       id="rect33036-3-85"
+       width="20.181782"
+       height="11.142429"
+       x="22.623055"
+       y="33.440388" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="107.06771"
+       y="40.142281"
+       id="text31122-2-9"><tspan
+         sodipodi:role="line"
+         id="tspan31120-9-0"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="107.06771"
+         y="40.142281">Target: 46</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.4;stroke-opacity:1"
+       id="rect33036-3-8"
+       width="49.024681"
+       height="11.142429"
+       x="93.04361"
+       y="33.440388" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="25.059639"
+       y="40.589798"
+       id="text43595"><tspan
+         sodipodi:role="line"
+         id="tspan43593"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="25.059639"
+         y="40.589798">Valid: 1</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.4;stroke-opacity:1"
+       id="rect33036-3-85-0"
+       width="29.241493"
+       height="11.142429"
+       x="142.06828"
+       y="33.440388" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="156.65079"
+       y="40.120579"
+       id="text43595-9"><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="156.65079"
+         y="40.120579"
+         id="tspan56954">Rep_policy: 3</tspan></text>
+  </g>
+</svg>
