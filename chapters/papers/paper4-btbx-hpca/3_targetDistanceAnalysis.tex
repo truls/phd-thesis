@@ -16,7 +16,7 @@
 
 \begin{figure*}[t!]
     \centering
-    \includegraphics[width=0.7\textwidth, trim=60 280 50 320, clip]{figures/offset_distribution.pdf}
+    \includegraphics[width=\textwidth, trim=60 280 50 320, clip]{figures/offset_distribution.pdf}
     \caption{Distribution of branch target offsets in different workloads.}
     \label{fig:offsets}
 \end{figure*}
@@ -36,7 +36,7 @@ Perhaps surprisingly, \Cref{fig:offsets} also shows that very few branches requi
 We gain two key insights from this analysis:
 
 \begin{description}
-\item[Key Insight 1] The targets of most branches lie relatively close in the virtual address space to the branch itself. As a result, storing the {\em distance} to the target, in the form of an offset from the branch instruction can provide drastic storage savings. 
+\item[Key Insight 1] The targets of most branches lie relatively close in the virtual address space to the branch itself. As a result, storing the {\em distance} to the target, in the form of an offset from the branch instruction can provide drastic storage savings.
 
 \item[Key Insight 2] The target offset sizes are unevenly distributed with 0-6 bits, 7-10 bits, and 11-25 bits required to encode the offsets of 54\%, 22\% and 23\% of branches respectively. Therefore, a single size offset field cannot provide storage optimal solution.
 \end{description}

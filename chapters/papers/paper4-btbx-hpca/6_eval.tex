@@ -159,23 +159,22 @@ We first assess the number of branches different BTB organizations (Conv-BTB, PD
 
 As the table shows BTB-X stores significantly more branches than any other BTB organizations. Concretely, it stores 2.24x more branches than a conventional BTB organization. Compared to PDede, BTB-X stores 1.24x more branches at 0.9KB storage budget and 1.34x more branches at 58KB storage budget. BTB-X's advantage over PDede increases with storage budget because PDede entries require more bits at higher budgets to accommodate larger Page-BTB pointers.
 
-\begin{figure}[t!]
+\begin{sidewaysfigure}
     \centering
     \includegraphics[width=\textwidth, trim=60 300 50 340, clip]{figures/BTBMPKI4KEQ.pdf}
     \vspace{-0.1in}
     \caption{BTB MPKI experienced by different BTB organizations.}
     \vspace{-0.2in}
     \label{fig:mpki}
-\end{figure}
+\end{sidewaysfigure}
 
-\begin{figure}[t!]
+\begin{sidewaysfigure}
     \centering
     \includegraphics[width=\textwidth, trim=60 300 50 340, clip]{figures/Performance4KEQ_revised.pdf}
     \vspace{-0.1in}
     \caption{Performance gain obtained by conventional BTB (with FDIP), PDede and BTB-X (with and without FDIP) over the conventional BTB without FDIP. The three bars for each workload correspond to Conv-BTB, PDede, and BTB-X respectively.}
     \label{fig:perfAll}
-\end{figure}
-
+\end{sidewaysfigure}
 
 \subsection{BTB MPKI}
 \label{sec:mpki}
