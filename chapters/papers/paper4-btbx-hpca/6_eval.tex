@@ -2,7 +2,7 @@
 \label{hpca:sec:eval}
 
 \begin{small}
-\begin{table}[t]
+\begin{table}
 	\centering
 	\caption{Microarchitectural parameters}
 	{\small
@@ -72,7 +72,7 @@ We improved two important aspects of Champsim to evaluate the baseline, state-of
 %We use CACTI 7.0~\cite{cacti} to analyse the power requirements of BTB-X at 28nm technology node. The per access energy numbers obtained from CACTI are combined with the number of BTB accesses obtained from Champsim to obtain the total power consumption.
 
 \begin{small}
-\begin{table}[t!]
+\begin{table}
   \centering
   \caption{BTB-X storage requirements. The numbers in parentheses are for BTB-XC.}
   \label{hpca:table:metadata}
@@ -196,7 +196,7 @@ Looking at the results without instruction prefetcher, \Cref{hpca:fig:perfAll} s
 
 
 \begin{small}
-\begin{table}[t!]
+\begin{table}
 \centering
 \caption{Energy requirements of different BTB designs.}
 \label{hpca:tab:energy}
@@ -228,7 +228,7 @@ Looking at the results without instruction prefetcher, \Cref{hpca:fig:perfAll} s
 
 These results show that by accommodating more branches in a given storage budget, BTB-X not only reduces pipeline flushes but also improves instruction prefetching, both lead to better performance.
 
-\begin{figure*}
+\begin{figure}
     \centering
     \begin{subfigure}[t]{0.935\columnwidth}
         \centering
@@ -246,7 +246,7 @@ These results show that by accommodating more branches in a given storage budget
         \label{hpca:fig:clientPerf}
     \end{subfigure}
     \caption{Performance gains for conventional BTB, PDede, and BTB-X on (a) \textbf{server} and (b) \textbf{client} workloads over a conventional BTB with 0.9KB storage budget. X-axis label is storage requirements of 256-, 512-, 1K-, 2K-, 4K-, 8K-, and 16K-entry BTB-X.}\label{hpca:fig:perf}
-\end{figure*}
+\end{figure}
 
 Finally, \Cref{hpca:fig:perfAll} shows that all three BTB organizations perform similar on client workloads. This is because their branch working sets mostly fit in the baseline Conv-BTB and the additional entries in PDede and BTB-X do not bring much performance benefit.
 

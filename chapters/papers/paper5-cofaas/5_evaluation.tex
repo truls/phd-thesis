@@ -29,7 +29,7 @@ web browsers, need to support the WebAssembly System Interface (WASI). For Rust,
 
 For the round-trip-time benchmarks (\Cref{es:subsec:rtt}), we invoke 6,000 requests back-to-back for every configuration. We chose this number of requests to get a representative number of data points while not exceeding memory capacity in the non-GC configurations. For evaluating the latency of inter-function requests, we report the mean of 100 inter-function requests and we repeat each experiment 100 times.
 
-\begin{figure}[t]
+\begin{figure}
   \centering
   \includegraphics[width=0.6\columnwidth]{figures/setup}
   \caption{\label{es:fig:deploy-setup} The deployment configurations for the native and the CoFaaS benchmarks.}
@@ -44,11 +44,11 @@ Finally, we point out that we run our native FaaS application on the same machin
 \subsection{Round-trip latency}
 \label{es:subsec:rtt}
 
-\begin{figure*}[t]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{figures/rust-go}
   \caption{\label{es:fig:rtt-latency} The round-trip latency of issuing a request to our example application.}
-\end{figure*}
+\end{figure}
 
 We begin our evaluation of CoFaaS' performance by showing measurements of the request round-trip latency. The round-trip latency is defined by the time it takes before the requesting client receives the reply to a request that it sent. The speedups achieved by the CoFaaS optimized application over the native baseline are shown in \Cref{es:fig:rtt-latency}. The blue boxes mark the median request payload size as observed from traces of real-world FaaS deployments on the Azure cloud \cite{mahgoub22_wisef} and is hence a notable data point. We run the Rust benchmarks with payload sizes between 1 and 512 whereas the Go benchmarks are run for sizes between 1 and 16. Due to the GC limitations outlined in \Cref{es:sec:methodology}, we are unable to run the Go benchmark for the full range of payload sizes. In both cases, we perform 1, 10 and 20 inter-function calls per external request.
 
@@ -67,7 +67,7 @@ Furthermore, as previously stated, an analysis of Azure FaaS traces showed that 
 
 % \truls{What does ``very real'' mean in this context}
 
-\begin{figure}[t]
+\begin{figure}
   \centering
   \includegraphics[width=\columnwidth]{figures/rawlat.pdf}
   \caption{\label{es:fig:lat-numbers} Latency (ms) of the Rust application performing 20 inter-function requests when running natively and using the CoFaaS transformation}
@@ -78,11 +78,11 @@ Furthermore, as previously stated, an analysis of Azure FaaS traces showed that 
 \subsection{Inter-Function Request Latency}
 \label{es:subsec:intra-app-latency}
 
-\begin{figure*}[t]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth]{figures/rust-go-latency}
   \caption{\label{es:fig:req-latency} The speedups of a single request.}
-\end{figure*}
+\end{figure}
 
 Next, we narrow the scope of our investigation to the latency of inter-function requests; the primary target of CoFaaS. \Cref{es:fig:req-latency} shows the speedups of the CoFaaS optimized application over the native baseline when measuring the latency of a single request. Compared to the results in \Cref{es:fig:rtt-latency}, the speedups are significantly higher as this measurement bypasses constant factors involved in every request issued to the application.
 
@@ -104,7 +104,7 @@ This result cements that CoFaaS is highly effective at reducing the latency of i
 %   \caption{\label{es:fig:rust-go-wasm} The speedup achieved when switching from Go to Rust executed as Wasm.}
 % \end{figure}
 
-\begin{figure}[t]
+\begin{figure}
   \centering
   \includegraphics[width=\columnwidth]{figures/go-gc}
   \caption{\label{es:fig:go-gc} The speedup achieved by disabling the Go garbage collector.}
@@ -125,7 +125,7 @@ Applying the CoFaaS transformation to our application written in Go currently ta
 %   \caption{\label{es:fig:binsize} the binary sizes of native and transformed functions}
 % \end{figure}
 
-\begin{table}[t]
+\begin{table}
   \centering
   \caption{\label{es:tab:binsize} The total sizes of containers and binaries needed to run our application.}
   \begin{tabularx}{\columnwidth}{l >{\centering}X >{\centering}X >{\centering}X}

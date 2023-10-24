@@ -9,10 +9,9 @@ We use ChampSim~\cite{champsim}, an open-source trace-driven simulator, to evalu
 \Cref{pact:fig:perf} presents the performance gains obtained by different BTB designs on a set of server workloads. The results are normalized to the performance of Conv-BTB with 0.9KB storage budget. Instruction prefetching (FDIP) is enabled in all designs including the baseline. As the figure shows BTB-X provides significantly higher performance than the Conv-BTB and PDede for equal storage budgets of up to 29KB and 14.5KB respectively. For instance, BTB-X provides 45\% performance gain over the baseline compared to 38\% and 27\% of PDede and Conv-BTB, respectively, at 14.5KB budget. At large BTB storage budgets, the branch working sets of many workloads start to fit in the available BTB capacity, at which point the performance gap between BTB-X and the other two designs diminishes. A key take-away from this figure is that BTB-X outperforms the conventional BTB even when it is given just half the storage budget of its conventional counterpart. For example, in \Cref{pact:fig:perf}, the Conv-BTB improves performance by 27\% with a 14.5KB budget whereas BTB-X provides a 31\% improvement with just 7.25KB of storage. The reason for this behaviour is that BTB-X accommodates 2.24x more entries than Conv-BTB of equal storage budget; thus, halving BTB-X's budget still gives a slight capacity advantage over Conv-BTB.
 
 \begin{small}
-\begin{table}[t!]
+\begin{table}
   \centering
   \caption{Number of branches in different BTB designs.}
-  \vspace{-0.1in}
   \label{pact:table:storageComp}
   \begin{tabular}{llrr} \hline
     \textbf{Storage} & \textbf{BTB-X (+ BTB-XC)} & \textbf{PDede}
@@ -29,9 +28,9 @@ We use ChampSim~\cite{champsim}, an open-source trace-driven simulator, to evalu
 \end{table}
 \end{small}
 
-\begin{figure}[t!]
+\begin{figure}
     \centering
-    \includegraphics[width=0.9\columnwidth, trim=70 265 70 330, clip]{figures/ISOStorage-Server.pdf}
+    \includegraphics[width=\textwidth, trim=70 265 70 330, clip]{figures/ISOStorage-Server.pdf}
     \vspace{-0.1in}
     \caption{Performance comparison of different BTB designs.}
     \vspace{-0.1in}

@@ -1,25 +1,26 @@
 \section{Branch Target Distance Analysis}
 \label{hpca:sec:analysis}
 
-\begin{figure}[b]
+\begin{figure}
   \sffamily
   \centering
-  \resizebox{\columnwidth}{!}{
+  %\resizebox{\columnwidth}{!}{
   \begin{tabular}{p{2.2cm}|rlllllllllll}
     Bit position      & 48 & ... & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1\\\hline
     Branch PC         &  0 & ... & 1 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 0\\
     Branch Target     &  0 & ... & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 0\\
     Target Offset     &    & ... &   &   &   &   & 1 & 1 & 0 & 0 & 0\\
-  \end{tabular}}
+  \end{tabular}
+%}
   \caption{\label{hpca:fig:concat} Branch target offset example}
 \end{figure}
 
-\begin{figure*}[t!]
+\begin{figure}
     \centering
     \includegraphics[width=\textwidth, trim=60 280 50 320, clip]{figures/offset_distribution.pdf}
     \caption{Distribution of branch target offsets in different workloads.}
     \label{hpca:fig:offsets}
-\end{figure*}
+\end{figure}
 
 
 The storage cost of branch targets accounts for a major fraction of BTB storage requirements. For example, in a conventional BTB, as depicted in \Cref{hpca:fig:conv-btb}, the target field accounts for about 72\% (46 of 64 bits) of the total BTB storage requirements. We analyze the number of bits required for branch target \emph{offsets} to assess if storing the offsets, instead of the full or compressed targets, can reduce BTB storage requirements. We define the target offset as the \textit{n} least significant bits of target address, with \textit{n} being the position of most significant bit that differs among branch PC and target. As an example, for the branch PC and target shown in \Cref{hpca:fig:concat}, the most significant bit that differs among them is at position five, whereas all bits at positions higher than five are same. Therefore, the target offset for this branch PC and target pair is `11000', i.e., the target bits from position 5 to 1. Also, as our modelled ARM v8 ISA aligns instructions at 4-byte boundaries, the two least significant bits of a target are always zeros. Therefore, we only need to store `110' as offset in the BTB.
