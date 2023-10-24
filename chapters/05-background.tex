@@ -1,9 +1,24 @@
 \pdfminorversion=7
-\documentclass[../main.tex]{subfiles}
+\ifx\chapincluded\undefined
+  \documentclass[../main.tex]{subfiles}
+\else
+  \documentclass[../main.tex]{subfiles}
+\fi
 \begin{document}
+\ifx\chapincluded\undefined
+  \begin{refsection}[main-bib]
+ \fi
+
 \chapter{Background}
 
-Here is a paper that claimed things \cite{wu_gpucc_2016}.
+Here is a paper that claimed things \cite{kanev15_profil}.
+
+\ifx\chapincluded\undefined
+
+  \printbibliography
+  \end{refsection}
+ \fi
+
 \end{document}
 
 %%% Local Variables:
