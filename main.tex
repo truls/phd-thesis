@@ -54,13 +54,15 @@
 % Multibib functionality
 %https://tex.stackexchange.com/questions/383484/package-biblatex-error-incompatible-package-multibib
 
-\addbibresource[label=main-bib]{\CurrentFilePath{}/bibliography.bib}
+
+
+\addbibresource[label=main-bib]{./bibliography.bib}
 %\addbibresource{./bibliography.bib}
-\addbibresource[label=btbx-cal]{\CurrentFilePath{}/chapters/papers/paper1-btbx-cal/refs.bib}
-\addbibresource[label=btbx-pact]{\CurrentFilePath{}/chapters/papers/paper2-btbx-pact/refs.bib}
-\addbibresource[label=faas-profiling]{\CurrentFilePath{}/chapters/papers/paper3-faas-profiling/refs.bib}
-\addbibresource[label=btbx-hpca]{\CurrentFilePath{}/chapters/papers/paper4-btbx-hpca/refs.bib}
-\addbibresource[label=cofaas]{\CurrentFilePath{}/chapters/papers/paper5-cofaas/bibliography.bib}
+\addbibresource[label=btbx-cal]{chapters/papers/paper1-btbx-cal/refs.bib}
+\addbibresource[label=btbx-pact]{chapters/papers/paper2-btbx-pact/refs.bib}
+\addbibresource[label=faas-profiling]{chapters/papers/paper3-faas-profiling/refs.bib}
+\addbibresource[label=btbx-hpca]{chapters/papers/paper4-btbx-hpca/refs.bib}
+\addbibresource[label=cofaas]{chapters/papers/paper5-cofaas/bibliography.bib}
 
 \usepackage{subfiles}
 
@@ -70,7 +72,6 @@
 \subfile{chapters/01-abstract}
 \subfile{chapters/02-preface}
 \subfile{chapters/03-acknowledgements}
-
 
 
 \tableofcontents
@@ -87,6 +88,7 @@
 \subfile{chapters/07-contributions}
 \subfile{chapters/08-discussion}
 \subfile{chapters/09-conclusion}
+
 
 \printbibliography
 
@@ -108,3 +110,10 @@
 % \input{appendices/a-appendix.tex}
 
 \end{document}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% TeX-command-extra-options: "-shell-escape"
+%%% End:
