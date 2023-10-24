@@ -1,5 +1,5 @@
 \section{Introduction and Motivation}
-\label{sec::intro}
+\label{pact:sec::intro}
 
 Contemporary server applications feature massive instruction footprints stemming from deeply layered software stacks. These footprints far exceed the capacity of the branch target buffer (BTB) and instruction cache (L1-I), resulting in the so-called front-end bottleneck. BTB misses may lead to wrong-path execution, triggering a pipeline flush when misspeculation is detected. Such pipeline flushes not only throw away tens of cycles of work but also expose the fill latency of the pipeline. Similarly, L1-I misses cause the core front-end to stall for tens of cycles while the miss is being served from lower-level caches. 
 

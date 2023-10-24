@@ -1,4 +1,4 @@
 \section{Conclusion}
-\label{sec:eval}
+\label{cal:sec:conclusion}
 
 The multi-megabyte instruction footprints of contemporary server applications cause frequent BTB and L1-I misses, which have become major performance limiters. Because BTB capacity greatly affects front-end performance in terms of flush rate and the efficacy of fetch-directed instruction prefetching, commercial products allocate tens to hundreds of KBs of storage to BTBs. To reduce the BTB storage requirements, this paper introduced an optimized BTB organization. The proposed design, BTB-X, leverages our insight that branch target offsets vary but tend to be much shorter than full target addresses. BTB-X uses an ensemble of five BTBs, each storing offsets of a different length, and also compresses the tags to track  2.8x more branches than a conventional BTB with an equal storage budget.

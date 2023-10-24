@@ -1,8 +1,8 @@
 \section{Discussion}
-\label{ec:discussion}
+\label{es:ec:discussion}
 
 \subsection{Security implications}
-\label{subsec:security}
+\label{es:subsec:security}
 
 
 
@@ -10,24 +10,24 @@ The security of a CoFaaS-transformed application is equivalent to the native Faa
 
 
 % \subsection{Performance implications}
-% \label{subsec:performance}
+% \label{es:subsec:performance}
 
 % What is the performance impact of compiling a function as WebAssembly.
 
 % \subsection{Multi language support}
-% \label{subsec:lang-support}
+% \label{es:subsec:lang-support}
 
 % How are support for multiple languages ensured using this model. What are potential challenges and limitations of true cross-language support.
 
 \subsection{Scalability}
-\label{subsec:paralelism}
+\label{es:subsec:paralelism}
 We now discuss an important aspect of the FaaS computing model: the ability to elastically scale additional function instances as needed and execute multiple smaller functions in parallel. In FaaS, this is easily achieved and is a side-effect of the function-level granularity in FaaS and the RPC-level function communication. The idea is, that if we have a computational bottleneck in a FaaS application, we can easily spawn additional instances of a function to handle the load. Additionally, we can distribute functions across several nodes as the network-backed RPC interfaces used for communication naturally enable this.
 
 CoFaaS does not currently support function-level scaling in FaaS applications. This is due to several reasons. First of all, Wasm currently has no support for threads. Secondly, we do not support to optionally maintain networked coupling of FaaS functions when multi-node processing is needed. It is important to note that none of these limitations are fundamental to CoFaaS. Efforts are under way to add supports for threads to Wasm. This will allow CoFaaS to orchestrate function to run in parallel when this is desirable.
 %There is a large existing body of work that discusses how to do this efficiently [TODO cite]. 
 Furthermore, optionally keeping the network coupling of functions in some cases is simply a matter of additional engineering.
 
-% In this regard, a strong mitigating factor \rakesh{mitigating factor? I am not sure what it means.} of CoFaaS is that it reduces the need to span applications over multiple hosts. This is because it significantly reduces the binary size (\Cref{subsec:binary-size}) and eliminates the overhead of running each function in a separate container. Thus, more functions can be co-located on the same host. Further, the fact that CoFaaS serializes computation in transformed FaaS applications can be viewed as simply a change in the granularity of achievable parallelism. Indeed, instead of spawning multiple instances of an individual function, we can instead spawn multiple instances of the whole application.
+% In this regard, a strong mitigating factor \rakesh{mitigating factor? I am not sure what it means.} of CoFaaS is that it reduces the need to span applications over multiple hosts. This is because it significantly reduces the binary size (\Cref{es:subsec:binary-size}) and eliminates the overhead of running each function in a separate container. Thus, more functions can be co-located on the same host. Further, the fact that CoFaaS serializes computation in transformed FaaS applications can be viewed as simply a change in the granularity of achievable parallelism. Indeed, instead of spawning multiple instances of an individual function, we can instead spawn multiple instances of the whole application.
 
 
 %%% Local Variables:
