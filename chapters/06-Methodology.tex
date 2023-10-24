@@ -2,11 +2,22 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
+\begin{document}
+\ifx\chapincluded\undefined
+  \begin{refsection}[main-bib]
+ \fi
+
+
 \chapter{Methodology}
 \label{chap:methodology}
 
-This chapter documents and motivates the experimental methodology used in the papers included in this thesis. 
+This chapter documents and motivates the experimental methodology used in the papers included in this thesis.
 
+
+\ifx\chapincluded\undefined
+  \printbibliography
+  \end{refsection}
+ \fi
 \end{document}
 
 %%% Local Variables:

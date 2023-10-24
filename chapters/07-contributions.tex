@@ -1,9 +1,20 @@
 \pdfminorversion=7
 \documentclass[../main.tex]{subfiles}
+
 \begin{document}
+\ifx\chapincluded\undefined
+  \begin{refsection}[main-bib]
+ \fi
 
 \chapter{Research Contributions}
+
+
+\ifx\chapincluded\undefined
+  \printbibliography
+  \end{refsection}
+ \fi
 \end{document}
+
 
 %%% Local Variables:
 %%% mode: latex
