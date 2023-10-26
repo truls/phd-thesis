@@ -8,7 +8,26 @@
 % Library includes
 
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+  \IfFileExists{MinionPro.sty}{
+    \IfFileExists{MyriadPro.sty}{
+      \usepackage[osf,onlytext]{MinionPro}
+      \usepackage{MyriadPro}
+      \usepackage[T1]{fontenc}
+      \usepackage{amsthm}
+      \usepackage{bm}
+      \usepackage{MnSymbol}
+      \def\taFontsIncluded{true}
+    }{}}{}
+  \ifx\taFontsIncluded\undefined
+    \usepackage[T1]{fontenc}
+    \usepackage[p,osf]{newtxtext}
+    \usepackage[vvarbb]{newtxmath}
+    \useosf
+  \fi
+
+  % \usepackage[scaled=0.75]{beramono}
+
+
 \usepackage{graphicx}
 % \usepackage{tabularx}
 \usepackage{rotating}
@@ -22,7 +41,7 @@
 \usepackage{styles}
 \usepackage{scrextend}
 
-\usepackage{newtxtext,newtxmath}
+% \usepackage{newtxtext,newtxmath}
 %\usepackage{mathptmx}
 \usepackage{placeins}
 \usepackage{minted}
