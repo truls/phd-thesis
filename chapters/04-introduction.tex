@@ -10,8 +10,9 @@
 \chapter{Introduction}
 
 \section{Motivation}
-Over the past couple of decades, the computing landscape has undergone a radical transformation. Driven by the ubiquity of the internet, computing resources has increasingly shifted from the hands of the user and into Datacenters. This shift has spearheaded an entirely new computing paradigm, Warehouse Scale Computing (WSC)~\cite{barroso18_datac_as_comput}. For most of its existence, a key feature of WSC systems is that they consist of a large aggregation of commodity computing system containing commodity processors~\cite{barroso03_web_searc_planet}. Using commodity hardware components is favored due to their low cost and wide availability. However, scholarly research revealed that commodity processors are fundamentally unfit for the WSC workloads~\cite{ ferdman12_clear_cloud,kanev15_profil}.
+Over the past couple of decades, the computing landscape has undergone a radical transformation. Driven by the ubiquity of the internet, computing resources has increasingly shifted from the hands of the user and into Datacenters. This shift has spearheaded an entirely new computing paradigm, Warehouse Scale Computing (WSC)~\cite{barroso18_datac_as_comput}. For most of its existence, a key feature of WSC systems is that they consist of a large aggregation of commodity computing system containing commodity processors~\cite{barroso03_web_searc_planet}. Using commodity hardware components is favored due to their low cost and wide availability. However, scholarly research revealed that commodity processors are fundamentally unfit for the WSC workloads~\cite{ ferdman12_clear_cloud,kanev15_profil}. This is because the workloads encountered in data centers are fundamentally different than the workloads that commodity processors were designed to target. Traditionally, processors were designed to mainly process data rather than code,  i.e., applications where small thigh loops process a lot of data.
 
+The server workloads not only use server resources in a different way, they are also designed using fundamentally different architectures than conventional monolith applications. Common for these applications architectures, is that they aim to lift the level of abstraction and move decisions about hosting resources from the developer to the provider.
 
 \section{Research overview}
 
@@ -27,7 +28,7 @@ Overall, this thesis makes 3 primary contributions:
 
 \noindent
 \textbf{Primary contribution 1: An in-depth microarchitectural profiling of serverless functions}
-Several items of previous work 
+Several items of previous work
 
 \vspace*{0.5cm}
 

@@ -31,6 +31,8 @@
 \usepackage{graphicx}
 % \usepackage{tabularx}
 \usepackage{rotating}
+\usepackage{xurl}
+% \PassOptionsToPackage{hyphens}{url}
 \usepackage[pdfauthor={\docauthor},
             pdftitle={\doctitle}]{hyperref}
             \def\UrlBreaks{\do\/\do-}
@@ -57,10 +59,12 @@
 \RequirePackage[backend=bibtex,sorting=none, style=numeric-comp,eprint=false, url=false,natbib]{biblatex}
 
 
+\renewcommand\chaptermark[1]{\markboth{\MakeUppercase{\thechapter.~#1}}{}}
+
 \newcommand{\Description}[1]{}
 
 \usepackage{caption}
-    \captionsetup{font=small,labelfont=bf}
+\captionsetup{font=small,labelfont=bf}
 
 % Custom commands
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
@@ -68,12 +72,6 @@
 
 
 \defbibheading{refs}{\section{References}}
-\defbibheading{refs2}{\section{References}}
-
-% Multibib functionality
-%https://tex.stackexchange.com/questions/383484/package-biblatex-error-incompatible-package-multibib
-
-
 
 \addbibresource[label=main-bib]{./bibliography.bib}
 %\addbibresource{./bibliography.bib}

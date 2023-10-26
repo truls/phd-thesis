@@ -1,5 +1,3 @@
-
-
 %% Implemented by Martin Helso (martibhe@math.uio.no)
 
 
@@ -282,8 +280,10 @@
 \pagestyle{phduio}
 
 \makepagestyle{chapter}
-\makeevenfoot{chapter}{\sffamily\thepage}{}{}
-\makeoddfoot {chapter}{}{}{\sffamily\thepage}
+% \makeevenfoot{chapter}{\sffamily\thepage}{}{}
+\makeevenfoot{chapter}{\thepage}{}{}
+% \makeoddfoot {chapter}{}{}{\sffamily\thepage}
+\makeoddfoot {chapter}{}{}{\thepage}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% INCLUDE PAPERS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
