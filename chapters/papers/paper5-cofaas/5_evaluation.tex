@@ -41,7 +41,7 @@ Finally, we point out that we run our native FaaS application on the same machin
 % \truls{Mention that we run the two functions on the same machine and therefore we use a highly optimized baseline}
 
 
-\subsection{Round-trip latency}
+\subsection{Round-trip Latency}
 \label{es:subsec:rtt}
 
 \begin{figure}
@@ -112,11 +112,11 @@ This result cements that CoFaaS is highly effective at reducing the latency of i
 
 Recall that we are evaluating the application implemented in Go with GC disabled as described in \Cref{es:sec:methodology}. To ensure that we are not giving the native Go functions an unfair advantage by running them without GC, we examine the impact of disabling GC on the native Go application. The results are presented in \Cref{es:fig:go-gc}. For smaller payload sizes ($\leq$ 8KB) the impact is negligible and for a small advantage of $1.2\times$ to the largest payload size repeated 20 times. From this, we conclude that our decision to disable Go's GC does not skew the results we  presented in \Cref{es:subsec:rtt} and \Cref{es:subsec:intra-app-latency}
 
-\subsection{Transformation performance}
+\subsection{Transformation Performance}
 \label{es:subsec:trans-time}
 Applying the CoFaaS transformation to our application written in Go currently takes 1s. As this step comes before compilation, it has only minimal impact on the time needed to compile the application. THe more interesting observation, is that composing CoFaaS components into an application takes just 20ms. This is important because, as stated in \Cref{es:subsec:practice}, compilation can be done ahead of time. Composing CoFaaS functions into a CoFaaS application, however, may be done at deployment time where any additional overheads are much more concerning.
 
-\subsection{Binary size implications}
+\subsection{Binary Size Implications}
 \label{es:subsec:binary-size}
 
 % \begin{figure}[ht]
