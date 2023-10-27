@@ -29,7 +29,7 @@ To describe CoFaaS functionality, we will use a simple two-function FaaS applica
 \end{sidewaysfigure}
 % I moved the figures around to make the labels match the flow of the text (Fig 4 was previously discussed before Fig 3)
 
-As mentioned in introduction, a FaaS function must have a contract that specifies how it interacts with the surrounding world. For this purpose, it is common to use Interface Definition Languages that formally defines a function's inputs and output. An IDL is purely declarative, a key reason for their language-independence, and therefore they rely on code generators to be turned into a usable interface.
+As mentioned in introduction, a FaaS function must have a contract that specifies how it interacts with the surrounding world. For this purpose, it is common to use Interface Definition Languages that formally defines a function's inputs and outputs. An IDL is purely declarative, a key reason for their language-independence, and therefore they rely on code generators to be turned into a usable interface.
 
 In practice, several different IDLs are in use by real-world FaaS applications, two notable examples being Protobuf~\cite{protobuf}, used by Google's gRPC~\cite{grpc}, and Apache Thrift~\cite{thrift}. Currently, CoFaaS only supports gRPC but there is no fundamental limitation preventing other IDLs from being supported. In the following, we will detail how the transformation from Protobuf to Wasm's WIT is done.
 
@@ -102,7 +102,7 @@ To add support for a new language in CoFaaS, only steps 2 and 3 above need to be
 
 \begin{figure}
   \centering
-  \includegraphics[width=\columnwidth]{figures/cofaas_compilation}
+  \includegraphics[width=0.6\columnwidth]{figures/cofaas_compilation}
   \caption{\label{es:fig:compile} The workflow of applying the CoFaaS transformation to a FaaS application.}
 \end{figure}
 
