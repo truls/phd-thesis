@@ -10,7 +10,7 @@ We implement BTB-X in Champsim simulator. Our artifacts provide the following: 1
 
 \item \textbf{Code/Workloads} Download code/workloads from the provided link.
 
-\item \textbf{Experiments} Modify the provided scripts (as described below) to run simulations. 
+\item \textbf{Experiments} Modify the provided scripts (as described below) to run simulations.
 
 \item \textbf{Metrics} IPC, BTB MPKI, Branch Target Offset distribution.
 
@@ -22,9 +22,9 @@ We implement BTB-X in Champsim simulator. Our artifacts provide the following: 1
 \subsection{Access to artifacts}
 
 \begin{itemize}
-\item \textbf{Code} Download BTB-X implementation from~\cite{btbx-artifacts}. 
+\item \textbf{Code} Download BTB-X implementation from~\cite{btbx-artifacts}.
 
-\item \textbf{Workloads} The workloads can be downloaded from  
+\item \textbf{Workloads} The workloads can be downloaded from
 
 \url{https://drive.google.com/file/d/1qs8t8-YWc7lLoYbjbH\_d3lf1xdoYBznf/view?usp=sharing}
 
@@ -43,9 +43,9 @@ Any hardware capable of running Champsim is sufficient. SLURM is recommended to 
 \item \textbf{Compilation} Champsim needs to be compiled with three BTB designs (convBTB, pdede, and BTBX) and two instruction prefetchers (no, fdip). Follow the instructions at~\cite{btbx-artifacts} to compile the code.
 
 
-\textbf{\textit{Important note on compilation}} IFETCH\_BUFFER needs to be 128 entries when compiling with “fdip” prefetcher and “FETCH\_WIDTH*2” entries when compiling with “no” prefetcher. This is because of how instruction fetch is implemented in baseline Champsim. IFETCH\_BUFFER size is defined in line 63 of \emph{\textless Path\_to\_code\textgreater/inc/ooo\_cpu.h}. 
+\textbf{\textit{Important note on compilation}} IFETCH\_BUFFER needs to be 128 entries when compiling with “fdip” prefetcher and “FETCH\_WIDTH*2” entries when compiling with “no” prefetcher. This is because of how instruction fetch is implemented in baseline Champsim. IFETCH\_BUFFER size is defined in line 63 of \emph{\textless Path\_to\_code\textgreater/inc/ooo\_cpu.h}.
 
-\item \textbf{Generating configuration files} 
+\item \textbf{Generating configuration files}
 Go to directory \emph{\textless Path\_to\_code\textgreater/launch/scripts/}. In the script file \emph{createConfig.sh}, point PATH\_TO\_CHAMPSIM to \textless Path\_to\_code\textgreater. Run this script (\emph{./createConfig.sh}) to generate config files needed by Champsim.
 
 \item \textbf{Running simulations}
@@ -59,8 +59,8 @@ Go to directory \emph{\textless Path\_to\_code\textgreater/launch/scripts/}. In 
 \subsection{Results}
 \begin{itemize}
 \item \textbf{Collecting results}
-Go to \emph{\textless Path\_to\_code\textgreater/collectStats/}. Run the script \emph{getResults.sh}, and it will collect results from all workloads and save them in a file \emph{all\_res}.
+Go to \emph{\textless Path\_to\_code\textgreater/collectStats/}. Run the script \emph{get}\emph{Results.sh}, and it will collect results from all workloads and save them in a file \emph{all\_res}.
 
 \item \textbf{Plotting Results}
-Download the \emph{all\_res} file. Open the provided excel file \emph{BTBX\_artifact\_results.xlsx}. Click on “Data” in MS-Excel top menu bar. Click on “Refresh All” in “Queries and Connections” ribbon, go to the folder where you stored \emph{all\_res} and double click on \emph{all\_res}. Now “Offset Distribution”, “MPKI”, and “Performance” sheets in the excel file should have plots for Figure 4, Figure 9, and Figure 10 respectively. 
+Download the \emph{all\_res} file. Open the provided excel file \emph{BTBX\_artifact\_} \emph{results.xlsx}. Click on “Data” in MS-Excel top menu bar. Click on “Refresh All” in “Queries and Connections” ribbon, go to the folder where you stored \emph{all\_res} and double click on \emph{all\_res}. Now “Offset Distribution”, “MPKI”, and “Performance” sheets in the excel file should have plots for Figure 4, Figure 9, and Figure 10 respectively.
 \end{itemize}
