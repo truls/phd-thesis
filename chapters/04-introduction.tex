@@ -268,15 +268,25 @@ existing functions to be rewritten to use a certain specialized
 API. Finally, some approaches propose entirely new runtimes that can
 be difficult to integrate on existing FaaS computing platforms.
 
-In response to this observation, we introduce CoFaaS, a software-based
-transformation for FaaS applications that significantly reduces the
-inter-application communication overhead without sacrificing any of
-the essential properties that make FaaS attractive to
-developers. CoFaaS is based on the observation that an individual FaaS
-function must have a formally defined external interface in order to
-preserve the modularity of FaaS and support composition with other
-functions. This means that, as long as we preserve a function's
-external interface, we can freely transform it. CoFaaS exploits this 
+In response to this observation, we introduce CoFaaS, a
+software-based, fully automatic, transformation for FaaS applications
+that significantly reduces the inter-application communication
+overhead without sacrificing any of the essential properties that make
+FaaS attractive to developers. CoFaaS is based on the observation that
+an individual FaaS function must have a formally defined external
+interface in order to preserve the modularity of FaaS and support
+composition with other functions. This means that, as long as we
+preserve a function's external interface, we can freely transform
+it. CoFaaS exploits this to retarget FaaS functions to a
+platform-neutral and language independent bytecode language known as
+WebAssembly (Wasm). The CoFaaS transformation turns each FaaS function
+into a CoFaaS component. Multiple CoFaaS components can then be
+composed, yielding a complete application, that can be executed on a
+single Wasm runtime. Our evaluation shows that the CoFaaS
+transformation improves inter-function communication overheads by up
+to $100\times$ without sacrificing any of FaaS' most attractive properties.
+
+The complete CoFaaS design and implementation is described in Paper E~\Cref{chap:cofaas-paper}
 
 \section{Thesis Overview}
 This thesis is structured in two parts. \Cref{part:one} introduces the
