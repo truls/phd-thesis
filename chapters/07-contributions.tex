@@ -34,10 +34,12 @@ The research contributions of this thesis are presented as five articles. The fi
 
 \section{Contribution overvew}
 
-\subsection{Primary contribution 1: An in-depth microarchitectural profiling of serverless functions}
+\subsection{Research direction 1: Hardware}
 
 
 \paragraph{Motivation} Function-as-a-service (FaaS) computing is a rapidly growing cloud computing model. In FaaS, the unit of computation is a function, normally with a very short execution time. Since a FaaS function is loaded and started when it is needed and shut down when it has finished executing, will co-schedule a large number of functions on the same processors to maximize server utilization. Recent work has reported that this heavily interleaved execution leads to microarchitectural state thrashing causing most of FaaS function execution to occur on a cold microarchitectural state~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. This work, however, stops short of investigating which specific properties of FaaS execution that causes this poor utilization of microarchitectural state.
+
+Use the profiling to motivate BTB-X
 
 \paragraph{Methodology}
 To address this gap in the research, we perform an evaluation of FaaS
