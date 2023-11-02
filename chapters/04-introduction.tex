@@ -183,17 +183,21 @@ microarchitectural state thrashing.
 %    FaaS applications in software allowing them to execute more efficiently on current hardware.
 %  \end{description}
 
-From fromt his work, we draw the conclusions that only functions with
+From this work, we draw the conclusions that only functions with
 a very short execution time (<1 ms) benefits from being executed on a
 processor with a warm microarchitectural state. In real-world
 workloads such functions are
 uncommon~\cite{shahrad20_server_wild,mahgoub22_wisef} and therefore
-they do not warrant the in
+adding a specialized hardware optimization to accommodate them would
+not be worthwhile. Furthermore, the analysis show that FaaS functions
+are heavily frontend bound. This corroborates similar observations made
+in previous work
+\cite{lukewarm_serverless,gan19_open_sourc_bench_suite_micros}. Thus,
+in order to improve execution performance in the general case for
+serverless functions we are strongly motivated to continue working on
+eliminating the front-end bottleneck.
 
-We present this work in Paper C (\Cref{chap:wosc-paper})
-
-
-To investigate RD-A, as outlined previously, we propose a
+To that end, we propose a
 storage-efficient Branch Target Buffer (BTB) (see
 \Cref{chap:btb-background}) organization for servers called BTB-X.
 The starting point of this work is that FDIP instruction prefetchers
@@ -226,7 +230,8 @@ instruction prefetching performance. Thereby, it helps alleviating the
 front-end bottleneck and improves the performance of, particularly,
 server workloads.
 
-This contribution evolved over time and is described in papers A, B
+The motivating analysis is presented in Paper C (\Cref{chap:wosc-paper}).
+BTB-X evolved over time and is described in papers A, B
 and D (\Cref{chap:cal-paper,chap:pact-paper,chap:hpca-paper}
 respectively), where the latter describes the full, final design.
 
