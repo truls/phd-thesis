@@ -39,7 +39,31 @@ The research contributions of this thesis are presented as five articles. The fi
 \paragraph{Motivation} Function-as-a-service (FaaS) computing is a rapidly growing cloud computing model. In FaaS, the unit of computation is a function, normally with a very short execution time. Since a FaaS function is loaded and started when it is needed and shut down when it has finished executing, will co-schedule a large number of functions on the same processors to maximize server utilization. Recent work has reported that this heavily interleaved execution leads to microarchitectural state thrashing causing most of FaaS function execution to occur on a cold microarchitectural state~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. This work, however, stops short of investigating which specific properties of FaaS execution that causes this poor utilization of microarchitectural state.
 
 \paragraph{Methodology}
-To address this gap in the research, we perform an evaluation of FaaS functions executed on a processor with warm and cold microarchitectural states respectively. We use a representative suite of FaaS functions consisting of both real-world and synthetic workloads. Using synthetic workloads allow us to modify specific parameters of interest in a targeted way. To measure the impact of executing the functions on a warm and cold microarchitectural state we execute the functions in tow modes: back-to-back and interleaved. In back-to-back execution, the functions are executed repeatedly in a tight loop. In the interleaved execution case, each invocation of a function is interleaved with an invocation of a \emph{trhasher} function that thrashes all existing microarchitectural state. The thrasher function achieves this by performing two actions: \begin{inparaenum}[1) \item it invokes the x86 WBINVD instruction that writes back and invalidates the entire cache hierarchy of a processor core and \item it runs a function that executes a long sequence of branches in order to thrash the state of the BTB and the branch predictor.\end{inparaenum} We measure microarchitectural parameters using perf and use the TopDown methodology~\cite{yasin14_top_down} for identifying specific microarchitectural bottlenecks. For both the back-to-back and interleaved execution we measured both the wall-clock running time of the functions and key microarchitectural parameters.
+To address this gap in the research, we perform an evaluation of FaaS
+functions executed on a processor with warm and cold
+microarchitectural states respectively. We use a representative suite
+of FaaS functions consisting of both real-world and synthetic
+workloads. Using synthetic workloads allow us to modify specific
+parameters of interest in a targeted way. To measure the impact of
+executing the functions on a warm and cold microarchitectural state we
+execute the functions in tow modes: back-to-back and interleaved. In
+back-to-back execution, the functions are executed repeatedly in a
+tight loop. In the interleaved execution case, each invocation of a
+function is interleaved with an invocation of a \emph{trhasher}
+function that thrashes all existing microarchitectural state. The
+thrasher function achieves this by performing two
+actions:
+\begin{inparaenum}[1)]
+\item it invokes the x86 WBINVD
+  instruction that writes back and invalidates the entire cache
+  hierarchy of a processor core and \item it runs a function that
+  executes a long sequence of branches in order to thrash the state of
+  the BTB and the branch predictor. \end{inparaenum} We measure
+microarchitectural parameters using perf and use the TopDown
+methodology~\cite{yasin14_top_down} for identifying specific
+microarchitectural bottlenecks. For both the back-to-back and
+interleaved execution we measured both the wall-clock running time of
+the functions and key microarchitectural parameters.
 
 To support our findings (presented below) we perform a measurement of the code footprint of each of the FaaS functions that we use in our analysis. Doing this using a full microarchitectural simulator is a slow and tedious effort and it is not possible to perform this analysis statically. Therefore, we use a method based on an approach described in~\cite{splash2} that use branch-record traces and a cache simulator to estimate the code footprint of a function. The branch-record traces show the branches taken by a program. By running the locations of these branches through a cache simulator, we can measure how big the cache has to be in order to fit the entire code footprint of a program. More specifically this is done by changing the size of the simulator cache until the observed miss-rate reaches zero. When this is the case, the entire code footprint of the program fit inside the cache.
 
