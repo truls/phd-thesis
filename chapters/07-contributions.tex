@@ -107,6 +107,7 @@ and for FaaS functions specifically~\cite{lukewarm_serverless}.
 \subsubsection{A storage-efficient BTB organization for servers}
 
 \paragraph{Motivation}
+THe front-end bottleneck is a well-known and widely documented problem affecting processors executing server workloads~\cite{ailamaki99_dbmss_moder_proces,ferdman12_clear_cloud,kanev15_profil,ayers19_asmdb}. Compared to other workload classes, server workloads pose particular challenges for processor frontends due to their very large instruction footprints. These footprints, quickly overwhelms the capacities of the instruction cache (L1-I) and the Branch Target Buffer (BTB). In order to handle this problem, computer architects has proposed a large number of different approaches. L1-I prefetchers are a highly effective way to alleviate the front-end bottleneck as they help avoiding the fill-latency that occurs when program control flow is diverted to an instruction that is not found in the L1-I.  As detailed in \truls{Add reference to relevant background section}, a particularly effective class of instruction prefetchers are known as Fetch Directed Instruction Prefetching (FDIP)~\cite{reinman99_fetch_direc_instr_prefet}. Since FDIP rely on the BTB to identify the control flow of a program, having a BTB with sufficient capacity is of crucial importance. By simply scaling the design of a conventional BTB design, the capacity required for holding realistic branch working sets of contemporary server workloads quickly become infeasible. Therefore, 
 
 \paragraph{Methodology}
 
