@@ -225,7 +225,7 @@ origin. Following this, our key insight is that we can redesign the
 BTB to store branch target offsets instead of the full target
 addresses. In a Conv-BTB, each way is sized to hold a full target
 address. In BTB-X we size the ways differently so that smaller branch
-offset sizes can be stored without unused space.
+offset sizes can be stored without redundant space.
 
 The resulting design improves the state of the art in terms of branch
 storage density, lookup latency and power requirements. Since BTB-X
