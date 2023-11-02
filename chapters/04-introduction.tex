@@ -140,31 +140,44 @@ significant negative impact on current
 microarchitectures~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. In
 particular, \textcite{lukewarm_serverless} finds that
 microarchitectural state thrashing occurs due to the short running
-time of FaaS functions and the heavy interleaving that occurs when
-several functions are executed simultaneously on the same processor
-core. However, they stop short of investigating \emph{why} FaaS
+time of FaaS functions and the heavy interleaving of functions
+executed on the same processor core. However, they stop short of investigating \emph{why} FaaS
 functions has this impact on common microarchitectures.
 
-To address this, we examine the opportunity available to serverless
-functions through hardware modifications. This work specifically
-investigates how sensitive FaaS functions are to the thrashing of
-microarchitectural state that occur when the processor switches from
-one task to another. We find that microarchitectural structures warm
-up, and start performing optimally, very quickly and therefore only
-functions with a very short execution time are amenable to targeted
-microarchitectural optimizations.
+To address this, we investigate which properties of FaaS functions
+that make them susceptible to the negative effects of
+microarchitectural state thrashing.
+
+% We find that only very short
+% running functions are negatively impacted an that this negative impact
+% increases for functions with larger code footprints. Further, the
+% functions with a running time that is sufficiently short to see a
+% negative impact are rare in real-world applications. Therefore, the
+% results indicate two things. First of all that microarchitectural
+% structures warm up sufficielty fast for the warm-up delay to be
+% armortized for most FaaS functions. Therefore, this aspect of FaaS
+% function performance is better addressed through software
+% optimizations rather than a targeted hardware optimization. Secondly,
+% the large code footprints of FaaS functions mean that they suffer from
+% the front-end bottleneck in the same way as conventional server
+% workloads.
+
+% and 2) that optimally, very quickly
+% and therefore only functions with a very short execution time are
+% amenable to targeted microarchitectural optimizations.
 
 The conclusions of this work prompted two research directions:
  \begin{description}
  \item[RD-A] Long-running FaaS functions ($>1\text{ms}$) challenges
    current processor architectures in the same way as other server workloads. This research direction therefore
    continues to address the front-end bottleneck of major processors.
- \item[RD-B] The highly modular nature of FaaS applications combined
-   with the very short execution time of some FaaS functions present
-   specific challenges that give a poor ROI when addressed through
-   hardware optimizations. This research direction therefore focuses
-   on addressing these challenges by transforming FaaS applications to
-   run more efficiently on current hardware.
+ \item[RD-B] The FaaS functions that have a sufficiently short running
+   time to be negatively affected by microarchitectural state
+   thrashing are rare in real-life deployments. Therefore, the benefit
+   of introducing a hardware optimization targeting this aspect of
+   FaaS performance is limited. Instead, this research direction
+   therefore focuses on addressing these challenges by transforming
+   FaaS applications in software allowing them to execute more efficiently on current hardware.
  \end{description}
 
 We present this work in Paper C (\Cref{chap:wosc-paper})

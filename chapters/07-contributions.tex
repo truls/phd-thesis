@@ -45,6 +45,7 @@ To address this gap in the research, we perform an evaluation of FaaS functions 
 To support our findings (presented below) we perform a measurement of the code footprint of each of the FaaS functions that we use in our analysis. Doing this using a full microarchitectural simulator is a slow and tedious effort and it is not possible to perform this analysis statically. Therefore, we use a method based on an approach described in~\cite{splash2} that use branch-record traces and a cache simulator to estimate the code footprint of a function. The branch-record traces show the branches taken by a program. By running the locations of these branches through a cache simulator, we can measure how big the cache has to be in order to fit the entire code footprint of a program. More specifically this is done by changing the size of the simulator cache until the observed miss-rate reaches zero. When this is the case, the entire code footprint of the program fit inside the cache.
 
 
+
 \paragraph{Key results}
 Our results show that two properties of a FaaS function impacts how sensitive it is to being executed on a cold microarchitectural state: Its execution time and its code footprint.
 
