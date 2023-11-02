@@ -4696,3 +4696,255 @@ month = jul,
   publisher={ACM New York, NY, USA}
 }
 
+@inproceedings{10.1145/279358.279364,
+author = {Keeton, Kimberly and Patterson, David A. and He, Yong Qiang and Raphael, Roger C. and Baker, Walter E.},
+title = {Performance Characterization of a Quad Pentium Pro SMP Using OLTP Workloads},
+year = {1998},
+isbn = {0818684917},
+publisher = {IEEE Computer Society},
+address = {USA},
+url = {https://doi.org/10.1145/279358.279364},
+doi = {10.1145/279358.279364},
+abstract = {Commercial applications are an important, yet often overlooked, workload with significantly different characteristics from technical workloads. The potential impact of these differences is that computers optimized for technical workloads may not provide good performance for commercial applications, and these applications may not fully exploit advances in processor design. To evaluate these issues, we use hardware counters to measure architectural features of a four-processor Pentium Pro-based server running a TPC-C-like workload on an Informix database. We examine the effectiveness of out-of-order execution, branch prediction, speculative execution, superscalar issue and retire, caching and multiprocessor scaling. We find that out-of-order execution, superscalar issue and retire, and branch prediction are not as effective for database workloads as they are for technical workloads, such as SPEC. We find that caches are effective at reducing processor traffic to memory; even larger caches would be helpful to satisfy more data requests. Multiprocessor scaling of this workload is good, but even modest bus utilization degrades application memory latency, limiting database throughput.},
+booktitle = {Proceedings of the 25th Annual International Symposium on Computer Architecture},
+pages = {15–26},
+numpages = {12},
+location = {Barcelona, Spain},
+series = {ISCA '98}
+}
+
+@article{keeton98_perfor_charac_quad_pentium_pro,
+  author =       {Keeton, Kimberly and Patterson, David A. and He,
+                  Yong Qiang and Raphael, Roger C. and Baker, Walter
+                  E.},
+  title =        {Performance Characterization of a Quad Pentium Pro
+                  Smp Using Oltp Workloads},
+  journal =      {SIGARCH Comput. Archit. News},
+  volume =       26,
+  number =       3,
+  pages =        {15-26},
+  year =         1998,
+  doi =          {10.1145/279361.279364},
+  url =          {https://doi.org/10.1145/279361.279364},
+  abstract =     {Commercial applications are an important, yet often
+                  overlooked, workload with significantly different
+                  characteristics from technical workloads. The
+                  potential impact of these differences is that
+                  computers optimized for technical workloads may not
+                  provide good performance for commercial
+                  applications, and these applications may not fully
+                  exploit advances in processor design. To evaluate
+                  these issues, we use hardware counters to measure
+                  architectural features of a four-processor Pentium
+                  Pro-based server running a TPC-C-like workload on an
+                  Informix database. We examine the effectiveness of
+                  out-of-order execution, branch prediction,
+                  speculative execution, superscalar issue and retire,
+                  caching and multiprocessor scaling. We find that
+                  out-of-order execution, superscalar issue and
+                  retire, and branch prediction are not as effective
+                  for database workloads as they are for technical
+                  workloads, such as SPEC. We find that caches are
+                  effective at reducing processor traffic to memory;
+                  even larger caches would be helpful to satisfy more
+                  data requests. Multiprocessor scaling of this
+                  workload is good, but even modest bus utilization
+                  degrades application memory latency, limiting
+                  database throughput.},
+  address =      {New York, NY, USA},
+  issn =         {0163-5964},
+  issue_date =   {June 1998},
+  month =        {apr},
+  numpages =     12,
+  publisher =    {Association for Computing Machinery},
+}
+
+@article{10.1145/384265.291067,
+author = {Ranganathan, Parthasarathy and Gharachorloo, Kourosh and Adve, Sarita V. and Barroso, Luiz Andr\'{e}},
+title = {Performance of Database Workloads on Shared-Memory Systems with out-of-Order Processors},
+year = {1998},
+issue_date = {Dec. 1998},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {32},
+number = {5},
+issn = {0163-5980},
+url = {https://doi.org/10.1145/384265.291067},
+doi = {10.1145/384265.291067},
+abstract = {Database applications such as online transaction processing (OLTP) and decision support systems (DSS) constitute the largest and fastest-growing segment of the market for multiprocessor servers. However, most current system designs have been optimized to perform well on scientific and engineering workloads. Given the radically different behavior of database workloads (especially OLTP), it is important to re-evaluate key system design decisions in the context of this important class of applications.This paper examines the behavior of database workloads on shared-memory multiprocessors with aggressive out-of-order processors, and considers simple optimizations that can provide further performance improvements. Our study is based on detailed simulations of the Oracle commercial database engine. The results show that the combination of out-of-order execution and multiple instruction issue is indeed effective in improving performance of database workloads, providing gains of 1.5 and 2.6 times over an in-order single-issue processor for OLTP and DSS, respectively. In addition, speculative techniques enable optimized implementations of memory consistency models that significantly improve the performance of stricter consistency models, bringing the performance to within 10--15\% of the performance of more relaxed models.The second part of our study focuses on the more challenging OLTP workload. We show that an instruction stream buffer is effective in reducing the remaining instruction stalls in OLTP, providing a 17\% reduction in execution time (approaching a perfect instruction cache to within 15\%). Furthermore, our characterization shows that a large fraction of the data communication misses in OLTP exhibit migratory behavior; our preliminary results show that software prefetch and writeback/flush hints can be used for this data to further reduce execution time by 12\%.},
+journal = {SIGOPS Oper. Syst. Rev.},
+month = {oct},
+pages = {307–318},
+numpages = {12}
+}
+
+@inproceedings{ranganathan98_perfor_datab_workl_shared_memor,
+  author =       {Ranganathan, Parthasarathy and Gharachorloo, Kourosh
+                  and Adve, Sarita V. and Barroso, Luiz Andr\'{e}},
+  title =        {Performance of Database Workloads on Shared-Memory
+                  Systems with out-of-Order Processors},
+  booktitle =    {Proceedings of the Eighth International Conference
+                  on Architectural Support for Programming Languages
+                  and Operating Systems},
+  year =         {1998},
+  pages =        {307-318},
+  doi =          {10.1145/291069.291067},
+  url =          {https://doi.org/10.1145/291069.291067},
+  abstract =     {Database applications such as online transaction
+                  processing (OLTP) and decision support systems (DSS)
+                  constitute the largest and fastest-growing segment
+                  of the market for multiprocessor servers. However,
+                  most current system designs have been optimized to
+                  perform well on scientific and engineering
+                  workloads. Given the radically different behavior of
+                  database workloads (especially OLTP), it is
+                  important to re-evaluate key system design decisions
+                  in the context of this important class of
+                  applications.This paper examines the behavior of
+                  database workloads on shared-memory multiprocessors
+                  with aggressive out-of-order processors, and
+                  considers simple optimizations that can provide
+                  further performance improvements. Our study is based
+                  on detailed simulations of the Oracle commercial
+                  database engine. The results show that the
+                  combination of out-of-order execution and multiple
+                  instruction issue is indeed effective in improving
+                  performance of database workloads, providing gains
+                  of 1.5 and 2.6 times over an in-order single-issue
+                  processor for OLTP and DSS, respectively. In
+                  addition, speculative techniques enable optimized
+                  implementations of memory consistency models that
+                  significantly improve the performance of stricter
+                  consistency models, bringing the performance to
+                  within 10--15\% of the performance of more relaxed
+                  models.The second part of our study focuses on the
+                  more challenging OLTP workload. We show that an
+                  instruction stream buffer is effective in reducing
+                  the remaining instruction stalls in OLTP, providing
+                  a 17\% reduction in execution time (approaching a
+                  perfect instruction cache to within
+                  15\%). Furthermore, our characterization shows that
+                  a large fraction of the data communication misses in
+                  OLTP exhibit migratory behavior; our preliminary
+                  results show that software prefetch and
+                  writeback/flush hints can be used for this data to
+                  further reduce execution time by 12\%.},
+  address =      {New York, NY, USA},
+  isbn =         {1581131070},
+  location =     {San Jose, California, USA},
+  numpages =     {12},
+  publisher =    {Association for Computing Machinery},
+  series =       {ASPLOS VIII},
+}
+
+
+@inproceedings{soundararajan21_pdede,
+  author =       {Soundararajan, Niranjan K and Braun, Peter and Khan,
+                  Tanvir Ahmed and Kasikci, Baris and Litz, Heiner and
+                  Subramoney, Sreenivas},
+  title =        {Pdede: Partitioned, deduplicated, delta branch
+                  target buffer},
+  booktitle =    {MICRO-54: 54th Annual IEEE/ACM International
+                  Symposium on Microarchitecture},
+  year =         2021,
+  pages =        {779--791},
+}
+
+@inproceedings{ansari20_divid,
+  author =       {Ansari, Ali and Lotfi-Kamran, Pejman and
+                  Sarbazi-Azad, Hamid},
+  title =        {Divide and conquer frontend bottleneck},
+  booktitle =    {2020 ACM/IEEE 47th Annual International Symposium on
+                  Computer Architecture (ISCA)},
+  year =         2020,
+  pages =        {65--78},
+  organization = {IEEE},
+}
+
+
+@inproceedings{khan21_rippl,
+  author =       {Khan, Tanvir Ahmed and Zhang, Dexin and Sriraman,
+                  Akshitha and Devietti, Joseph and Pokam, Gilles and
+                  Litz, Heiner and Kasikci, Baris},
+  title =        {Ripple: Profile-Guided Instruction Cache Replacement
+                  for Data Center Applications},
+  booktitle =    {Proceedings of the 48th International Symposium on
+                  Computer Architecture (ISCA)},
+  year =         2021,
+  month =        jun,
+  series =       {ISCA 2021},
+}
+
+@misc{serverless_state,
+  author = {Datalog},
+  title = {The state of serverless},
+  howpublished = "\url{https://www.datadoghq.com/state-of-serverless-2022/}",
+  year         = 2022
+}
+
+@inproceedings{ishii21_re_fetch_direc_instr_prefet,
+  author =       {Ishii, Yasuo and Lee, Jaekyu and Nathella,
+                  Krishnendra and Sunwoo, Dam},
+  title =        {Re-establishing Fetch-Directed Instruction
+                  Prefetching: An Industry Perspective},
+  booktitle =    {2021 IEEE International Symposium on Performance
+                  Analysis of Systems and Software (ISPASS)},
+  year =         2021,
+  pages =        {172-182},
+  doi =          {10.1109/ISPASS51385.2021.00034},
+}
+
+@INPROCEEDINGS{IBMz,
+  author={Bonanno, James and Collura, Adam and Lipetz, Daniel and Mayer, Ulrich and Prasky, Brian and Saporito, Anthony},
+  booktitle={2013 IEEE 19th International Symposium on High Performance Computer Architecture (HPCA)}, 
+  title={Two level bulk preload branch prediction}, 
+  year={2013},
+  volume={},
+  number={},
+  pages={71-82},
+  doi={10.1109/HPCA.2013.6522308}
+}
+
+@ARTICLE{zen2,
+  author={Suggs, David and Subramony, Mahesh and Bouvier, Dan},
+  journal={IEEE Micro}, 
+  title={The {AMD} “Zen 2” Processor}, 
+  year={2020},
+  volume={40},
+  number={2},
+  pages={45-52},
+  doi={10.1109/MM.2020.2974217}
+}
+
+  
+@ARTICLE{neoverse,
+  author={Pellegrini, Andrea and Stephens, Nigel and Bruce, Magnus and Ishii, Yasuo and Pusdesris, Joseph and Raja, Abhishek and Abernathy, Chris and Koppanalil, Jinson and Ringe, Tushar and Tummala, Ashok and Jalal, Jamshed and Werkheiser, Mark and Kona, Anitha},
+  journal={IEEE Micro}, 
+  title={The Arm Neoverse N1 Platform: Building Blocks for the Next-Gen Cloud-to-Edge Infrastructure SoC}, 
+  year={2020},
+  volume={40},
+  number={2},
+  pages={53-62},
+  doi={10.1109/MM.2020.2972222}
+}
+
+@INPROCEEDINGS{exynos,
+  author={Grayson, Brian and Rupley, Jeff and Zuraski, Gerald Zuraski and Quinnell, Eric and Jiménez, Daniel A. and Nakra, Tarun and Kitchin, Paul and Hensley, Ryan and Brekelbaum, Edward and Sinha, Vikas and Ghiya, Ankit},
+  booktitle={2020 ACM/IEEE 47th Annual International Symposium on Computer Architecture (ISCA)}, 
+  title={Evolution of the Samsung Exynos CPU Microarchitecture}, 
+  year={2020},
+  volume={},
+  number={},
+  pages={40-51},
+  doi={10.1109/ISCA45697.2020.00015}
+}
+
+@INPROCEEDINGS{splash2,
+  author={Woo, S.C. and Ohara, M. and Torrie, E. and Singh, J.P. and Gupta, A.},
+  booktitle={Proceedings 22nd Annual International Symposium on Computer Architecture},
+  title={The SPLASH-2 programs: characterization and methodological considerations},
+  year={1995},
+  volume={},
+  number={},
+  pages={24-36}
+}

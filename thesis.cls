@@ -171,8 +171,8 @@
 
 \makechapterstyle{phduio}
 {
-    \renewcommand*{\chapnamefont}{\huge\sffamily}
-    \renewcommand*{\chapnumfont}{\huge\sffamily}
+    \renewcommand*{\chapnamefont}{\huge\lnfigures\sffamily}
+    \renewcommand*{\chapnumfont}{\huge\lnfigures\sffamily}
     \renewcommand*{\chaptitlefont}
     {\Huge\bfseries\boldmath\sffamily\raggedright}
     \renewcommand*{\authorsfont}{\Large\bfseries\sffamily}
@@ -221,8 +221,8 @@
 
 %% Lower level sections
 \setsecnumdepth{subsubsection}
-\setsecheadstyle{\Large\bfseries\boldmath\sffamily\raggedright}
-\setsubsecheadstyle{\large\bfseries\boldmath\sffamily\raggedright}
+\setsecheadstyle{\Large\bfseries\lnfigures\boldmath\sffamily\raggedright}
+\setsubsecheadstyle{\large\bfseries\lnfigures\boldmath\sffamily\raggedright}
 \setsubsubsecheadstyle{\normalsize\bfseries\boldmath\sffamily\raggedright}
 \setparaheadstyle{\normalsize\bfseries\boldmath\sffamily\raggedright}
 \setsubparaheadstyle{\normalsize\bfseries\boldmath\sffamily\raggedright}
