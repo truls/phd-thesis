@@ -11,84 +11,219 @@
 \label{chap:intro}
 
 \section{Motivation}
-\truls{Reorder the introduction to start with talking about serverless and then proceed to describe the hardware challenges}
+% Over the past couple of decades, the computing landscape has undergone
+% a radical transformation. Driven by the ubiquity of the internet,
+% computing resources has increasingly shifted from the hands of the
+% user and into data centers belonging to a handful of global
+% providers.
 
-Over the past couple of decades, the computing landscape has undergone a radical transformation. Driven by the ubiquity of the internet, computing resources has increasingly shifted from the hands of the user and into data centers belonging to a handful of global providers.
+Function-as-a-Service (FaaS) computing, the core technology powering
+serverless computing, is a cloud computing model that is currently
+seeing rapid growth. FaaS promises simplicity, flexibility and
+cost-efficiency by moving deployment and resource allocation decisions
+from the user to the provider. Currently, FaaS technology is used by
+half of all organizations that use cloud
+computing~\cite{serverless_state}. In the FaaS model, the fundamental
+unit of computation is a \emph{function}. A FaaS function is a
+stateless unit of code that is executed on demand following the
+triggering of an external event, such as an incoming HTTP request or a
+timer tick. Thus, when developing a FaaS function, the developer only
+needs to implement the functionality of the function, leaving all
+other deployment-level decisions to the provider.
+% A key property of
+% FaaS functions is that they are stateless, meaning that they produce
+% deterministic output when executed repeatedly with the same
+% inputs.
+When an event associated with a FaaS function is triggered,
+the provider must allocate resources and invoke the target function in
+order to handle the request. When the FaaS function has finished
+executing, the function is shut down and the resources allocated to
+its execution are freed, possibly after the expiry of a grace
+period. This ephemeral deployment structure make FaaS fundamentally
+different from the conventional cloud computing model where computing
+resources are provisioned in advance by the developer and services run
+as persistent daemons.
 
+Additionally, the FaaS computing model heavily emphasizes application
+modularity, code reuse and compositionality. A consequence of this is
+that each individual FaaS function has a single well-defined purpose,
+hence its running time is often less than 1
+second~\cite{shahrad19_archit_implic_funct_servic_comput,mahgoub22_wisef,shahrad20_server_wild,lukewarm_serverless,du20_catal}.
+Larger and more complex FaaS applications are then built by composing
+multiple smaller FaaS functions. Since a FaaS function can be written
+in any language depending on what best fits its purpose, the functions
+comprising a FaaS application normally communicate using
+network-backed Remote Procedure Call (RPC) interfaces. In addition to
+facilitating language-independence, these loosely-coupled RPC-backed
+communication interface also makes it possible to transparently
+replace parts of an application and rewriting it piece-by-piece
+without discarding tested and reliable components. While this
+RPC-backed communication support many of the most attractive features
+of the FaaS model, it also introduce a considerable communication
+overhead that is highly detrimental to the performance of FaaS functions.
 
-This shift has spearheaded a new era in computing systems dominated by Warehouse Scale Computing (WSC)~\cite{barroso18_datac_as_comput}. Since their emergence, a key feature of WSC's is that they consist of a large aggregation of commodity computing systems containing commodity processors~\cite{barroso03_web_searc_planet}. Commodity hardware is favored due to its low cost and widespread availability. However, scholarly research revealed that commodity processors are fundamentally unfit for the WSC workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike workloads typically encountered client-side or in scientific commuting, WSC workloads are marked by massive, multi-MB code footprints and comparatively meager data footprints. These massive code footprints overwhelms the capabilities of common processor frontends causing a well-documented phenomenon known as the \emph{frontend bottleneck}~\cite{ailamaki99_dbmss_moder_proces,keeton98_perfor_charac_quad_pentium_pro,ranganathan98_perfor_datab_workl_shared_memor}. \truls{The front-end bottleneck occurs when [TODO].} In response to this, the academic community has proposed a myriad of diverse methods to mitigate the front-end bottleneck~\cite{reinman99_fetch_direc_instr_prefet, kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,}. \truls{[TODO: More citations]}
+Over the last three decades, long before the FaaS model emerged and
+attracted the attention of researchers, the shift towards Warehouse
+Scale Computing (WSC)~\cite{barroso18_datac_as_comput} has challenged
+the way computer architects conventionally designed systems. Since
+their emergence, a key feature of WSC's is that they consist of a
+large aggregation of commodity computing systems containing commodity
+processors~\cite{barroso03_web_searc_planet}. Commodity hardware is
+favored due to its low cost and widespread availability. However,
+scholarly research revealed that commodity processors are
+fundamentally unfit for the WSC
+workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike
+workloads typically encountered client-side or in scientific
+computing, WSC workloads are marked by massive, multi-MB code
+footprints and comparatively meager data footprints. These massive
+code footprints overwhelms the capabilities of common processor
+frontends causing a well-documented phenomenon known as the
+\emph{frontend
+  bottleneck}~\cite{ailamaki99_dbmss_moder_proces,keeton98_perfor_charac_quad_pentium_pro,ranganathan98_perfor_datab_workl_shared_memor}. The
+frontend bottleneck occurs when the backend of the processor is
+starved for instructions due to inefficiencies in the frontend. In
+response to this, the academic community has proposed a myriad of
+diverse methods to mitigate the front-end
+bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,}.
+%\truls{[TODO:  More citations]}
 
+In this thesis, we closely examine the challenges FaaS pose to
+conventional hardware and software architectures. We continue a long
+lineage of research into designing data center-optimized processors
+and how this direction is applicable to FaaS. However, many of the
+performance challenges in FaaS originate not from inefficiencies in
+the hardware, but rather from software overheads inherent to its
+design. To that end, we propose a method to transform FaaS
+applications in a way that removes many of these inherent software overheads.
 
-The WSC-era workloads not only use computing resources in a different way, often, they introduce entirely new application design models that  challenges conventional wisdom. Serverless Computing, often deployed as Function-as-a-Service (FaaS), is a prominent example of such a model. Currently, half of all organizations that utilize cloud computing have FaaS services deployed~\cite{serverless_state}. In the FaaS model, the fundamental unit of computation is a \emph{function}. A FaaS function is a piece of code that is given to the provider and associated with a trigger, for example an incoming HTTP request or a timer tick. Thus, when developing a FaaS function, the developer only needs to consider writing the code of the function; all other deployment-level decisions are left to the provider. When an event associated with a FaaS function is triggered, the provider must start the code in order to handle the request. When the FaaS function has finished executing, the function is shut down and the resources allocated to its execution are freed, possibly after the expiry of a grace period. This ephemeral deployment structure make FaaS fundamentally different from conventional cloud computing model where computing resources are provisioned in advance by the developer and services run as persistent daemons.
+% \begin{enumerate}
+% \item FaaS functions have a short running time. Hence, they may not give essential performance-enhancing structures such as caches sufficient time to warm up and perform optimally
+% \item Since FaaS applications are composed of several loosely-coupled functions, they have a significant internal communication overhead. Modularity in monolithic applications is achieved through tightly-coupled linking that adds no additional communication overhead.
+% \end{enumerate}
 
-Additionally, the FaaS computing model heavily emphasizes application modularity, code reuse and compositionality. A consequence of this is that each individual FaaS function has a single well-defined purpose, hence its running time is often less than 1 second. Larger and more complex FaaS applications are then built by composing multiple smaller FaaS functions. Since a FaaS function can be written in any language depending on what best fits its purpose, the functions comprising a FaaS application normally communicate using network-backed Remote Procedure Call (RPC) interfaces. In addition to facilitating language-independence, these loosely-coupled RPC-backed communication interface also makes it possible to transparently replace parts of an application and rewriting it piece-by-piece without discarding tested and reliable components.
-
-To summarize, FaaS functions exhibit two fundamental differences from traditional monolithic applications
-
-\begin{enumerate}
-\item FaaS functions have a short running time. Hence, they may not give essential performance-enhancing structures such as caches sufficient time to warm up and perform optimally
-\item Since FaaS applications are composed of several loosely-coupled functions, they have a significant internal communication overhead. Modularity in monolithic applications is achieved through tightly-coupled linking that adds no additional communication overhead.
-\end{enumerate}
-
-This thesis investigates serverless functions from these two perspectives.
-
+% This thesis investigates serverless functions from these two perspectives.
 
 
 \section{Research overview}
+This thesis addresses the question of how to build hardware and
+software platforms for effectively executing FaaS applications. The
+first step towards answering this question is to understand platform
+requirements for effectively executing FaaS applications. To improve
+this understanding, our first primary contribution is an in-depth
+characterization of the microarchitectural interactions occurring with
+FaaS function execution (\Cref{sec:pc1}). The results of this study
+opened two research directions. The first, RD-A, addresses the
+front-end bottleneck (as described in the introduction) found in
+server processors and is described in \Cref{sec:pc2}. The second,
+RD-2, is concerned with alleviating the massive inter-function
+communication overhead encountered in complex FaaS applications. This
+direction is described in \Cref{sec:pc3}.
 
-When developing a FaaS function, 
-
-At a high level, the research presented in this thesis is motivated by two
-key characteristics exhibited by serverless applications
-
-Problem 1: They run for a short time which makes it difficult for structures to train
-
-Problem 2: They are highly modular which increases communication overhead
-
-Overall, this thesis makes 3 primary contributions:
-
-%\vspace*{0.5cm}
-
-%\noindent
 \subsection{Primary contribution 1: An in-depth microarchitectural profiling of serverless functions}
-The interplay between hardware and software in computing systems is complex and multi-faceted. Software optimizations can only go so far until they are fundamentally limited by hardware restrictions. Likewise, hardware optimizations cannot alleviate fundamental overheads in software. Furthermore, by introducing a large number of workload-tailored hardware specifications, we run the risk of hardware \emph{over specialization}, that is, we risk introducing optimizations that, at the cost of significant added complexity, delivers minimal or negative benefits in the general case. Previous work has investigated the impact of FaaS on current hardware and concluded that FaaS has a significant negative impact on current microarchitectures~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. In particular, \textcite{lukewarm_serverless} finds that microarchitectural state thrashing occurs due to the short running time of FaaS functions heavy interleaving that occurs when several functions are executed simultaneously on the same processor core. However, they stop short of investigating \emph{why} FaaS functions has this impact on common microarchitectures.
+\label{sec:pc1}
 
-To address this, we examine the opportunity available to serverless functions through hardware modifications. This work specifically investigates how sensitive FaaS functions are to the thrashing of microarchitectural state that occur when the processor switches from one task to another. We find that microarchitectural structures warm up, and start performing optimally, very quickly and therefore only functions with a very short execution time are amenable to targeted microarchitectural optimizations.
+The interplay between hardware and software in computing systems is
+complex and multi-faceted. Software optimizations can only go so far
+until they are fundamentally limited by hardware
+restrictions. Likewise, hardware optimizations cannot alleviate
+fundamental overheads in software. Furthermore, introducing
+workload-tailored hardware optimization is always a trade off between
+the ensuing increase in complexity and the scope of the
+optimization. Previous work has investigated the impact of FaaS on
+current hardware and concluded that FaaS has a significant negative
+impact on current
+microarchitectures~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. In
+particular, \textcite{lukewarm_serverless} finds that
+microarchitectural state thrashing occurs due to the short running
+time of FaaS functions heavy interleaving that occurs when several
+functions are executed simultaneously on the same processor
+core. However, they stop short of investigating \emph{why} FaaS
+functions has this impact on common microarchitectures.
 
+To address this, we examine the opportunity available to serverless
+functions through hardware modifications. This work specifically
+investigates how sensitive FaaS functions are to the thrashing of
+microarchitectural state that occur when the processor switches from
+one task to another. We find that microarchitectural structures warm
+up, and start performing optimally, very quickly and therefore only
+functions with a very short execution time are amenable to targeted
+microarchitectural optimizations.
 
 The conclusions of this work prompted two research directions:
  \begin{description}
- \item[Research direction A] For functions
- \item[Research direction B] Longer-running functions 
+ \item[RD-A] Long-running FaaS functions ($>1\text{ms}$) challenges
+   current processor architectures in the same way as other server workloads. This research direction therefore
+   continues to address the front-end bottleneck of major processors.
+ \item[RD-B] The highly modular nature of FaaS applications combined
+   with the very short execution time of some FaaS functions present
+   specific challenges that give a poor ROI when addressed through
+   hardware optimizations. This research direction therefore focuses
+   on addressing these challenges by transforming FaaS applications to
+   run more efficiently on current hardware.
  \end{description}
 
-
-
- 
 We present this work in Paper C (\Cref{chap:wosc-paper})
 
 %\vspace*{0.5cm}
 
 %\noindent
 \subsection{Primary contribution 2: A storage-efficient BTB organization for servers}
-To investigate Research Direction A, as outlined above, we propose a storage-efficient Branch Target Buffer (BTB) (see \Cref{chap:btb-background}) organization for servers called BTB-X.  The starting point of this work is that FDIP instruction prefetchers have superior performance when given sufficient BTB capacity~\cite{ishii21_re_fetch_direc_instr_prefet}. Considering the vast branch working sets of contemporary server workloads, industry has responded by allocating large amounts of storage to the BTB \cite{neoverse,IBMz,zen2} with resulting sizes reaching up to 500KB of on-chip storage \cite{exynos}. This amount of space means that significant amounts of chip area and power budget is dedicated to the BTB. Further, considering that instruction set sizes show no sign of slowing down with Google observing 20\% annualized growth rates~\cite{kanev15_profil}, it is infeasible to respond to this simply by increasing the BTB storage budget.
+\label{sec:pc2}
 
-BTB-X defies this trend by leveraging a key insight about the distribution of branch target offset sizes. Conventional BTBs (Conv-BTB) stores the full target address of every branch it holds. We make the observation that most branch targets are close to their origin. Following this, our key insight is that we can redesign the BTB to store branch target offsets instead of the full target addresses. In a Conv-BTB, each way is sized to hold a full target address. In BTB-X we size the ways differently so that smaller branch offset sizes can be stored without unused space.
+To investigate RD-A, as outlined previously, we propose a
+storage-efficient Branch Target Buffer (BTB) (see
+\Cref{chap:btb-background}) organization for servers called BTB-X.
+The starting point of this work is that FDIP instruction prefetchers
+have superior performance when given sufficient BTB
+capacity~\cite{ishii21_re_fetch_direc_instr_prefet}. Considering the
+vast branch working sets of contemporary server workloads, industry
+has responded by allocating large amounts of storage to the
+BTB~\cite{neoverse,IBMz,zen2} with resulting sizes reaching up to
+500KB of on-chip storage~\cite{exynos}. This amount of space means
+that significant amounts of chip area and power budget is dedicated to
+the BTB. Further, considering that instruction set sizes show no sign
+of slowing down with Google observing 20\% annualized growth
+rates~\cite{kanev15_profil}, it is infeasible to respond to this
+simply by increasing the BTB storage budget.
 
-The resulting design improves on the state of the art in terms of branch storage density, lookup latency and power requirements. Since BTB-X increases the branch working set coverage of the BTB it improves  instruction prefetching performance. Thereby, it helps alleviating the front-end bottleneck and improves the performance of, particularly, server workloads.
+BTB-X defies this trend by leveraging a key insight about the
+distribution of branch target offset sizes. Conventional BTBs
+(Conv-BTB) stores the full target address of every branch it holds. We
+make the observation that most branch targets are close to their
+origin. Following this, our key insight is that we can redesign the
+BTB to store branch target offsets instead of the full target
+addresses. In a Conv-BTB, each way is sized to hold a full target
+address. In BTB-X we size the ways differently so that smaller branch
+offset sizes can be stored without unused space.
 
-This contribution evolved over time and is described in papers A, B and D (\Crefrange{chap:cal-paper, chap:pact-paper, chap:hpca-paper}  respectively), where the latter describes the full, final design
+The resulting design improves the state of the art in terms of branch
+storage density, lookup latency and power requirements. Since BTB-X
+increases the branch working set coverage of the BTB it improves
+instruction prefetching performance. Thereby, it helps alleviating the
+front-end bottleneck and improves the performance of, particularly,
+server workloads.
+
+This contribution evolved over time and is described in papers A, B
+and D (\Cref{chap:cal-paper,chap:pact-paper,chap:hpca-paper}
+respectively), where the latter describes the full, final design.
 
 
-%\vspace*{0.5cm}
-
-%\noindent
 \subsection{Primary contribution 3: A software-based optimization methodology for serverless functions.}
-
+\label{sec:pc3}
+Following RD-B 
 
 
 \section{Thesis Overview}
-This thesis is structured in two parts. \Cref{part:one} introduces the topic matter of the thesis and positions its contribution. \Cref{cap:intro} introduces the topic of the thesis, \Cref{chap:background} provides background material that aides understanding and contextualizes the topics of the included paper, \Cref{chap:rcontrib} summarizes the research contributions of the thesis in more details and finally \Cref{chap:conclusions} presents the thesis' conclusions. \Cref{part:two} contains the scientific publications that collectively comprise the contributions of the thesis.
+This thesis is structured in two parts. \Cref{part:one} introduces the
+topic matter of the thesis and positions its
+contribution. \Cref{cap:intro} introduces the topic of the thesis,
+\Cref{chap:background} provides background material that aides
+understanding and contextualizes the topics of the included paper,
+\Cref{chap:rcontrib} summarizes the research contributions of the
+thesis in more details and finally \Cref{chap:conclusions} presents
+the thesis' conclusions. \Cref{part:two} contains the scientific
+publications that collectively comprise the contributions of the
+thesis.
 
 \ifx\chapincluded\undefined
   \printbibliography
