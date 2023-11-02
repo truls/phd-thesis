@@ -44,12 +44,14 @@ different from the conventional cloud computing model where computing
 resources are provisioned in advance by the developer and services run
 as persistent daemons.
 
-Additionally, the FaaS computing model heavily emphasizes application
-modularity, code reuse and compositionality. A consequence of this is
-that each individual FaaS function has a single well-defined purpose,
-hence its running time is often less than 1
+The unique modularity, compositionality and language-independence of
+FaaS functions makes the FaaS computing model highly attractive to
+developers. To maximize these benefits developers are encouraged to
+keep each individual FaaS function small with a narrowly defined
+purpose. Hence, many FaaS function shave short running times, often
+less than 1
 second~\cite{shahrad19_archit_implic_funct_servic_comput,mahgoub22_wisef,shahrad20_server_wild,lukewarm_serverless,du20_catal}.
-Larger and more complex FaaS applications are then built by composing
+Larger and more complex FaaS applications are built by composing
 multiple smaller FaaS functions. Since a FaaS function can be written
 in any language depending on what best fits its purpose, the functions
 comprising a FaaS application normally communicate using
@@ -60,7 +62,8 @@ replace parts of an application and rewriting it piece-by-piece
 without discarding tested and reliable components. While this
 RPC-backed communication support many of the most attractive features
 of the FaaS model, it also introduce a considerable communication
-overhead that is highly detrimental to the performance of FaaS functions.
+overhead that is highly detrimental to the performance of FaaS
+functions.
 
 Over the last three decades, long before the FaaS model emerged and
 attracted the attention of researchers, the shift towards Warehouse
@@ -87,15 +90,6 @@ diverse methods to mitigate the front-end
 bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,}.
 %\truls{[TODO:  More citations]}
 
-In this thesis, we closely examine the challenges FaaS pose to
-conventional hardware and software architectures. We observe that FaaS
-functions are affected by the frontend bottleneck in the same way as
-other server workloads. Therefore, we propose a microarchitectural
-optimization that alleviate this bottleneck. However, many of the
-performance challenges in FaaS originate not from inefficiencies in
-the hardware, but rather from software overheads inherent to its
-design. To that end, we propose a method to transform FaaS
-applications in a way that removes many of these inherent software overheads.
 
 % \begin{enumerate}
 % \item FaaS functions have a short running time. Hence, they may not give essential performance-enhancing structures such as caches sufficient time to warm up and perform optimally
@@ -117,6 +111,15 @@ directions. The first, RD-A is concerned with hardware optimizations
 that improves the performance of serverless computing and the second,
 RD-B is concerned with software optimizations that improve the
 performance of serverless computing.
+
+In this thesis, we closely examine the challenges FaaS pose to
+conventional hardware and software architectures.  However, many of the
+performance challenges in FaaS originate not from inefficiencies in
+the hardware, but rather from software overheads inherent to its
+design. To that end, we propose a method to transform FaaS
+applications in a way that removes many of these inherent software overheads.
+
+
 
 % The
 % first step towards answering this question is to understand platform
