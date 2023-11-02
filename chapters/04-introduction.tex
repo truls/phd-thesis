@@ -89,13 +89,17 @@ bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast
 
 In this thesis, we closely examine the challenges FaaS pose to
 conventional hardware and software architectures. We observe that FaaS
-functions are We continue a long
-lineage of research into designing data center-optimized processors
-and how this direction is applicable to FaaS. However, many of the
+functions are affected by the frontend bottleneck in the same way as
+other server workloads. Therefore, we propose a microarchitectural
+optimization that alleviate this bottleneck. However, many of the
 performance challenges in FaaS originate not from inefficiencies in
 the hardware, but rather from software overheads inherent to its
 design. To that end, we propose a method to transform FaaS
 applications in a way that removes many of these inherent software overheads.
+
+\truls{There is a slight leap in this argument since we do not
+  directly show that BTB-X works to improve the performance of the
+  functions that we measure the WoSC paper}
 
 % \begin{enumerate}
 % \item FaaS functions have a short running time. Hence, they may not give essential performance-enhancing structures such as caches sufficient time to warm up and perform optimally
@@ -129,15 +133,15 @@ until they are fundamentally limited by hardware
 restrictions. Likewise, hardware optimizations cannot alleviate
 fundamental overheads in software. Furthermore, introducing
 workload-tailored hardware optimization is always a trade off between
-the ensuing increase in complexity and the scope of the
-optimization. Previous work has investigated the impact of FaaS on
-current hardware and concluded that FaaS has a significant negative
-impact on current
+the ensuing increase in complexity and the scope of workloads that
+benefit from the optimization. Previous work has investigated the
+impact of FaaS on current hardware and concluded that FaaS has a
+significant negative impact on current
 microarchitectures~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. In
 particular, \textcite{lukewarm_serverless} finds that
 microarchitectural state thrashing occurs due to the short running
-time of FaaS functions heavy interleaving that occurs when several
-functions are executed simultaneously on the same processor
+time of FaaS functions and the heavy interleaving that occurs when
+several functions are executed simultaneously on the same processor
 core. However, they stop short of investigating \emph{why} FaaS
 functions has this impact on common microarchitectures.
 
