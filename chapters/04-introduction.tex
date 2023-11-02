@@ -107,21 +107,28 @@ applications in a way that removes many of these inherent software overheads.
 
 \section{Research overview}
 This thesis addresses the question of how to build hardware and
-software platforms for effectively executing FaaS applications. The
-first step towards answering this question is to understand platform
-requirements for effectively executing FaaS applications. To improve
-this understanding, our first primary contribution is an in-depth
-characterization of the microarchitectural interactions occurring with
-FaaS function execution (\Cref{sec:pc1}). The results of this study
-opened two research directions. The first, RD-A, addresses the
-front-end bottleneck (as described in the introduction) found in
-server processors and is described in \Cref{sec:pc2}. The second,
-RD-2, is concerned with alleviating the massive inter-function
-communication overhead encountered in complex FaaS applications. This
-direction is described in \Cref{sec:pc3}.
+software platforms for effectively executing FaaS applications. To
+that end, the research presented in this thesis follows two
+directions. The first, RD-A is concerned with hardware optimizations
+that improves the performance of serverless computing and the second,
+RD-B is concerned with software optimizations that improve the
+performance of serverless computing.
 
-\subsection{Research direction A: Hardware approaches for optimizing Serverless computing}
-\label{sec:pc1}
+% The
+% first step towards answering this question is to understand platform
+% requirements for effectively executing FaaS applications. To improve
+% this understanding, our first primary contribution is an in-depth
+% characterization of the microarchitectural interactions occurring with
+% FaaS function execution (\Cref{sec:pc1}). The results of this study
+% opened two research directions. The first, RD-A, addresses the
+% front-end bottleneck (as described in the introduction) found in
+% server processors and is described in \Cref{sec:pc2}. The second,
+% RD-2, is concerned with alleviating the massive inter-function
+% communication overhead encountered in complex FaaS applications. This
+% direction is described in \Cref{sec:pc3}.
+
+\subsection{Research direction A: Hardware Optimizations for Serverless Computing}
+\label{sec:rda}
 
 The interplay between hardware and software in computing systems is
 complex and multi-faceted. Software optimizations can only go so far
@@ -162,19 +169,26 @@ microarchitectural state thrashing.
 % and therefore only functions with a very short execution time are
 % amenable to targeted microarchitectural optimizations.
 
-The conclusions of this work prompted two research directions:
- \begin{description}
- \item[RD-A] Long-running FaaS functions ($>1\text{ms}$) challenges
-   current processor architectures in the same way as other server workloads. This research direction therefore
-   continues to address the front-end bottleneck of major processors.
- \item[RD-B] The FaaS functions that have a sufficiently short running
-   time to be negatively affected by microarchitectural state
-   thrashing are rare in real-life deployments. Therefore, the benefit
-   of introducing a hardware optimization targeting this aspect of
-   FaaS performance is limited. Instead, this research direction
-   therefore focuses on addressing these challenges by transforming
-   FaaS applications in software allowing them to execute more efficiently on current hardware.
- \end{description}
+% The conclusions of this work prompted two research directions:
+%  \begin{description}
+%  \item[RD-A] Long-running FaaS functions ($>1\text{ms}$) challenges
+%    current processor architectures in the same way as other server workloads. This research direction therefore
+%    continues to address the front-end bottleneck of major processors.
+%  \item[RD-B] The FaaS functions that have a sufficiently short running
+%    time to be negatively affected by microarchitectural state
+%    thrashing are rare in real-life deployments. Therefore, the benefit
+%    of introducing a hardware optimization targeting this aspect of
+%    FaaS performance is limited. Instead, this research direction
+%    therefore focuses on addressing these challenges by transforming
+%    FaaS applications in software allowing them to execute more efficiently on current hardware.
+%  \end{description}
+
+From fromt his work, we draw the conclusions that only functions with
+a very short execution time (<1 ms) benefits from being executed on a
+processor with a warm microarchitectural state. In real-world
+workloads such functions are
+uncommon~\cite{shahrad20_server_wild,mahgoub22_wisef} and therefore
+they do not warrant the in
 
 We present this work in Paper C (\Cref{chap:wosc-paper})
 
