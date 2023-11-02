@@ -98,10 +98,6 @@ design. To that end, we propose a method to transform FaaS
 applications in a way that removes many of these inherent software overheads.
 
 
-\truls{There is a slight leap in this argument since we do not
-  directly show that BTB-X works to improve the performance of the
-  functions that we measure the WoSC paper}
-
 % \begin{enumerate}
 % \item FaaS functions have a short running time. Hence, they may not give essential performance-enhancing structures such as caches sufficient time to warm up and perform optimally
 % \item Since FaaS applications are composed of several loosely-coupled functions, they have a significant internal communication overhead. Modularity in monolithic applications is achieved through tightly-coupled linking that adds no additional communication overhead.
@@ -125,7 +121,7 @@ RD-2, is concerned with alleviating the massive inter-function
 communication overhead encountered in complex FaaS applications. This
 direction is described in \Cref{sec:pc3}.
 
-\subsection{Primary contribution 1: An in-depth microarchitectural profiling of serverless functions}
+\subsection{Research direction A: Hardware approaches for optimizing Serverless computing}
 \label{sec:pc1}
 
 The interplay between hardware and software in computing systems is
@@ -183,11 +179,6 @@ The conclusions of this work prompted two research directions:
 
 We present this work in Paper C (\Cref{chap:wosc-paper})
 
-%\vspace*{0.5cm}
-
-%\noindent
-\subsection{Primary contribution 2: A storage-efficient BTB organization for servers}
-\label{sec:pc2}
 
 To investigate RD-A, as outlined previously, we propose a
 storage-efficient Branch Target Buffer (BTB) (see
@@ -227,7 +218,7 @@ and D (\Cref{chap:cal-paper,chap:pact-paper,chap:hpca-paper}
 respectively), where the latter describes the full, final design.
 
 
-\subsection{Primary contribution 3: A software-based optimization methodology for serverless functions.}
+\subsection{Research direction B: Software approaches for optimizing serverless computing}
 \label{sec:pc3}
 Following RD-B 
 
