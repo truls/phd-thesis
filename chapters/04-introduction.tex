@@ -242,6 +242,41 @@ respectively), where the latter describes the full, final design.
 
 \subsection{Research direction B: Software Approaches for Optimizing Serverless Computing}
 \label{sec:pc3}
+The second research direction investigates software optimizations for
+serverless computing. The software inefficiencies in serverless
+computing mainly has two origins. First of all, since resources for
+executing a FaaS function are executed transiently, starting a FaaS
+function for the first time is marked by a significant latency known
+as the cold-start latency. A large body of previous work investigates
+this issue, for
+example~\cite{du20_catal,,ustiugov21_bench_analy_optim_server_funct_snaps}. Another
+well-documented performance challenge in FaaS is the communication
+overhead experienced by FaaS
+applications~\cite{gan19_open_sourc_bench_suite_micros}. As mentioned
+previously, the loose coupling between the individual functions
+comprising a FaaS application means that slow, high-latency RPC
+interfaces are used to facilitate the communication within the
+application. Because of the impact of this problem, numerous previous
+papers has approached this issue~\cite{kotni21_faast, mahgoub22_wisef,
+  barcelona-pons19_faas_track,sreekanti20_cloud,shillaker20_faasm,jia21_night}. However,
+we observe that these approaches compromise with at least one of the
+critical properties that make FaaS attractive to developers. Some
+approaches, require FaaS applications to be written in a specific
+language, compromising the developers' ability to freely mix and match
+implementation languages of functions. Other approaches require
+existing functions to be rewritten to use a certain specialized
+API. Finally, some approaches propose entirely new runtimes that can
+be difficult to integrate on existing FaaS computing platforms.
+
+In response to this observation, we introduce CoFaaS, a software-based
+transformation for FaaS applications that significantly reduces the
+inter-application communication overhead without sacrificing any of
+the essential properties that make FaaS attractive to
+developers. CoFaaS is based on the observation that an individual FaaS
+function must have a formally defined external interface in order to
+preserve the modularity of FaaS and support composition with other
+functions. This means that, as long as we preserve a function's
+external interface, we can freely transform it. CoFaaS exploits this 
 
 \section{Thesis Overview}
 This thesis is structured in two parts. \Cref{part:one} introduces the
