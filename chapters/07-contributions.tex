@@ -73,7 +73,8 @@ To support our findings (presented below) we perform a measurement of
 the code footprint of each of the FaaS functions that we use in our
 analysis. Doing this using a full microarchitectural simulator is a
 slow and tedious process and it is not possible to perform this
-analysis statically. Therefore, we use a method described
+analysis statically since the dynamic instruction trace of a program
+is only known at runtime.  Therefore, we use a method described
 in~\cite{splash2} that use branch-record traces and a cache simulator
 to estimate the code footprint of a function. The branch-record traces
 show the branches taken by a program. By running the locations of
