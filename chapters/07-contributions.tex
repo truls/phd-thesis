@@ -12,24 +12,6 @@
 The research contributions of this thesis are presented as five articles. The first four (\Cref{chap:cal-paper,chap:pact-paper,chap:wosc-paper,chap:hpca-paper}), and the last (\Cref{chap:eurosys-paper}) is pending review at the time of thesis submission. In this chapter, we summarize the contributions of each paper and contextualize the papers in regard to prior work. The papers that are included in this thesis are:
 
 
-\vspace*{0.8cm}
-
-\noindent
-\begin{tabular}{lp{0.8\textwidth}}
-\textbf{Paper A1} & \textbf{BTB-X: A Storage-Effective BTB Organization} \newline
-                     Truls Asheim, Boris Grot and Rakesh Kumar \newline
-                     In: IEEE Computer Architecture Letters, Volume: 20, Issue: 2, July-December 2021
-                     \vspace*{0.3cm} \\
-\textbf{Paper A2} & \textbf{A Specialized BTB Organization for Servers} \newline
-                     Truls Asheim, Boris Grot and Rakesh Kumar \newline
-                     In':Proceedings of the International Conference on Parallel Architectures and Compilation Techniques, 2022
-                     \vspace*{0.3cm} \\
-\textbf{Paper A3} & \textbf{A Specialized BTB Organization for Servers} \newline
-                     Truls Asheim, Boris Grot and Rakesh Kumar \newline
-                     In': 
-                     \vspace*{0.3cm} \\
-
-\end{tabular}
 
 
 \section{Contribution overvew}
@@ -107,9 +89,18 @@ and for FaaS functions specifically~\cite{lukewarm_serverless}.
 \subsubsection{A storage-efficient BTB organization for servers}
 
 \paragraph{Motivation}
-THe front-end bottleneck is a well-known and widely documented problem affecting processors executing server workloads~\cite{ailamaki99_dbmss_moder_proces,ferdman12_clear_cloud,kanev15_profil,ayers19_asmdb}. Compared to other workload classes, server workloads pose particular challenges for processor frontends due to their very large instruction footprints. These footprints, quickly overwhelms the capacities of the instruction cache (L1-I) and the Branch Target Buffer (BTB). In order to handle this problem, computer architects has proposed a large number of different approaches. L1-I prefetchers are a highly effective way to alleviate the front-end bottleneck as they help avoiding the fill-latency that occurs when program control flow is diverted to an instruction that is not found in the L1-I.  As detailed in \truls{Add reference to relevant background section}, a particularly effective class of instruction prefetchers are known as Fetch Directed Instruction Prefetching (FDIP)~\cite{reinman99_fetch_direc_instr_prefet}. Since FDIP rely on the BTB to identify the control flow of a program, having a BTB with sufficient capacity is of crucial importance. By simply scaling the design of a conventional BTB design, the capacity required for holding realistic branch working sets of contemporary server workloads quickly become infeasible. Therefore, 
+The front-end bottleneck is a well-known and widely documented problem affecting processors executing server workloads~\cite{ailamaki99_dbmss_moder_proces,ferdman12_clear_cloud,kanev15_profil,ayers19_asmdb}. Compared to other workload classes, server workloads pose particular challenges for processor frontends due to their very large instruction footprints. These footprints, quickly overwhelms the capacities of the instruction cache (L1-I) and the Branch Target Buffer (BTB). In order to handle this problem, computer architects has proposed a large number of different approaches. L1-I prefetchers are a highly effective way to alleviate the front-end bottleneck as they help avoiding the fill-latency that occurs when program control flow is diverted to an instruction that is not found in the L1-I.  As detailed in \truls{Add reference to relevant background section}, a particularly effective class of instruction prefetchers are known as Fetch Directed Instruction Prefetching (FDIP)~\cite{reinman99_fetch_direc_instr_prefet}. Since FDIP rely on the BTB to identify the control flow of a program, having a BTB with sufficient capacity is of crucial importance. By simply scaling the design of a conventional BTB design, the capacity required for holding realistic branch working sets of contemporary server workloads quickly become infeasible. To address this, previous work observed that several instruction addresses reside within the same memory page or region. Since these page numbers are shared between several memory addresses, they can be deduplicated by only storing them once in a dedicated table and replace their uses with pointer to that table~\cite{seznec96_dont_use_page_number_point_it,soundararajan21_pdede}. The limitation of these approaches is that they introduce a level of indirection for BTB lookups, adding complexity and increasing the BTB access latency.
 
 \paragraph{Methodology}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/offset_distribution.pdf}
+  \caption{\label{fig:offset-distr} Distribution of branch target offsets in the IPC-1~\cite{ipc1} workload traces}
+\end{figure}
+
+In an attempt to find a more efficient way of storing branch offsets, we performed an analysis of the branch target offsets in a large number of real-world workload traces released for the first Instruction Prefetching Championship (IPC-1)~\cite{ipc1}. A branch target offset is the distance from a branch to its destination. This analysis, shown in \Cref{fig:offset-distr} showed that the bast majority of branches have targets very close to their origin. For example, using just, 19 bits, we can represent the target offsets of 90\% of all branches.
+
 
 \paragraph{Key results}
 
