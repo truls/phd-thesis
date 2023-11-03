@@ -71,23 +71,25 @@ identify a threshold where FaaS functions run long enough to be
 cindered equivalent with general server workloads from a
 microarchitectural perspective.
 
-The large code footprints observed for FaaS functions brings them in
-line with a general trend observed for server workloads. Over the last three decades, long before the FaaS model emerged and
-attracted the attention of researchers, the shift towards Warehouse
-Scale Computing (WSC)~\cite{barroso18_datac_as_comput} has challenged
-the way computer architects conventionally designed systems. Since
-their emergence, a key feature of WSC is that they consist of a
-large aggregation of commodity computing systems containing commodity processors~\cite{barroso03_web_searc_planet}. Commodity hardware is
+THe large code footprints and high instruction misses of FaaS
+functions brings them in line with a general trend observed for server
+workloads. Over the last three decades, long before the FaaS model
+emerged and attracted the attention of researchers, the shift towards
+Warehouse Scale Computing (WSC)~\cite{barroso18_datac_as_comput} has
+challenged the way computer architects conventionally designed
+systems. Since their emergence, a key feature of WSC is that they
+consist of a large aggregation of commodity computing systems
+containing commodity
+processors~\cite{barroso03_web_searc_planet}. Commodity hardware is
 favored due to its low cost and widespread availability. However,
 scholarly research revealed that commodity processors are
 fundamentally unfit for the WSC
 workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike the
 workloads typically encountered on the client-side or in scientific
 computing, WSC workloads are marked by massive, multi-megabyte code
-footprints. These massive
-code footprints overwhelms the capabilities of common processor
-frontends causing a well-documented phenomenon known as the
-\emph{frontend
+footprints. These massive code footprints overwhelms the capabilities
+of common processor frontends causing a well-documented phenomenon
+known as the \emph{frontend
   bottleneck}~\cite{ailamaki99_dbmss_moder_proces,keeton98_perfor_charac_quad_pentium_pro,ranganathan98_perfor_datab_workl_shared_memor}. The
 frontend bottleneck occurs when the backend of the processor is
 starved for instructions due to inefficiencies in the frontend. In
