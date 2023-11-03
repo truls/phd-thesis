@@ -23,8 +23,8 @@ in the hands of a few global providers. The cloud computing revolution
 is driven by the developers desire for simple and flexible
 hosting. Function-as-a-Service (FaaS) computing, the core technology
 powering serverless computing, is a cloud computing model that is
-currently seeing rapid growth. FaaS promises simplicity, flexibility
-and cost-efficiency by moving deployment and resource allocation
+currently seeing rapid growth. FaaS promises simplicity, elasticity
+and cost-efficiency by moving deployment and resource management
 decisions from the user to the provider. Currently, FaaS technology is
 used by the half of all organizations that rely on cloud
 computing~\cite{serverless_state}. In the FaaS model, the fundamental
@@ -106,10 +106,19 @@ bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast
 
 
 \section{Research overview}
-The guiding research statement of this thesis is to 
+The interplay between hardware and software in computing systems is
+complex and multi-faceted. Software optimizations can only go so far
+until they are fundamentally limited by hardware
+restrictions. Likewise, hardware optimizations cannot alleviate
+fundamental overheads in software. Furthermore, introducing
+workload-tailored hardware optimizations is always a trade off between
+the ensuing increase in complexity and the scope of workloads that
+benefit from the optimization.
+
+The guiding research statement of this thesis is to:
 \begin{framed}
 \noindent
-\textbf{Identify the sources of inefficiencies in FaaS applications, determine their root causes, and investigate hardware and software mechanisms to alleviate these inefficiencies.}
+\textbf{Identify the sources of inefficiencies in the FaaS application execution model, determine their root causes, and investigate hardware and software mechanisms to alleviate them.}
 \end{framed}
 \noindent
 To that end, the research presented in this thesis takes two
@@ -142,14 +151,7 @@ introducing a software-level transformation.
 \subsection{Research direction A: Hardware Optimizations for Serverless Computing}
 \label{sec:rda}
 
-The interplay between hardware and software in computing systems is
-complex and multi-faceted. Software optimizations can only go so far
-until they are fundamentally limited by hardware
-restrictions. Likewise, hardware optimizations cannot alleviate
-fundamental overheads in software. Furthermore, introducing
-workload-tailored hardware optimizations is always a trade off between
-the ensuing increase in complexity and the scope of workloads that
-benefit from the optimization. Previous work has investigated the
+Previous work has investigated the
 impact of FaaS on current hardware and concluded that FaaS has a
 significant negative impact on current
 microarchitectures~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. In
@@ -157,9 +159,7 @@ particular, \textcite{lukewarm_serverless} finds that
 microarchitectural state thrashing occurs due to the short running
 time of FaaS functions and the heavy interleaving that occurs when many
 different functions are queued for execution on a single processor core. However, they stop short of investigating \emph{why} FaaS
-functions has this impact on common microarchitectures.
-
-To address this, we investigate which properties of FaaS functions
+functions has this impact on common microarchitectures. To address this, we investigate which properties of FaaS functions
 make them susceptible to the negative effects of microarchitectural
 state thrashing.
 
@@ -243,8 +243,8 @@ front-end bottleneck and improves the performance of, particularly,
 server workloads.
 
 The motivating analysis is presented in Paper A1 (\Cref{chap:wosc-paper}).
-BTB-X evolved over time and is described in papers A2, A3
-and A4 (\Cref{chap:cal-paper,chap:pact-paper,chap:hpca-paper}
+An early version of BTB-X was over time and is described in papers A2, A3
+and A4 (\Cref{chap:cal-paper}),chap:pact-paper,chap:hpca-paper}
 respectively), where the latter describes the full, final design.
 
 \noindent
