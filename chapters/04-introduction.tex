@@ -259,10 +259,7 @@ instructions themselves. Therefore, we can achieve significant storage savings
 by storing branch target offsets instead of the full target
 addresses in the BTB. We further observe large variability in the target offset sizes,
 i.e., some offsets are much larger/smaller than others. Thus, a BTB
-design should be able to accommodate this variability to maximize storage efficiency.
-
-
-The resulting design improves the state of the art in terms of branch
+design should be able to accommodate this variability to maximize storage efficiency. The resulting design improves the state of the art in terms of branch
 storage density, lookup latency and power requirements. Since BTB-X
 increases the branch working set coverage of the BTB, it also improves
 instruction prefetching performance (see \Cref{sec:instr-delivery}). Thereby, it helps alleviating the
