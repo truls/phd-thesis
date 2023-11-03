@@ -17,14 +17,18 @@ The research contributions of this thesis are presented as five articles. The fi
 \section{Contribution overvew}
 
 \subsection{Research direction 1: Hardware}
+We present our results in two parts where the first part
+(\Cref{subsub:understanding}) covers the
+background study, presented in Paper A1 (\Cref{chap:wosc-paper}) and
+the second part (\Cref{subsub:btbx}) describes BTB-X, the proposal for a
+redesigned BTB proposal covered in Papers
+A2, A3 and A4 (\Cref{chap:cal-paper,chap:pact-paper,chap:u hpca-paper}).
 
 \subsubsection{Understanding FaaS}
-
+\label{subsub:understanding}
 \paragraph{Motivation.} Function-as-a-service (FaaS) computing is a rapidly growing cloud computing model. In FaaS, the unit of computation is a function, normally with a very short execution time. Since a FaaS function is loaded and started when it is needed and shut down when it has finished executing, will co-schedule a large number of functions on the same processors to maximize server utilization. Recent work has reported that this heavily interleaved execution leads to microarchitectural state thrashing causing most of FaaS function execution to occur on a cold microarchitectural state~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. This work, however, stops short of investigating which specific properties of FaaS execution that causes this poor utilization of microarchitectural state.
 
-Use the profiling to motivate BTB-X
-
-\paragraph{Methodology.}
+\paragraph{Approach.}
 To address this gap in the research, we perform an evaluation of FaaS
 functions executed on a processor with warm and cold
 microarchitectural states respectively. We use a representative suite
@@ -38,14 +42,13 @@ tight loop. In the interleaved execution case, each invocation of a
 function is interleaved with an invocation of a \emph{trhasher}
 function that thrashes all existing microarchitectural state. The
 thrasher function achieves this by performing two
-actions:
-\begin{inparaenum}[1)]
+actions: \begin{inparaenum}[1)]
 \item it invokes the x86 WBINVD
   instruction that writes back and invalidates the entire cache
-  hierarchy of a processor core and \item it runs a function that
+  hierarchy of the processor package~\cite[Chapter 6]{intelmanual} and \item it runs a function that
   executes a long sequence of branches in order to thrash the state of
   the BTB and the branch predictor. \end{inparaenum} We measure
-microarchitectural parameters using perf and use the TopDown
+microarchitectural parameters using perf~\cite{perftool} and use the Top-Down
 methodology~\cite{yasin14_top_down} for identifying specific
 microarchitectural bottlenecks. For both the back-to-back and
 interleaved execution we measured both the wall-clock running time of
@@ -84,14 +87,47 @@ the real-world FaaS functions we evaluate are overwhelmingly front-end
 bound. This is in line with similar observations made for general
 server
 workloads~\cite{ferdman12_clear_cloud,kanev15_profil,ayers19_asmdb}
-and for FaaS functions specifically~\cite{lukewarm_serverless}.
+and for FaaS functions specifically~\cite{lukewarm_serverless}. This
+strongly motivates further research aiming to alleviate the front-end
+bottleneck with the goal of optimizing the execution of FaaS
+functions.
 
 \subsubsection{A storage-efficient BTB organization for servers}
+\label{subsub:btbx}
 
-\paragraph{Motivation}
-The front-end bottleneck is a well-known and widely documented problem affecting processors executing server workloads~\cite{ailamaki99_dbmss_moder_proces,ferdman12_clear_cloud,kanev15_profil,ayers19_asmdb}. Compared to other workload classes, server workloads pose particular challenges for processor frontends due to their very large instruction footprints. These footprints, quickly overwhelms the capacities of the instruction cache (L1-I) and the Branch Target Buffer (BTB). In order to handle this problem, computer architects has proposed a large number of different approaches. L1-I prefetchers are a highly effective way to alleviate the front-end bottleneck as they help avoiding the fill-latency that occurs when program control flow is diverted to an instruction that is not found in the L1-I.  As detailed in \truls{Add reference to relevant background section}, a particularly effective class of instruction prefetchers are known as Fetch Directed Instruction Prefetching (FDIP)~\cite{reinman99_fetch_direc_instr_prefet}. Since FDIP rely on the BTB to identify the control flow of a program, having a BTB with sufficient capacity is of crucial importance. By simply scaling the design of a conventional BTB design, the capacity required for holding realistic branch working sets of contemporary server workloads quickly become infeasible. To address this, previous work observed that several instruction addresses reside within the same memory page or region. Since these page numbers are shared between several memory addresses, they can be deduplicated by only storing them once in a dedicated table and replace their uses with pointer to that table~\cite{seznec96_dont_use_page_number_point_it,soundararajan21_pdede}. The limitation of these approaches is that they introduce a level of indirection for BTB lookups, adding complexity and increasing the BTB access latency.
+\paragraph{Motivation.}
+The front-end bottleneck is a well-known and widely documented problem
+affecting processors executing server
+workloads~\cite{ailamaki99_dbmss_moder_proces,ferdman12_clear_cloud,kanev15_profil,ayers19_asmdb}. Compared
+to other workload classes, server workloads pose particular challenges
+for processor frontends due to their very large instruction
+footprints. These footprints, quickly overwhelms the capacities of the
+instruction cache L1-I) and the Branch Target Buffer (BTB). In order
+to handle this problem, computer architects has proposed a large
+number of different approaches. L1-I prefetchers are a highly
+effective way to alleviate the front-end bottleneck as they help
+avoiding the fill-latency that follows an L1-I miss.  As detailed in
+\truls{Add reference to relevant background section}, a particularly
+effective class of instruction prefetchers are known as Fetch Directed
+Instruction Prefetching
+(FDIP)~\cite{reinman99_fetch_direc_instr_prefet}. Since FDIP rely on
+the BTB to predict the control flow of a program, having a BTB with
+sufficient capacity is of crucial importance. By simply scaling the
+design of a conventional BTB design, the capacity required for holding
+realistic branch working sets of contemporary server workloads quickly
+become infeasible. To address this, previous work observed that all
+branch targets within a page share the same numbers and only differ in
+page offsets. Thus the page number can be deduplicated by only storing
+it once in a dedicated table and then replacing its use in a branch
+target address with a pointer to that
+table~\cite{seznec96_dont_use_page_number_point_it}. \textcite{soundararajan21_pdede}
+extends this concept further by observing that several branch page
+numbers share a common region number which can be deduplicated
+further. The limitation of these approaches is that they introduce a
+level of indirection for BTB lookups, adding complexity and increasing
+the BTB access latency.
 
-\paragraph{Methodology}
+\paragraph{Methodology.}
 
 \begin{figure}[ht]
   \centering
@@ -99,10 +135,43 @@ The front-end bottleneck is a well-known and widely documented problem affecting
   \caption{\label{fig:offset-distr} Distribution of branch target offsets in the IPC-1~\cite{ipc1} workload traces}
 \end{figure}
 
-In an attempt to find a more efficient way of storing branch offsets, we performed an analysis of the branch target offsets in a large number of real-world workload traces released for the first Instruction Prefetching Championship (IPC-1)~\cite{ipc1}. A branch target offset is the distance from a branch to its destination. This analysis, shown in \Cref{fig:offset-distr} showed that the bast majority of branches have targets very close to their origin. For example, using just, 19 bits, we can represent the target offsets of 90\% of all branches.
+To gain a deeper understanding of the characteristics of branch
+targets, we performed an analysis of the branch target offsets in a
+large number of real-world workload traces released for the first
+Instruction Prefetching Championship (IPC-1)~\cite{ipc1}. A branch
+target offset is the distance from a branch to its destination. From
+this analysis, shown in \Cref{fig:offset-distr} we make the
+observation that the vast majority of branches have targets very
+close to their origin. For example, using just 19 bits we can
+represent the target offsets of 90\% of all branches. This is
+significantly less than the 46 bits\footnote{This is assuming an
+  Arm-64 architecture whre all instructions are 4 bytes long. Thus, we
+  save the last two offset bits of the full 48-bit virtual address
+  space.} required to store the full target address.
 
+Based on this observation we propose BTB-X, a redesigned BTB that uses
+differently sized ways matching the distribution of target offset
+size that we observed. To accommodate branch targets that require the
+full address size, we introduce a small conventional BTB called
+BTB-XC. When accessing the BTB, BTB-X and BTB-XC are looked up in parallel.
 
-\paragraph{Key results}
+We implement and evaluate BTB-X using the Champsim
+simulator. Champsim is a trace-based simulator for microarchitectural
+studies~\cite{champsim}. For evaluation we use the aforementioned
+workload traces released as part of the IPC-1 championship. The traces
+were provided by Qualcomm and include both server and client
+workloads. For the BTB-X design to be applicable to all workloads, the
+branch target offset size distribution that guided its design must be
+shown to be widely applicable. To ensure this, we measure the branch
+target offset size distributions of the more than 750 traces provided by
+Qualcomm as part of the First Championship Value Prediction CVP-1 and
+traces from 6 known server applications. These results show nearly
+identical branch target offset size distributions.
+
+Finally, we measure the energy requirements and access latencies of
+BTB-X, the state-of-the-art BTB design and a conventional BTB using Cacti 7.0~\cite{cacti} at the 22~nm technology node.
+
+\paragraph{Key results.}
 
 \truls{Emphasize how the evaluation methodology using the traces from server workloads applies to FaaS workloads since a) they are fundamentally similar except that FaaS workloads run for a shorter time and b) we and prior work shows that FaaS workloads also have a large code footprint}
 
