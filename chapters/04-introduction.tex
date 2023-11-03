@@ -6,7 +6,6 @@
   \begin{refsection}[main-bib]
  \fi
 
-
 \chapter{Introduction}
 \label{chap:intro}
 
@@ -39,15 +38,64 @@ the deployment-level decisions to the provider.
 % FaaS functions is that they are stateless, meaning that they produce
 % deterministic output when executed repeatedly with the same
 % inputs.
-When an event associated with a FaaS function is triggered,
-the provider must allocate resources and invoke the target function in
+When an event associated with a FaaS function is triggered, the
+provider must allocate resources and spawn the target function in
 order to handle the request. When the FaaS function finishes its
-execution, it is shut down and the resources allocated for
-its execution are freed, possibly after the expiry of a grace
-period. This ephemeral deployment structure makes FaaS fundamentally
-different from the conventional cloud computing model where computing
-resources are provisioned in advance by the developer and services run
-as persistent daemons.
+execution, it is torn down and the resources allocated for its
+execution are freed, possibly after the expiry of a grace period to
+prevent repeatedly starting the function in case it receives requests
+with a short inter-arrival time. This ephemeral deployment structure
+makes FaaS fundamentally different from the conventional cloud
+computing model where computing resources are provisioned in advance
+by the developer and services run as persistent daemons. Another
+aspect that distinguishes FaaS functions from conventional cloud
+services is that their running time is often very short, with 67\% of
+functions studied
+in~\cite{eismann20_review_server_use_cases_their_charac} having a
+runtime in the order of seconds. Furthermore, the current trend
+indicates that functions are getting shorter with median function
+reducing by $2\times$ from 2019 to 2020~\cite{serverless_state_21}.
+
+
+The unique deployment model and runtime characteristics of FaaS
+functions motivates investigation into how FaaS interacts with current
+hardware. Notably, performance critical structures of computing
+systems, such as caches, under the fundamental assumption that
+workloads exhibits temporal locality. Prior work investigating
+this~\cite{lukewarm_serverless} notes that FaaS functions have large
+code footprints and therefore exhibit a large number of instruction
+cache misses when executed on current processors. However, their
+investigation does not identify the specific properties of serverless
+functions that cause this behavior. In particular, they do not
+identify a threshold where FaaS functions run long enough to be
+cindered equivalent with general server workloads from a
+microarchitectural perspective.
+
+The large code footprints observed for FaaS functions brings them in
+line with a general trend observed for server workloads. Over the last three decades, long before the FaaS model emerged and
+attracted the attention of researchers, the shift towards Warehouse
+Scale Computing (WSC)~\cite{barroso18_datac_as_comput} has challenged
+the way computer architects conventionally designed systems. Since
+their emergence, a key feature of WSC is that they consist of a
+large aggregation of commodity computing systems containing commodity processors~\cite{barroso03_web_searc_planet}. Commodity hardware is
+favored due to its low cost and widespread availability. However,
+scholarly research revealed that commodity processors are
+fundamentally unfit for the WSC
+workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike the
+workloads typically encountered on the client-side or in scientific
+computing, WSC workloads are marked by massive, multi-megabyte code
+footprints. These massive
+code footprints overwhelms the capabilities of common processor
+frontends causing a well-documented phenomenon known as the
+\emph{frontend
+  bottleneck}~\cite{ailamaki99_dbmss_moder_proces,keeton98_perfor_charac_quad_pentium_pro,ranganathan98_perfor_datab_workl_shared_memor}. The
+frontend bottleneck occurs when the backend of the processor is
+starved for instructions due to inefficiencies in the frontend. In
+response to this, the academic community has proposed a myriad of
+diverse methods to mitigate the front-end
+bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,}.
+
+
 
 The unique modularity, compositionality and language-independence of
 FaaS functions make the FaaS computing model highly attractive to
@@ -65,36 +113,16 @@ interfaces~\cite{gan19_open_sourc_bench_suite_micros}. In addition to
 facilitating language-independence, these loosely-coupled RPC-backed
 communication interfaces also makes it possible to transparently
 replace parts of an application and rewriting it piece-by-piece
-without discarding tested and reliable components. While this
-RPC-backed communication fabric enables many of the most attractive
-features of the FaaS model, it also introduces a considerable
-communication overhead that is highly detrimental to the performance
-of FaaS applications.
+without discarding tested and reliable components. Language
+independence is a critically important property of FaaS as 96\% of
+large organizations that use FaaS deploy functions written in two or
+more different languages\cite{serverless_state}. While this RPC-backed
+communication fabric enables many of the most attractive features of
+the FaaS model, it also introduces a considerable communication
+overhead that is highly detrimental to the performance of FaaS
+applications.  \truls{Cite work that investigates how bad the
+  communication overhead is}
 
-
-Over the last three decades, long before the FaaS model emerged and
-attracted the attention of researchers, the shift towards Warehouse
-Scale Computing (WSC)~\cite{barroso18_datac_as_comput} has challenged
-the way computer architects conventionally designed systems. Since
-their emergence, a key feature of WSC is that they consist of a
-large aggregation of commodity computing systems containing commodity
-processors~\cite{barroso03_web_searc_planet}. Commodity hardware is
-favored due to its low cost and widespread availability. However,
-scholarly research revealed that commodity processors are
-fundamentally unfit for the WSC
-workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike the
-workloads typically encountered on the client-side or in scientific
-computing, WSC workloads are marked by massive, multi-megabyte code
-footprints. These massive
-code footprints overwhelms the capabilities of common processor
-frontends causing a well-documented phenomenon known as the
-\emph{frontend
-  bottleneck}~\cite{ailamaki99_dbmss_moder_proces,keeton98_perfor_charac_quad_pentium_pro,ranganathan98_perfor_datab_workl_shared_memor}. The
-frontend bottleneck occurs when the backend of the processor is
-starved for instructions due to inefficiencies in the frontend. In
-response to this, the academic community has proposed a myriad of
-diverse methods to mitigate the front-end
-bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,}.
 
 
 % \begin{enumerate}
@@ -195,7 +223,7 @@ state thrashing.
 %  \end{description}
 
 From this work, we draw the conclusions that only functions with
-a very short execution time (<1 ms) benefit from being executed on a
+a very short execution times (<1 ms) benefit from being executed on a
 processor with a warm microarchitectural state. In real-world
 workloads such functions are
 uncommon~\cite{shahrad20_server_wild,mahgoub22_wisef} and therefore,
@@ -250,7 +278,7 @@ presented in the full length paper A4 (\Cref{chap:hpca-paper}).
 \noindent
 \begin{tabular}{lp{0.8\textwidth}}
   \textbf{Paper A1} & \textbf{Impact of Microarchitectural State Reuse on Serverless Functions} \newline
-                     \textbf{Truls Asheim}, Tanvir Ahmed Khan, Baris Kasicki and Rakesh Kumar \newline
+                      \textbf{Truls Asheim}, Tanvir Ahmed Khan, Baris Kasicki and Rakesh Kumar \newline
                      \textbf{In:} Proceedings of the Eighth International Workshop on Serverless Computing, 2022
                      \vspace*{0.3cm}\\
   \textbf{Paper A2} & \textbf{BTB-X: A Storage-Effective BTB Organization} \newline
@@ -294,7 +322,7 @@ we observe that these approaches compromise with at least one of the
 critical properties that make FaaS attractive to developers. Some
 approaches, require FaaS applications to be written in a specific
 language, compromising the developers' ability to freely mix and match
-implementation languages of functions. Other approaches require
+implementation languages of functions.  Other approaches require
 existing functions to be rewritten to use a certain specialized
 API. Finally, some approaches propose entirely new runtimes that can
 be difficult to integrate on existing FaaS computing platforms.
