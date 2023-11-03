@@ -71,6 +71,7 @@ features of the FaaS model, it also introduces a considerable
 communication overhead that is highly detrimental to the performance
 of FaaS applications.
 
+
 Over the last three decades, long before the FaaS model emerged and
 attracted the attention of researchers, the shift towards Warehouse
 Scale Computing (WSC)~\cite{barroso18_datac_as_comput} has challenged
@@ -83,8 +84,8 @@ scholarly research revealed that commodity processors are
 fundamentally unfit for the WSC
 workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike the
 workloads typically encountered on the client-side or in scientific
-computing, WSC workloads are marked by massive, multi-MB code
-footprints and comparatively meager data footprints. These massive
+computing, WSC workloads are marked by massive, multi-megabyte code
+footprints. These massive
 code footprints overwhelms the capabilities of common processor
 frontends causing a well-documented phenomenon known as the
 \emph{frontend
@@ -94,7 +95,6 @@ starved for instructions due to inefficiencies in the frontend. In
 response to this, the academic community has proposed a myriad of
 diverse methods to mitigate the front-end
 bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,}.
-%\truls{[TODO:  More citations]}
 
 
 % \begin{enumerate}
