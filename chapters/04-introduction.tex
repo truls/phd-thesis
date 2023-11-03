@@ -181,19 +181,22 @@ introducing a software-level transformation.
 \label{sec:rda}
 
 The first step of solving any problem is to gain an in-depth
-understanding of its characteristics.
-
-Previous work has investigated the
-impact of FaaS on current hardware and concluded that FaaS has a
-significant negative impact on current
+understanding of its characteristics. We begin approaching this
+research direction with a study that performs an in-depths
+chracterization of how one of the unique features of FaaS functions,
+their very short running times, interacts with current processors. Previous work has investigated the impact of FaaS on current
+processors and concluded that FaaS has a significant negative impact on
+current
 microarchitectures~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. In
 particular, \textcite{lukewarm_serverless} finds that
 microarchitectural state thrashing occurs due to the short running
-time of FaaS functions and the heavy interleaving that occurs when many
-different functions are queued for execution on a single processor core. However, they stop short of investigating \emph{why} FaaS
-functions has this impact on common microarchitectures. To address this, we investigate which properties of FaaS functions
-make them susceptible to the negative effects of microarchitectural
-state thrashing.
+time of FaaS functions and the heavy interleaving that occurs when
+many different functions are queued for execution on a single
+processor core. However, they stop short of investigating \emph{why}
+FaaS functions has this impact on common microarchitectures. To
+address this, we investigate which properties of FaaS functions make
+them susceptible to the negative effects of microarchitectural state
+thrashing.
 
 % We find that only very short
 % running functions are negatively impacted an that this negative impact
