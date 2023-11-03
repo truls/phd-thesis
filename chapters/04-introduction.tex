@@ -180,6 +180,9 @@ introducing a software-level transformation.
 \subsection{Research direction A: Hardware Optimizations for Serverless Computing}
 \label{sec:rda}
 
+The first step of solving any problem is to gain an in-depth
+understanding of its characteristics.
+
 Previous work has investigated the
 impact of FaaS on current hardware and concluded that FaaS has a
 significant negative impact on current
@@ -256,17 +259,19 @@ simply by increasing the BTB storage budget.
 BTB-X defies this trend by leveraging a key insight about the
 distribution of branch target offset sizes. A conventional BTB
 (Conv-BTB) stores the full target address of every branch it holds. We
-make a key observation that most branch targets are close to the branch
-instructions themselves. Therefore, we can achieve significant storage savings 
-by storing branch target offsets instead of the full target
-addresses in the BTB. We further observe large variability in the target offset sizes,
-i.e., some offsets are much larger/smaller than others. Thus, a BTB
-design should be able to accommodate this variability to maximize storage efficiency. The resulting design improves the state of the art in terms of branch
-storage density, lookup latency and power requirements. Since BTB-X
-increases the branch working set coverage of the BTB, it also improves
-instruction prefetching performance (see \Cref{sec:instr-delivery}). Thereby, it helps alleviating the
-front-end bottleneck and improves the performance of, particularly,
-server workloads.
+make a key observation that most branch targets are close to the
+branch instructions themselves. Therefore, we can achieve significant
+storage savings by storing branch target offsets instead of the full
+target addresses in the BTB. We further observe large variability in
+the target offset sizes, i.e., some offsets are much larger/smaller
+than others. Thus, a BTB design should be able to accommodate this
+variability to maximize storage efficiency. The resulting design
+improves the state of the art in terms of branch storage density,
+lookup latency and power requirements. Since BTB-X increases the
+branch working set coverage of the BTB, it also improves instruction
+prefetching performance (see \Cref{sec:instr-delivery}). Thereby, it
+helps alleviating the front-end bottleneck and improves the
+performance of, particularly, server workloads.
 
 The motivating analysis is presented in Paper A1 (\Cref{chap:wosc-paper}).
 The design of BTB-X evolved over time and is described in three paper. The first version of BTB-X is described in paper A2
