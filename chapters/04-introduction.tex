@@ -230,51 +230,49 @@ thrashing.
 %    FaaS applications in software allowing them to execute more efficiently on current hardware.
 %  \end{description}
 
-From this work, we draw the conclusions that only functions with
-a very short execution times (<1 ms) benefit from being executed on a
-processor with a warm microarchitectural state. In real-world
-workloads such functions are
-uncommon~\cite{shahrad20_server_wild,mahgoub22_wisef} and therefore,
-adding a specialized hardware optimization to accommodate them would
-not be worthwhile. Furthermore, the analysis show that FaaS functions
-are heavily frontend bound. This corroborates similar observations made
-in previous work
+From this work, we learn that only functions with a very short
+execution times (<1 ms) benefit from being executed on a processor
+with a warm microarchitectural state. In real-world workloads such
+functions are uncommon~\cite{shahrad20_server_wild,mahgoub22_wisef}
+and therefore, adding a specialized hardware optimization to
+accommodate them would not be worthwhile. Furthermore, the analysis
+show that FaaS functions are heavily frontend bound. This corroborates
+similar observations made in previous work
 \cite{lukewarm_serverless,gan19_open_sourc_bench_suite_micros}. Thus,
 in order to improve execution performance in the general case for
 serverless functions we are strongly motivated to continue working on
 eliminating the front-end bottleneck.
 
 To that end, we propose BTB-X, a storage-efficient Branch Target
-Buffer (BTB) (see \Cref{sec:btb-background}) organization for
-servers.  The starting point of this work is that Fetch Directed Instruction
+Buffer (BTB) (see \Cref{sec:btb-background}) organization for servers.
+The starting point of this work is that Fetch Directed Instruction
 Prefetchers (FDIP) have superior performance when given sufficient BTB
 capacity~\cite{ishii21_re_fetch_direc_instr_prefet}. Considering the
 vast branch working sets of contemporary server workloads, industry
 has responded by allocating large amounts of storage to the
 BTB~\cite{neoverse,IBMz,zen2} with resulting sizes reaching up to
 500KB of on-chip storage~\cite{exynos}. This amount of space means
-that large chunks of chip area and power budget is dedicated to
-the BTB. Further, considering that instruction set sizes show no sign
-of slowing down with Google observing 20\% annualized growth
+that large chunks of chip area and power budget is dedicated to the
+BTB. Further, considering that instruction set sizes show no sign of
+slowing down with Google observing 20\% annualized growth
 rates~\cite{kanev15_profil}, it is infeasible to respond to this
-simply by increasing the BTB storage budget.
-
-BTB-X defies this trend by leveraging a key insight about the
-distribution of branch target offset sizes. A conventional BTB
-(Conv-BTB) stores the full target address of every branch it holds. We
-make a key observation that most branch targets are close to the
-branch instructions themselves. Therefore, we can achieve significant
-storage savings by storing branch target offsets instead of the full
-target addresses in the BTB. We further observe large variability in
-the target offset sizes, i.e., some offsets are much larger/smaller
-than others. Thus, a BTB design should be able to accommodate this
-variability to maximize storage efficiency. The resulting design
-improves the state of the art in terms of branch storage density,
-lookup latency and power requirements. Since BTB-X increases the
-branch working set coverage of the BTB, it also improves instruction
-prefetching performance (see \Cref{sec:instr-delivery}). Thereby, it
-helps alleviating the front-end bottleneck and improves the
-performance of, particularly, server workloads.
+simply by increasing the BTB storage budget. BTB-X defies this trend
+by leveraging a key insight about the distribution of branch target
+offset sizes. A conventional BTB (Conv-BTB) stores the full target
+address of every branch it holds. We make a key observation that most
+branch targets are close to the branch instructions
+themselves. Therefore, we can achieve significant storage savings by
+storing branch target offsets instead of the full target addresses in
+the BTB. We further observe large variability in the target offset
+sizes, i.e., some offsets are much larger/smaller than others. Thus, a
+BTB design should be able to accommodate this variability to maximize
+storage efficiency. The resulting design improves the state of the art
+in terms of branch storage density, lookup latency and power
+requirements. Since BTB-X increases the branch working set coverage of
+the BTB, it also improves instruction prefetching performance (see
+\Cref{sec:instr-delivery}). Thereby, it helps alleviating the
+front-end bottleneck and improves the performance of, particularly,
+server workloads.
 
 The motivating analysis is presented in Paper A1 (\Cref{chap:wosc-paper}).
 The design of BTB-X evolved over time and is described in three paper. The first version of BTB-X is described in paper A2
