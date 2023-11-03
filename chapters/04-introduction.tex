@@ -26,22 +26,23 @@ powering serverless computing, is a cloud computing model that is
 currently seeing rapid growth. FaaS promises simplicity, flexibility
 and cost-efficiency by moving deployment and resource allocation
 decisions from the user to the provider. Currently, FaaS technology is
-used by half of all organizations that rely on cloud
+used by the half of all organizations that rely on cloud
 computing~\cite{serverless_state}. In the FaaS model, the fundamental
 unit of computation is a \emph{function}. A FaaS function is a
-stateless unit of code that is executed on demand following the
-triggering of an external event, such as an incoming HTTP request or a
+stateless unit of code that is executed on demand %following the triggering of an external event,
+when triggered by an external event,
+such as an incoming HTTP request or a
 timer tick. Thus, when developing a FaaS function, the developer only
-needs to implement the functionality of the function, leaving all
-other deployment-level decisions to the provider.
+needs to implement its functionality, leaving all
+the deployment-level decisions to the provider.
 % A key property of
 % FaaS functions is that they are stateless, meaning that they produce
 % deterministic output when executed repeatedly with the same
 % inputs.
 When an event associated with a FaaS function is triggered,
 the provider must allocate resources and invoke the target function in
-order to handle the request. When the FaaS function has finished
-executing, the function is shut down and the resources allocated to
+order to handle the request. When the FaaS function finishes its
+execution, it is shut down and the resources allocated for
 its execution are freed, possibly after the expiry of a grace
 period. This ephemeral deployment structure makes FaaS fundamentally
 different from the conventional cloud computing model where computing
@@ -53,7 +54,7 @@ FaaS functions make the FaaS computing model highly attractive to
 developers~\cite{williams16_growin_need_micros_bioin}. To maximize
 these benefits, developers are encouraged to keep each individual FaaS
 function small with a narrowly defined purpose. Hence, many FaaS
-functions have short running times, often less than 1
+functions have short execution times, often less than 1
 second~\cite{shahrad19_archit_implic_funct_servic_comput,mahgoub22_wisef,shahrad20_server_wild,lukewarm_serverless,du20_catal}.
 Larger and more complex FaaS applications are built by composing
 multiple smaller FaaS functions. Since a FaaS function can be written
@@ -65,8 +66,8 @@ facilitating language-independence, these loosely-coupled RPC-backed
 communication interfaces also makes it possible to transparently
 replace parts of an application and rewriting it piece-by-piece
 without discarding tested and reliable components. While this
-RPC-backed communication fabric enable many of the most attractive
-features of the FaaS model, it also introduce a considerable
+RPC-backed communication fabric enables many of the most attractive
+features of the FaaS model, it also introduces a considerable
 communication overhead that is highly detrimental to the performance
 of FaaS applications.
 
@@ -74,14 +75,14 @@ Over the last three decades, long before the FaaS model emerged and
 attracted the attention of researchers, the shift towards Warehouse
 Scale Computing (WSC)~\cite{barroso18_datac_as_comput} has challenged
 the way computer architects conventionally designed systems. Since
-their emergence, a key feature of WSC's is that they consist of a
+their emergence, a key feature of WSC is that they consist of a
 large aggregation of commodity computing systems containing commodity
 processors~\cite{barroso03_web_searc_planet}. Commodity hardware is
 favored due to its low cost and widespread availability. However,
 scholarly research revealed that commodity processors are
 fundamentally unfit for the WSC
-workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike
-workloads typically encountered client-side or in scientific
+workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike the
+workloads typically encountered on the client-side or in scientific
 computing, WSC workloads are marked by massive, multi-MB code
 footprints and comparatively meager data footprints. These massive
 code footprints overwhelms the capabilities of common processor
@@ -108,16 +109,20 @@ bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast
 The guiding research statement of this thesis is to 
 \begin{framed}
 \noindent
-\textbf{Identify sources of inefficiencies in FaaS applications, determine why they occur and to propose hardware and software mechanisms to alleviate these inefficiencies.}
+\textbf{Identify the sources of inefficiencies in FaaS applications, determine their root causes, and investigate hardware and software mechanisms to alleviate these inefficiencies.}
 \end{framed}
 \noindent
-To that end, the research presented in this thesis follows two
-directions. The first, RD-A is concerned with hardware optimizations
-that improves the performance of serverless computing and in that
-regard we perform an in-depth microarchitectural evaluation of FaaS
-functions and we propose a microarchitectural optimization that
-mitigates the front-end bottleneck for server workloads generally. For the
-second research direction, RD-B, we focus on reducing the
+To that end, the research presented in this thesis takes two
+directions. The first research direction, RD-A, focuses on understanding 
+the microarchitectural behaviour of FaaS functions and leveraging 
+this understanding to investigate microarchitectural features for optimizing their 
+execution. 
+%is concerned with hardware optimizations 
+%that improves the performance of serverless computing and in that
+%regard we perform an in-depth microarchitectural evaluation of FaaS
+%functions and we propose a microarchitectural optimization that
+%itigates the front-end bottleneck for server workloads generally. 
+The second research direction, RD-B, focuses on reducing the
 inter-function communication overhead in FaaS applications by
 introducing a software-level transformation.
 
@@ -206,8 +211,8 @@ eliminating the front-end bottleneck.
 
 To that end, we propose BTB-X, a storage-efficient Branch Target
 Buffer (BTB) (see \Cref{sec:btb-background}) organization for
-servers.  The starting point of this work is that FDIP instruction
-prefetchers have superior performance when given sufficient BTB
+servers.  The starting point of this work is that Fetch Directed Instruction
+Prefetchers (FDIP) have superior performance when given sufficient BTB
 capacity~\cite{ishii21_re_fetch_direc_instr_prefet}. Considering the
 vast branch working sets of contemporary server workloads, industry
 has responded by allocating large amounts of storage to the
@@ -220,14 +225,15 @@ rates~\cite{kanev15_profil}, it is infeasible to respond to this
 simply by increasing the BTB storage budget.
 
 BTB-X defies this trend by leveraging a key insight about the
-distribution of branch target offset sizes. Conventional BTBs
+distribution of branch target offset sizes. A conventional BTB
 (Conv-BTB) stores the full target address of every branch it holds. We
-make the observation that most branch targets are close to their
-origin. Following this, our key insight is that we can redesign the
-BTB to store branch target offsets instead of the full target
-addresses. In a Conv-BTB, each way is sized to hold a full target
-address. In BTB-X we size the ways differently so that smaller branch
-offset sizes can be stored without redundant space.
+make a key observation that most branch targets are close to the branch
+instructions themselves. Therefore, we can achieve significant storage savings 
+by storing branch target offsets instead of the full target
+addresses in the BTB. We further observe large variability in the target offset sizes,
+i.e., some offsets are much larger/smaller than others. Thus, a BTB
+design should be able to accommodate this variability to maximize storage efficiency.
+
 
 The resulting design improves the state of the art in terms of branch
 storage density, lookup latency and power requirements. Since BTB-X
@@ -312,7 +318,7 @@ transformation improves inter-function communication overheads by up
 to $100\times$ without sacrificing any of FaaS' most attractive properties.
 
 The complete CoFaaS design and implementation is described in Paper B1
-(\Cref{chap:eurosys-paper})
+(\Cref{chap:eurosys-paper}):
 
 
 \vspace*{0.5em}
@@ -333,7 +339,7 @@ understanding and contextualizes the topics of the included paper,
 \Cref{chap:rcontrib} summarizes the research contributions of the
 thesis in more details and finally \Cref{chap:conclusions} presents
 the thesis' conclusions. \Cref{part:two} contains the scientific
-publications that collectively comprise the contributions of the
+publications that collectively describe the contributions of the
 thesis.
 
 \ifx\chapincluded\undefined
