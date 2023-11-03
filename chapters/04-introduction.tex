@@ -104,12 +104,16 @@ FaaS functions make the FaaS computing model highly attractive to
 developers~\cite{williams16_growin_need_micros_bioin}. To maximize
 these benefits, developers are encouraged to keep each individual FaaS
 function small with a narrowly defined purpose. This also contributes
-to the aforementioned very short running time of FaaS functions~\cite{shahrad19_archit_implic_funct_servic_comput,mahgoub22_wisef,shahrad20_server_wild,lukewarm_serverless,du20_catal}.
-Larger and more complex FaaS applications are built by composing
-multiple smaller FaaS functions. Since a FaaS function can be written
-in any language depending on what best fits its purpose, the functions
-comprising a FaaS application normally communicate using
-network-backed Remote Procedure Call (RPC)
+to the aforementioned very short running time of FaaS
+functions~\cite{shahrad19_archit_implic_funct_servic_comput,mahgoub22_wisef,shahrad20_server_wild,lukewarm_serverless,du20_catal}. Additionally,
+since providers charge for the CPU-time needed to execute a FaaS
+function, developers also have a strong monetary incentive to keep the
+running time of functions short~\cite{faas_procing}.  Larger and more
+complex FaaS applications are built by composing multiple smaller FaaS
+functions. Since a FaaS function can be written in any language
+depending on what best fits its purpose, the functions comprising a
+FaaS application normally communicate using network-backed Remote
+Procedure Call (RPC)
 interfaces~\cite{gan19_open_sourc_bench_suite_micros}. In addition to
 facilitating language-independence, these loosely-coupled RPC-backed
 communication interfaces also makes it possible to transparently
