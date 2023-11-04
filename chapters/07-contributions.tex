@@ -16,7 +16,7 @@ The research contributions of this thesis are presented as five articles. The fi
 
 \section{Contribution overview}
 
-\subsection{Research direction 1: Hardware}
+\subsection{Research Direction A: Hardware approaches to optimizing FaaS}
 We present our results in two parts where the first partI
 (\Cref{subsub:understanding}) covers the
 background study, presented in Paper A1 (\Cref{chap:wosc-paper}) and
@@ -203,25 +203,45 @@ their external interfaces is preserved. Furthermore, since RPC can be
 placed on a network fabric, FaaS functions communicating over RPC can
 be transparently distributed across several nodes. The major
 disadvantage of these network-backed RPC interlaces are the massive
-latency that they induce. Where a local function call in a monolithic
-application takes an order of nanoseconds, RPC-backed function calls
-between FaaS functions in a FaaS application can take several
-milliseconds to execute -- a difference of several orders of
-magnitude. In some cases, e.g. when two FaaS functions scheduled on
-different node need to communicate, using a networked RPC interface
-for communication is necessary. In other cases, e.g. when two FaaS
-functions are scheduled on the same node, using the RPC interface for
-communication only adds overhead without giving any benefits. To
-tackle this issue, prior work has proposed diverse mechanisms aiming
-to reduce the inter-function communication overhead of FaaS
-\cite{kotni21_faast,
-  mahgoub22_wisef,barcelona-pons19_faas_track,sreekanti20_cloud,shillaker20_faasm,jia21_night}.  Common for all of these approaches, however, is that they violate one or more of the key properties of FaaS that makes the programming model attractive to developers (see \Cref{sec:serverless})
+latency that they induce. Where the latency of a local function call
+in a monolith application is in the order of a new nanoseconds,
+RPC-backed function calls between FaaS functions in a FaaS application
+can take several milliseconds to execute -- a difference of several
+orders of magnitude. In some cases, e.g. when two FaaS functions
+scheduled on different node need to communicate, using a networked RPC
+interface for communication is necessary. In other cases, e.g. when
+two FaaS functions are scheduled on the same node, using the RPC
+interface for communication only adds overhead without giving any
+benefits. To tackle this issue, prior work has proposed diverse
+mechanisms aiming to reduce the inter-function communication overhead
+of FaaS \cite{kotni21_faast,
+  mahgoub22_wisef,barcelona-pons19_faas_track,sreekanti20_cloud,shillaker20_faasm,jia21_night}.
+Common for all of these approaches, however, is that they violate one
+or more of the key properties of FaaS that makes the programming model
+attractive to developers (see \Cref{sec:serverless}).
 
 \paragraph{Approach.}
+We propose CoFaaS, a software transformation of FaaS applications that eliminate inter-function communication overhead. CoFaaS is unique in the landscape as it eliminates the FaaS communication overhead without sacrificing any of the key properties that makes FaaS attractive to developers. The CoFaaS transformation is fully automatic and can be applied to existing FaaS applications without requiring manual modification of existing functions.
+
+CoFaaS makes the key observation that in order for FaaS functions to communicate, their public interfaces must be specified using language-independent Interface Definition Languages (IDL).  A commonly used IDL in FaaS applications is Protobuf. The IDL definitions written in Protobuf are used by Google's gRPC framework. The key takeaway from this, is that as long as we keep the public interface unchanged, we can transform the function implementation freely. We exploit this to retarget FaaS functions run on a single WebAssembly (Wasm) runtime. Wasm is a language-independent portable bytecode format ideally suited for our purpose. In order for the FaaS functions to co-exist on a single Wasm runtime, we transform the FaaS functions into a Wasm component. Wasm components, like FaaS functions, use a language-independent IDL to define their public interface and since each Wasm component exist in their own isolated memory space, we can simply transform the IDL of the FaaS function to the IDL of Wasm and compile the functions to Wasm. The final point to address is that the original functions are written to communicate over a network-backed RPC interface. To address this we do two things: First, we provide a stub library that provides API-level compatibility with the original grPC library but instead of calling other functions using a networked RPC call, it uses the Wasm interface to call functions running on the same Wasm runtime.
+
+For evaluating CoFaaS we use a two-function producer-consumer FaaS application that works as follows: A client issues a request to the producer function, then the producer function generates $m$ bytes of data and transmits this data to the consumer function. Finally, the request from the producer to the consumer is repeated $n$ times. By changing values for $m$ and $n$ evaluation we are able to estimate \begin{inparaenum}[a)]
+  \item to what extent the latency reduction CoFaaS achieves is amortized by the data transfer happening between the consumer and producer and \item we can estimate the impact of CoFaaS on more complex applications consisting of more functions by varying the number of intra-application requests.
+\end{inparaenum}
+
+
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\textwidth]{papers/paper5-cofaas/figures/cofaas_compilation.pdf}
+  \caption{\label{fig:cofaas-comp} The compilation workflow required when using CoFaaS.}
+\end{figure}
 
 
 \paragraph{Key Results.}
+We evaluate CoFaaS using a two-function FaaS application  that CoFaaS reduces the round-triip request time of the FaaS application that we evaluate by 6\texttimes. The latency of inter-function requests is reduced by up to 100\texttimes..
 
+Applying CoFaaS to a production scenario is feasible as transforming a FaaS function to a composable CoFaaS component is simply another compilation step. The operation needed to compose CoFaaS components into an application is instantaneous and can easily be done at deployment time.
 
 %\subsection{Primary contribution 2: 
 
