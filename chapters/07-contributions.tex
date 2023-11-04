@@ -208,7 +208,7 @@ application takes an order of nanoseconds, RPC-backed function calls
 between FaaS functions in a FaaS application can take several
 milliseconds to execute -- a difference of several orders of
 magnitude. In some cases, e.g. when two FaaS functions scheduled on
-different node needs to communicate, using a networked RPC interface
+different node need to communicate, using a networked RPC interface
 for communication is necessary. In other cases, e.g. when two FaaS
 functions are scheduled on the same node, using the RPC interface for
 communication only adds overhead without giving any benefits. To
