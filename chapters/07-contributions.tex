@@ -36,7 +36,7 @@ of FaaS functions consisting of both real-world and synthetic
 workloads. Using synthetic workloads allow us to modify specific
 parameters of interest in a targeted way. To measure the impact of
 executing the functions on a warm and cold microarchitectural state we
-execute the functions in tow modes: back-to-back and interleaved. In
+execute the functions in two modes: back-to-back and interleaved. In
 back-to-back execution, the functions are executed repeatedly in a
 tight loop. In the interleaved execution case, each invocation of a
 function is interleaved with an invocation of a \emph{trhasher}
@@ -87,7 +87,7 @@ the real-world FaaS functions we evaluate are overwhelmingly front-end
 bound. This is in line with similar observations made for general
 server
 workloads~\cite{ferdman12_clear_cloud,kanev15_profil,ayers19_asmdb}
-and for FaaS functions specifically~\cite{lukewarm_serverless}. This
+and corroborates similar observations made for FaaS functions specifically~\cite{lukewarm_serverless}. This
 strongly motivates further research aiming to alleviate the front-end
 bottleneck with the goal of optimizing the execution of FaaS
 functions.
@@ -233,7 +233,7 @@ For evaluating CoFaaS we use a two-function producer-consumer FaaS application t
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.8\textwidth]{papers/paper5-cofaas/figures/cofaas_compilation.pdf}
+  \includegraphics[width=0.5\textwidth]{papers/paper5-cofaas/figures/cofaas_compilation.pdf}
   \caption{\label{fig:cofaas-comp} The compilation workflow required when using CoFaaS.}
 \end{figure}
 
