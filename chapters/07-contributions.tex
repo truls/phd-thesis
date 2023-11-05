@@ -9,7 +9,13 @@
  \chapter{Research Contributions}
 \label{chap:rcontrib}
 
-The research contributions of this thesis are presented as five articles. The first four (\Cref{chap:cal-paper,chap:pact-paper,chap:wosc-paper,chap:hpca-paper}), and the last (\Cref{chap:eurosys-paper}) is pending review at the time of thesis submission. In this chapter, we summarize the contributions of each paper and contextualize the papers in regard to prior work. The papers that are included in this thesis are:
+The research contributions of this thesis are presented in five
+articles. The first four
+(\Cref{chap:cal-paper,chap:pact-paper,chap:wosc-paper,chap:hpca-paper})
+are published and the final paper (\Cref{chap:eurosys-paper}) is
+pending review at the time of thesis submission. In this chapter, we
+summarize the contributions of each paper and contextualize the papers
+prior work. 
 
 
 \section{Contribution overview}
@@ -52,8 +58,9 @@ microarchitectural bottlenecks. For both the back-to-back and
 interleaved execution we measured both the wall-clock running time of
 the functions and key microarchitectural parameters.
 
-To support our findings (presented below) we perform a measurement of
-the code footprint of each of the FaaS functions that we use in our
+
+To support our findings (presented below) we measure the code
+footprint of each of the FaaS functions that we use in our
 analysis. Doing this using a full microarchitectural simulator is a
 slow and tedious process and it is not possible to perform this
 analysis statically since the dynamic instruction trace of a program
@@ -239,7 +246,7 @@ attractive to developers (see \Cref{sec:serverless}).
 
 
 \paragraph{Approach.}
-We propose CoFaaS, a software transformation of FaaS applications that eliminate inter-function communication overhead. CoFaaS is unique in the landscape as it eliminates the FaaS communication overhead without sacrificing any of the key properties that makes FaaS attractive to developers. The CoFaaS transformation is fully automatic and can be applied to existing FaaS applications without requiring manual modification of existing functions.
+We propose CoFaaS, a software transformation of FaaS applications that eliminate the inter-function communication overhead. CoFaaS is unique in the landscape as it eliminates the FaaS communication overhead without sacrificing any of the key properties that makes FaaS attractive to developers. The CoFaaS transformation is fully automatic and can be applied to existing FaaS applications without requiring manual modification of existing functions.
 
 
 For FaaS functions to communicate, their public interfaces must be

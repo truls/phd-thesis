@@ -17,23 +17,22 @@
 % providers.
 
 The emergence of cloud computing has driven a landslide change in the
-computing landscape where computing resources increasingly centralize
-in the hands of a few global providers. The cloud computing revolution
-is driven by the developers desire for simple and flexible
-hosting. Function-as-a-Service (FaaS) computing, the core technology
-powering serverless computing, is a cloud computing model that is
-currently seeing rapid growth. FaaS promises simplicity, elasticity
-and cost-efficiency by moving deployment and resource management
-decisions from the user to the provider. Currently, FaaS technology is
-used by the half of all organizations that rely on cloud
+computing landscape where computing resources are increasingly
+centralized in the hands of a few global providers. The cloud
+computing revolution is driven by the developers' desire for simple and
+flexible hosting. Function-as-a-service (FaaS) computing, the core
+technology powering serverless computing, is a cloud programming model
+that is currently seeing rapid growth. FaaS promises simplicity,
+elasticity, and cost-efficiency by moving deployment and resource
+management decisions from the user to the provider. Currently, FaaS
+technology is used by half of all organizations that rely on cloud
 computing~\cite{serverless_state}. In the FaaS model, the fundamental
 unit of computation is a \emph{function}. A FaaS function is a
-stateless unit of code that is executed on demand %following the triggering of an external event,
-when triggered by an external event,
-such as an incoming HTTP request or a
-timer tick. Thus, when developing a FaaS function, the developer only
-needs to implement its functionality, leaving all
-the deployment-level decisions to the provider.
+stateless unit of code that is executed on demand when triggered by an
+external event, such as an incoming HTTP request or a timer
+tick. Thus, when developing a FaaS function, the developer only needs
+to implement its functionality, leaving all the deployment-level
+decisions to the provider.
 % A key property of
 % FaaS functions is that they are stateless, meaning that they produce
 % deterministic output when executed repeatedly with the same
@@ -54,20 +53,21 @@ functions studied
 in~\cite{eismann20_review_server_use_cases_their_charac} having a
 runtime in the order of seconds. Furthermore, the current trend
 indicates that functions are getting shorter with median function
-reducing by 2\texttimes{} from 2019 to 2020~\cite{serverless_state_21}.
+execution time reducing by 2\texttimes{} from 2019 to
+2020~\cite{serverless_state_21}.
 
 
 The unique deployment model and runtime characteristics of FaaS
 functions motivates investigation into how FaaS interacts with current
-hardware. Notably, performance critical structures of computing
+hardware. Notably, performance-critical structures of computing
 systems, such as caches, work under the fundamental assumption that
-workloads exhibits temporal locality. Prior work investigating
+workloads exhibit temporal locality. Prior work investigating
 this~\cite{lukewarm_serverless} notes that FaaS functions have large
-code footprints and therefore exhibit a large number of instruction
-cache misses when executed on current processors. However, their
-investigation does not identify the specific properties of serverless
-functions that cause this behavior. In particular, they do not
-identify a threshold where FaaS functions run long enough to be
+code footprints and therefore exhibit a large number of
+instruction-cache misses when executed on current processors. However,
+their investigation does not identify the specific properties of
+serverless functions that cause this behavior. In particular, they do
+not identify a threshold where FaaS functions run long enough to be
 considered equivalent to general server workloads from a
 microarchitectural perspective.
 
@@ -85,9 +85,9 @@ favored due to its low cost and widespread availability. However,
 scholarly research revealed that commodity processors are
 fundamentally unfit for the WSC
 workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike the
-workloads typically encountered on the client-side or in scientific
+workloads typically encountered by the client-side or in scientific
 computing, WSC workloads are marked by massive, multi-megabyte code
-footprints. These massive code footprints overwhelms the capabilities
+footprints. These massive code footprints overwhelm the capabilities
 of common processor frontends causing a well-documented phenomenon
 known as the \emph{frontend
   bottleneck}~\cite{ailamaki99_dbmss_moder_proces,keeton98_perfor_charac_quad_pentium_pro,ranganathan98_perfor_datab_workl_shared_memor}. The
@@ -96,16 +96,16 @@ starved for instructions due to inefficiencies in the frontend. In
 response to this, the academic community has proposed a myriad of
 diverse methods to mitigate the front-end
 bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,}.
-This thesis seeks to exploit outstanding opportunity in mitigating
-the front-end bottleneck in order to improve the performance of FaaS
+This thesis seeks to exploit outstanding opportunities in mitigating
+the front-end bottleneck to improve the performance of FaaS
 functions and server workloads in general.
 
 
 
-The unique modularity, compositionality and language-independence of
+The unique modularity, compositionality, and language-independence of
 FaaS functions make the FaaS computing model highly attractive to
 developers~\cite{williams16_growin_need_micros_bioin}. To maximize
-these benefits, developers are encouraged to keep each individual FaaS
+these benefits, developers are encouraged to keep each FaaS
 function small with a narrowly defined purpose. This also contributes
 to the aforementioned very short running time of FaaS
 functions~\cite{shahrad19_archit_implic_funct_servic_comput,mahgoub22_wisef,shahrad20_server_wild,lukewarm_serverless,du20_catal}. Additionally,
@@ -119,8 +119,8 @@ FaaS application normally communicate using network-backed Remote
 Procedure Call (RPC)
 interfaces~\cite{gan19_open_sourc_bench_suite_micros}. In addition to
 facilitating language-independence, these loosely-coupled RPC-backed
-communication interfaces also makes it possible to transparently
-replace parts of an application and rewriting it piece-by-piece
+communication interfaces also make it possible to transparently
+replace parts of an application and rewrite it piece-by-piece
 without discarding tested and reliable components. Language
 independence is a critically important property of FaaS as 96\% of
 large organizations that use FaaS deploy functions written in two or
@@ -249,7 +249,7 @@ accommodate them would not be worthwhile. Furthermore, the analysis
 show that FaaS functions are heavily frontend bound. This corroborates
 similar observations made in previous work
 \cite{lukewarm_serverless,gan19_open_sourc_bench_suite_micros}. Thus,
-in order to improve execution performance in the general case for
+to improve execution performance in the general case for
 serverless functions we are strongly motivated to continue working on
 eliminating the front-end bottleneck.
 
