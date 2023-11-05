@@ -236,7 +236,7 @@ inter-function communications in FaaS applications are a key
 facilitator of the loose coupling between functions that give FaaS
 many of its attractive
 benefits~\cite{gan19_open_sourc_bench_suite_micros}. The RPC
-interfaces allow FaaS functions written in different languages to
+interface allow FaaS functions written in different languages to
 communicate with each other and it allows functions to be swapped out
 at runtime as long as their external interfaces is
 preserved. Furthermore, since RPC protocols can use a networked
@@ -244,7 +244,7 @@ transport, FaaS functions communicating over RPC can be transparently
 distributed across physical nodes. The major disadvantage of these
 network-backed RPC interlaces is that they induce a massive
 inter-function communication latency. Where the latency of a local
-function call in a monolith application is in the order of a new
+function call in a monolith application is in the order of a few
 nanoseconds, RPC-backed function calls between FaaS functions in a
 FaaS application can take several milliseconds to execute -- a
 difference of several orders of magnitude. When two FaaS functions
@@ -269,7 +269,13 @@ attractive to developers (see \Cref{sec:serverless}).
 
 
 \paragraph{Approach.}
-We propose CoFaaS, a software transformation of FaaS applications that eliminate the inter-function communication overhead. CoFaaS is unique in the landscape as it eliminates the FaaS communication overhead without sacrificing any of the key properties that makes FaaS attractive to developers. The CoFaaS transformation is fully automatic and can be applied to existing FaaS applications without requiring manual modification of existing functions.
+We propose CoFaaS, a software transformation of FaaS applications that
+eliminate the inter-function communication overhead. CoFaaS is unique
+in the solution space as it eliminates the FaaS communication overhead
+without sacrificing any of the key properties that makes FaaS
+attractive to developers. The CoFaaS transformation is fully automatic
+and can be applied to existing FaaS applications without requiring
+manual modification of existing functions.
 
 
 For FaaS functions to communicate, their public interfaces must be
@@ -289,7 +295,7 @@ component. Wasm components~\cite{compmodel}, like FaaS functions, use
 a language-independent IDL to define their public interface and since
 each Wasm component exist in their own isolated memory space, we can
 simply transform the IDL of the FaaS function to the IDL of Wasm and
-compile the functions to Wasm. The final point to address is that the
+compile the functions to Wasm. The final point to consider is that the
 original functions are written to communicate over a network-backed
 RPC interface. To address this we do two things: First, we provide a
 stub library that provides API-level compatibility with the original
@@ -318,14 +324,14 @@ reduces the round-trip request time of the FaaS application that we
 evaluate by 6\texttimes. For a 1 kilobyte payload, the latency of
 inter-function requests is reduced by up to 100\texttimes. For larger
 payload sizes, the achieved speedup diminishes but remains
-significant, with a 2\texttimes{} speedup being achieved for the largest
-evaluated payload size of 512 kilobytes. We note that the median
-inter-function request payload size observed in real-world FaaS traces
-is 8 kilobytes~\cite{mahgoub22_wisef}. For this size, CoFaaS gives a
-20\texttimes{} speedup. Further, the round-trip time speedup increases
-when we increase the number of intra-application requests. This
-indicates that the relative advantage of CoFaaS is bigger for more
-complex applications.
+significant, with a 2\texttimes{} speedup being achieved for the
+largest evaluated payload size of 512 kilobytes. We note that the
+median inter-function request payload size observed in real-world FaaS
+traces is 8 kilobytes~\cite{mahgoub22_wisef}, a size comfortably
+within the range where CoFaaS gives performance improvements For this
+size, CoFaaS gives a 20\texttimes{} speedup. Further, the round-trip
+time speedup increases when we increase the number of
+intra-application requests. This indicates that the relative advantage of CoFaaS increases with application complexity.
 
 Introducing CoFaaS in a production environment adds only minimal
 overhead. This is because transforming a FaaS function to a composable
