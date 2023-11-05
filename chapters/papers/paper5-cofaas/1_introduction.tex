@@ -57,7 +57,7 @@ We hence propose CoFaaS which automatically consolidates FaaS functions --- whil
 %contract a powerful transformation of FaaS applications that reduces the interaction latency between FaaS functions in a fully-automated and semantics-preserving fashion.
 % This work seeks to significantly reduce the inter-function communication latencies between FaaS functions without requiring existing code to be rewritten and without sacrificing any of the key advantages of the FaaS computing model. \rakesh{The next phrase needs to be simplified, this is summarizing the whole work and it is not easy to understand it.}
 More specifically, CoFaaS first transforms the IDL description used by the target RPC interface to WebAssembly Interface Types (WIT). This enables us to leverage the WebAssembly (Wasm) ecosystem and co-locate FaaS functions on a single Wasm runtime; each function is hosted in its own container to maintain isolation. %Performing the function interface transformation on the IDL level ensures that the external interface of the functions remains correct. 
-In this way, CoFaaS uses the Wasm runtime to provide inter-function communication and thereby avoids accessing the network layer when functions are deployed on the same node. Our evaluation shows that this strategy yields significant speedups. CoFaaS reduces inter-function communication latency by up to $100\times$ and application-level request round-trip time by up to $6\times$. The overhead of applying CoFaaS in production scenarios is minimal because it is fully automatic and only slightly increases compilation and deployment times (see Section~\ref{es:sec:evaluation} for details).
+In this way, CoFaaS uses the Wasm runtime to provide inter-function communication and thereby avoids accessing the network layer when functions are deployed on the same node. Our evaluation shows that this strategy yields significant speedups. CoFaaS reduces inter-function communication latency by up to 100\texttimes{} and application-level request round-trip time by up to 6\texttimes{}. The overhead of applying CoFaaS in production scenarios is minimal because it is fully automatic and only slightly increases compilation and deployment times (see Section~\ref{es:sec:evaluation} for details).
 
 %slow network-backed RPC interfaces for inter-interpreter function calls with near-native performance.
 
@@ -73,7 +73,7 @@ To summarize, we present the following key contributions:
 %CoFaaS leverages WebAssembly to allow FaaS functions written in different languages to communicate with little overhead
 %\item We introduce the CoFaaS methodology that allows up to 100$\times$  decrease in intra-function message latency and 6$\times$ reduction  in application request round-trip time without manually changing existing code
 
-\item We demonstrate that CoFaaS yields significant speed\-ups, i.e., it reduces inter-function message latency by up to 100$\times$ and application request round-trip time by up to 6$\times$.
+\item We demonstrate that CoFaaS yields significant speed\-ups, i.e., it reduces inter-function message latency by up to 100\texttimes{} and application request round-trip time by up to 6\texttimes{}.
 %without manually changing existing code
 \end{itemize}
 

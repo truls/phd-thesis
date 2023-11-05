@@ -54,7 +54,7 @@ functions studied
 in~\cite{eismann20_review_server_use_cases_their_charac} having a
 runtime in the order of seconds. Furthermore, the current trend
 indicates that functions are getting shorter with median function
-reducing by $2\times$ from 2019 to 2020~\cite{serverless_state_21}.
+reducing by 2\texttimes{} from 2019 to 2020~\cite{serverless_state_21}.
 
 
 The unique deployment model and runtime characteristics of FaaS
@@ -284,27 +284,27 @@ the BTB, it also improves instruction prefetching performance (see
 front-end bottleneck and improves the performance of, particularly,
 server workloads.
 
-The motivating analysis is presented in Paper A1 (\Cref{chap:wosc-paper}).
-The design of BTB-X evolved over time and is described in three paper. The first version of BTB-X is described in paper A2
+The motivating analysis is presented in Paper \liningfigures{A1} (\Cref{chap:wosc-paper}).
+The design of BTB-X evolved over time and is described in three paper. The first version of BTB-X is described in paper \liningfigures{A2}
 (\Cref{chap:cal-paper}), an improved version is presented in the
-short paper A3 (\Cref{chap:pact-paper}) and the final design is
-presented in the full length paper A4 (\Cref{chap:hpca-paper}).
+short paper \liningfigures{A3} (\Cref{chap:pact-paper}) and the final design is
+presented in the full length paper \liningfigures{A4} (\Cref{chap:hpca-paper}).
 
 \noindent
 \begin{tabular}{lp{0.8\textwidth}}
-  \textbf{Paper A1} & \textbf{Impact of Microarchitectural State Reuse on Serverless Functions} \newline
+  \textbf{Paper \liningfigures{A1}} & \textbf{Impact of Microarchitectural State Reuse on Serverless Functions} \newline
                       \textbf{Truls Asheim}, Tanvir Ahmed Khan, Baris Kasicki and Rakesh Kumar \newline
                      \textbf{In:} Proceedings of the Eighth International Workshop on Serverless Computing, 2022
                      \vspace*{0.3cm}\\
-  \textbf{Paper A2} & \textbf{BTB-X: A Storage-Effective BTB Organization} \newline
+  \textbf{Paper \liningfigures{A2}} & \textbf{BTB-X: A Storage-Effective BTB Organization} \newline
                      \textbf{Truls Asheim}, Boris Grot and Rakesh Kumar \newline
                      \textbf{In:} IEEE Computer Architecture Letters, Volume: 20, Issue: 2, July-December 2021
                      \vspace*{0.3cm} \\
-\textbf{Paper A3} & \textbf{A Specialized BTB Organization for Servers} \newline
+\textbf{Paper \liningfigures{A3}} & \textbf{A Specialized BTB Organization for Servers} \newline
                      \textbf{Truls Asheim}, Boris Grot and Rakesh Kumar \newline
                      \textbf{In:} Proceedings of the International Conference on Parallel Architectures and Compilation Techniques, 2022
                     \vspace*{0.3cm} \\
-\textbf{Paper A4} & \textbf{A Storage-Effective BTB Organization for Servers} \newline
+\textbf{Paper \liningfigures{A4}} & \textbf{A Storage-Effective BTB Organization for Servers} \newline
                      \textbf{Truls Asheim}, Boris Grot and Rakesh Kumar
                     \newline
                      \textbf{In:} IEEE International Symposium on High-Performance Computer Architecture (HPCA), 2023
@@ -353,21 +353,21 @@ composition with other functions. This means that, as long as we
 preserve a function's external interface, we can freely transform
 it. CoFaaS exploits this to retarget FaaS functions to a
 platform-neutral and language independent bytecode language known as
-WebAssembly (Wasm). The CoFaaS transformation turns each FaaS function
+WebAssembly (Wasm)~\cite{rossberg22_webas_core_specif}. The CoFaaS transformation turns each FaaS function
 into a CoFaaS component. Multiple CoFaaS components can then be
 composed, yielding a complete application, that can be executed on a
 single Wasm runtime. Our evaluation shows that the CoFaaS
 transformation improves inter-function communication overheads by up
-to $100\times$ without sacrificing any of FaaS' most attractive properties.
+to 100\texttimes{} without sacrificing any of FaaS' most attractive properties.
 
-The complete CoFaaS design and implementation is described in Paper B1
+The complete CoFaaS design and implementation is described in Paper \liningfigures{B1}
 (\Cref{chap:eurosys-paper}):
 
 
 \vspace*{0.5em}
 \noindent
 \begin{tabular}{lp{0.8\textwidth}}
-\textbf{Paper B1} & \textbf{CoFaaS: Automatic Transformation-based
+\textbf{Paper \liningfigures{B1}} & \textbf{CoFaaS: Automatic Transformation-based
                     Consolidation of Serverless Functions} \newline
                      \textbf{Truls Asheim}, Magnus Jahre and Rakesh Kumar \newline
                      \textbf{Submitted to:} Eurosys 2024

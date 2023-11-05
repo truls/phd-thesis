@@ -12,16 +12,15 @@
 The research contributions of this thesis are presented as five articles. The first four (\Cref{chap:cal-paper,chap:pact-paper,chap:wosc-paper,chap:hpca-paper}), and the last (\Cref{chap:eurosys-paper}) is pending review at the time of thesis submission. In this chapter, we summarize the contributions of each paper and contextualize the papers in regard to prior work. The papers that are included in this thesis are:
 
 
-
 \section{Contribution overview}
 
 \subsection{Research Direction A: Hardware approaches to optimizing FaaS}
 We present our results in two parts where the first partI
 (\Cref{subsub:understanding}) covers the
-background study, presented in Paper A1 (\Cref{chap:wosc-paper}) and
+background study, presented in Paper \liningfigures{A1} (\Cref{chap:wosc-paper}) and
 the second part (\Cref{subsub:btbx}) describes BTB-X, the proposal for a
 redesigned BTB proposal covered in Papers
-A2, A3 and A4 (\Cref{chap:cal-paper,chap:pact-paper,chap:hpca-paper}).
+\liningfigures{A2}, \liningfigures{A3} and \liningfigures{A4} (\Cref{chap:cal-paper,chap:pact-paper,chap:hpca-paper}).
 
 \subsubsection{Understanding FaaS}
 \label{subsub:understanding}
@@ -91,6 +90,8 @@ strongly motivates further research aiming to alleviate the front-end
 bottleneck with the goal of optimizing the execution of FaaS
 functions.
 
+
+
 \subsubsection{A storage-efficient BTB organization for servers}
 \label{subsub:btbx}
 
@@ -101,11 +102,11 @@ workloads~\cite{ailamaki99_dbmss_moder_proces,ferdman12_clear_cloud,kanev15_prof
 to other workload classes, server workloads pose particular challenges
 for processor frontends due to their very large instruction
 footprints. These footprints, quickly overwhelms the capacities of the
-instruction cache L1-I and the Branch Target Buffer (BTB). In order to
+instruction cache \liningfigures{L1-I} and the Branch Target Buffer (BTB). In order to
 handle this problem, computer architects has proposed a large number
-of different approaches. L1-I prefetchers are a highly effective way
+of different approaches. \liningfigures{L1-I} prefetchers are a highly effective way
 to alleviate the front-end bottleneck as they help avoiding the
-fill-latency that follows an L1-I miss.  As detailed
+fill-latency that follows an \liningfigures{L1-I} miss.  As detailed
 in~\Cref{sec:instr-delivery}, a particularly effective class of
 instruction prefetchers are known as Fetch Directed Instruction
 Prefetching (FDIP)~\cite{reinman99_fetch_direc_instr_prefet}. Since
@@ -131,13 +132,13 @@ BTB access latency.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\textwidth]{figures/offset_distribution.pdf}
-  \caption{\label{fig:offset-distr} Distribution of branch target offsets in the IPC-1~\cite{ipc1} workload traces}
+  \caption{\label{fig:offset-distr} Distribution of branch target offsets in the \liningfigures{IPC-1}~\cite{ipc1} workload traces}
 \end{figure}
 
 To gain a deeper understanding of the characteristics of branch
 targets, we performed an analysis of the branch target offsets in a
 large number of real-world workload traces released for the first
-Instruction Prefetching Championship (IPC-1)~\cite{ipc1}. A branch
+Instruction Prefetching Championship (\liningfigures{IPC-1})~\cite{ipc1}. A branch
 target offset is the relative distance from a branch to its target. From this
 analysis, shown in \Cref{fig:offset-distr}, we make the observation
 that the vast majority of branches have targets very close to their
@@ -170,13 +171,13 @@ offset in the first free way where it will fit.
 We implement and evaluate BTB-X using the Champsim simulator. Champsim
 is a trace-based simulator used for for microarchitectural
 studies~\cite{champsim}. For evaluation we use the aforementioned
-workload traces released as part of the IPC-1 championship. The traces
+workload traces released as part of the \liningfigures{IPC-1} championship. The traces
 were provided by Qualcomm and include both server and client
 workloads. For the BTB-X design to be applicable to all workloads, the
 branch target offset size distribution that guided its design must be
 shown to be widely applicable. To ensure this, we measure the branch
 target offset size distributions of the more than 750 traces provided
-by Qualcomm as part of the First Championship Value Prediction CVP-1
+by Qualcomm as part of the First Championship Value Prediction \liningfigures{CVP-1}
 and traces from 6 known server applications. These results show nearly
 identical branch target offset size distributions.
 

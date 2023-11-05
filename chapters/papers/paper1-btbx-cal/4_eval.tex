@@ -1,7 +1,7 @@
 \section{Evaluation}
 \label{cal:sec:eval}
 
-We use ChampSim~\cite{champsim}, an open-source trace-driven simulator, to evaluate the efficacy of BTB-X on server and client workload traces from IPC-1~\cite{ipc1}. We warm up microarchitectural structures for 50M instructions and collect statistics over the next 50M. The microarchitectural parameters for the modeled processor are listed in \Cref{cal:table:microParam}.
+We use ChampSim~\cite{champsim}, an open-source trace-driven simulator, to evaluate the efficacy of BTB-X on server and client workload traces from \liningfigures{IPC-1}~\cite{ipc1}. We warm up microarchitectural structures for 50M instructions and collect statistics over the next 50M. The microarchitectural parameters for the modeled processor are listed in \Cref{cal:table:microParam}.
 
 \begin{table}[t]
 	\centering 
@@ -20,7 +20,7 @@ We use ChampSim~\cite{champsim}, an open-source trace-driven simulator, to evalu
 			\hline  			
             Branch Predictor& Hashed Perceptron \\
 			\hline
-			L1-I & 
+			\liningfigures{L1-I} & 
             \begin{tabular}{@{}c@{}}
             32 KB, 8-way, 4 cycle latency, 8 MSHRs
             \end{tabular} \\
@@ -155,7 +155,7 @@ Recall from \Cref{cal:sec:background} that a larger BTB can deliver two distinct
     \label{cal:fig:perf}
 \end{figure}
 
-As the figure shows, BTB-X provides significantly higher overall performance than the conventional BTB for equal storage budgets of up to several tens of kilobytes. The performance advantage of BTB-X is particularly pronounced on server traces whose large instruction footprints pressure the BTB and L1-I. For instance, BTB-X provides 63\% performance gain over the baseline compared to 38\% of conventional BTB with 21.5KB storage budget.
+As the figure shows, BTB-X provides significantly higher overall performance than the conventional BTB for equal storage budgets of up to several tens of kilobytes. The performance advantage of BTB-X is particularly pronounced on server traces whose large instruction footprints pressure the BTB and \liningfigures{L1-I}. For instance, BTB-X provides 63\% performance gain over the baseline compared to 38\% of conventional BTB with 21.5KB storage budget.
 At large BTB storage budgets, the branch working sets of many workloads start to fit in the available BTB capacity, at which point the performance gap between the two designs diminishes.
 
 A key take-away from the figure is that BTB-X provides same or higher performance than the conventional BTB even when BTB-X is given just half the storage budget of its conventional counterpart. For example, in \Cref{cal:fig:serverPerf}, the conventional BTB improves performance by 38\% with a 21.5KB budget whereas BTB-X provides a 44\% improvement with just 10.875KB of storage. The reason for this phenomenon is that BTB-X accommodates 2.8x more entries than a conventional BTB of equal storage budget; thus, halving BTB-X's budget still gives a capacity advantage over the conventional design. 
