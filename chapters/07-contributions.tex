@@ -13,7 +13,6 @@ The research contributions of this thesis are presented as five articles. The fi
 
 
 
-
 \section{Contribution overview}
 
 \subsection{Research Direction A: Hardware approaches to optimizing FaaS}
@@ -76,7 +75,7 @@ Our results show that two properties of a FaaS function impacts how
 sensitive it is to being executed on a cold microarchitectural state:
 Its execution time and its code footprint. For example, the shortest
 running function that we evaluate (0.25 ms) show a slowdown of
-$17\times$ when executed on a processor with a cold microarchitectural
+17\texttimes{} when executed on a processor with a cold microarchitectural
 state. The longest running functions are largely unaffected by
 microarchitectural state thrashing. This indicates that the warm-up
 latency of microarchitectural structures is amortized for the vast
@@ -204,21 +203,23 @@ We see that BTB-X outperforms the state of the art BTB organization PDede while,
 The network-backed RPC interfaces commonly use to facilitate
 inter-function communications in FaaS applications are a key
 facilitator of the loose coupling between functions that give FaaS
-many of its attractive benefits/. The RPC interfaces allow FaaS
-functions written in different languages to communicate with each
-other and it allows functions to be swapped out at runtime as long as
-their external interfaces is preserved. Furthermore, since RPC can be
-placed on a network fabric, FaaS functions communicating over RPC can
-be transparently distributed across several nodes. The major
-disadvantage of these network-backed RPC interlaces are the massive
-latency that they induce. Where the latency of a local function call
-in a monolith application is in the order of a new nanoseconds,
-RPC-backed function calls between FaaS functions in a FaaS application
-can take several milliseconds to execute -- a difference of several
-orders of magnitude. In some cases, e.g. when two FaaS functions
-scheduled on different node need to communicate, using a networked RPC
-interface for communication is necessary. In other cases, e.g. when
-two FaaS functions are scheduled on the same node, using the RPC
+many of its attractive
+benefits~\cite{gan19_open_sourc_bench_suite_micros}. The RPC
+interfaces allow FaaS functions written in different languages to
+communicate with each other and it allows functions to be swapped out
+at runtime as long as their external interfaces is
+preserved. Furthermore, since RPC protocols can use a networked
+transport, FaaS functions communicating over RPC can be transparently
+distributed across physical nodes. The major disadvantage of these
+network-backed RPC interlaces is that they induce a massive
+inter-function communication latency. Where the latency of a local
+function call in a monolith application is in the order of a new
+nanoseconds, RPC-backed function calls between FaaS functions in a
+FaaS application can take several milliseconds to execute -- a
+difference of several orders of magnitude. When two FaaS functions
+scheduled for execution on different nodes need to communicate, using
+a networked RPC interface for communication is necessary. However,
+when two FaaS functions are scheduled on the same node, using the RPC
 interface for communication only adds overhead without giving any
 benefits. To tackle this issue, prior work has proposed diverse
 mechanisms aiming to reduce the inter-function communication overhead
