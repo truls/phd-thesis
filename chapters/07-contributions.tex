@@ -133,23 +133,23 @@ for processor frontends due to their very large instruction
 footprints. These footprints quickly overwhelm the capacities of the
 \liningfigures{L1-I} and the Branch Target Buffer (BTB). To handle
 this problem, computer architects have proposed a large number of
-different approaches. In particular,
-\liningfigures{L1-I} prefetchers
+different approaches. In particular, \liningfigures{L1-I} prefetchers
 are a highly effective way to alleviate the front-end bottleneck as
 they help avoid the fill-latency that follows an \liningfigures{L1-I}
 miss.  As detailed in~\Cref{sec:instr-delivery}, a particularly
 effective class of instruction prefetchers are known as Fetch Directed
 Instruction Prefetching
 (FDIP)~\cite{reinman99_fetch_direc_instr_prefet}. Since FDIP rely on
-the BTB to predict the control flow of a program, having a BTB with
-sufficient capacity is of crucial importance. By simply scaling the
-design of a conventional BTB design, the capacity required for holding
-realistic branch working sets of contemporary server workloads quickly
-become infeasible. To address this, previous work observed that all
-branch targets within a page share the same numbers and only differ in
-page offsets. Thus the page number can be deduplicated by only storing
-it once in a dedicated table and then replacing its use in a branch
-target address with a pointer to that
+the BTB to predict the control flow of a program and identify prefetch
+candidates, having a BTB with sufficient capacity is of crucial
+importance. By simply scaling the design of a conventional BTB design,
+the capacity required for holding realistic branch working sets of
+contemporary server workloads quickly become infeasible. To address
+this, previous work observed that all branch targets within a page
+share the same numbers and only differ in page offsets. Thus the page
+number can be deduplicated by only storing it once in a dedicated
+table and then replacing its use in a branch target address with a
+pointer to that
 table~\cite{seznec96_dont_use_page_number_point_it}. \textcite{soundararajan21_pdede}
 extends this concept further by observing that several branch page
 numbers share a common region number which can be deduplicated
@@ -211,7 +211,6 @@ target offset size distributions of the more than 750 traces provided
 by Qualcomm as part of the First Championship Value Prediction \liningfigures{CVP-1}
 and traces from 6 known server applications. These results show nearly
 identical branch target offset size distributions.
-
 Finally, we measure the energy requirements and access latencies of
 BTB-X, the state-of-the-art BTB design and a conventional BTB using Cacti 7.0~\cite{cacti} at the 22nm technology node.
 
