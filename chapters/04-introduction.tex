@@ -98,8 +98,6 @@ This thesis seeks to exploit outstanding opportunities in mitigating
 the front-end bottleneck to improve the performance of FaaS
 functions and server workloads in general.
 
-
-
 The unique modularity, compositionality, and language-independence of
 FaaS functions make the FaaS computing model highly attractive to
 developers~\cite{williams16_growin_need_micros_bioin}. To maximize
@@ -109,7 +107,7 @@ to the aforementioned very short running time of FaaS
 functions~\cite{shahrad19_archit_implic_funct_servic_comput,mahgoub22_wisef,shahrad20_server_wild,lukewarm_serverless,du20_catal}. Additionally,
 since providers charge for the CPU-time needed to execute a FaaS
 function, developers also have a strong monetary incentive to keep the
-running time of functions short~\cite{faas_procing}.  Larger and more
+running time of functions short~\cite{yu20_charac_server_platf_server}.  Larger and more
 complex FaaS applications are built by composing multiple smaller FaaS
 functions. Since a FaaS function can be written in any language
 depending on what best fits its purpose, the functions comprising a
@@ -126,8 +124,7 @@ more different languages\cite{serverless_state}. While this RPC-backed
 communication fabric enables many of the most attractive features of
 the FaaS model, it also introduces a considerable communication
 overhead that is highly detrimental to the performance of FaaS
-applications.  \truls{Cite work that investigates how bad the
-  communication overhead is and emphasize that it is really bad}. Due
+applications~\cite{stellar}. Due
 to the detrimental performance impact that the communication overhead
 has on FaaS functions, this thesis aims to reduce it by introducing a
 software-based transformation for FaaS functions.
