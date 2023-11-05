@@ -3,33 +3,17 @@
 
 This section presents the measurements we made with our functions. %First, we divide the application into multiple functional categories to see how much processor time is spent in each category, then we describe and present our estimation of the function's code footprints that we use to support our findings and finally we show the top-down breakdown of microarchitectural bottlenecks and the component-wise execution performance.
 For each of these measurements, we compare back-to-back and interleaved function execution and discuss the consequences.
-\begin{table}
-  \caption{\label{wosc:tab:timings} Percentiles of the observed running times for the functions in ms.}
-  \centering
-%\resizebox{0.8\columnwidth}{!}{
-  \input{figures/timing_table.tex}
-%}
-\end{table}
-
-
-\begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{figures/thrasher_speedups.pdf}
-  \caption{\label{wosc:fig:slowdown} The wall-time slowdown encountered when running functions interleaved instead of back-to-back.}
-  \Description{Bar chart showing the slowdown factor the thrasher causes on individual functions.}
-\end{figure}
-
-\begin{sidewaysfigure}
-  \centering
-  \includegraphics[width=\textwidth]{figures/topdown_level1.pdf}
-  \caption{\label{wosc:fig:topdown_level1} CPI stack for the functions broken down based on the contribution from each bottleneck category.}
-  \Description{Stacked bar chart showing the top-down bottlenecks for the analyzed functions.}
-\end{sidewaysfigure}
-
 
 
 \subsection{Where does time go?}
 \label{wosc:subsec:time}
+
+\begin{sidewaysfigure}
+  \centering
+  \includegraphics[width=\textwidth]{figures/cycles_per_component.pdf}
+  \caption{\label{wosc:fig:cyc_per_component} The breakdown of where executed cycles are spent divided into categories.}
+  \Description{Stacked bar chart showing the distribution of CPU cycles across application stack components.}
+\end{sidewaysfigure}
 
 The invocation machinery of a FaaS function is complex and multi-layered as it involves multiple components that are not directly related to a function's core functionality. To understand the potential of these components to impact the function execution behaviour, we analyze their contribution to a request's overall processing time, \Cref{wosc:fig:cyc_per_component}. The sampled cycles are categorized primarily based on the Dynamic Shared Object (DSO, e.g. a shared library or executable) they originated from and, in some cases, secondarily subdivided based on the function that was executing when the cycle was sampled. This subdivision is necessary to correctly decompose NodeJS functions as they depend on platform-native libraries executed as JIT-generated code that do not appear as separate DSOs.
 
@@ -49,6 +33,20 @@ In general, application or application-specific library code dominates the CPU c
 
 Next we look at how the cycle distribution changes when comparing back-to-back invocations of the functions to interleaved invocations. Examining this change in distribution informs us about how the various components involved in the function execution lifecycle are affected by the interference from the thrasher. If a component takes up relatively more cycles in the interleaved execution case, it means that the component is disproportionally negatively affected by the thrasher. Our results show that there are significant differences in the degree to which different functions are affected that largely depend on the function execution time. For example, in \emph{autocomplete} and \emph{dynamichtml}, which have very small execution time, we observe an increase in the fraction of cycles spent in application code with interleaved execution. In contrast, long running functions such as \emph{img\_resize} and \emph{ocr\_img} do not show much difference in cycle distribution.
 
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{figures/thrasher_speedups.pdf}
+  \caption{\label{wosc:fig:slowdown} The wall-time slowdown encountered when running functions interleaved instead of back-to-back.}
+  \Description{Bar chart showing the slowdown factor the thrasher causes on individual functions.}
+\end{figure}
+
+\begin{table}
+  \caption{\label{wosc:tab:timings} Percentiles of the observed running times for the functions in ms.}
+  \centering
+%\resizebox{0.8\columnwidth}{!}{
+  \input{figures/timing_table.tex}
+%}
+\end{table}
 
 Now, we demonstrate the significance of interleaved execution on functions with a short execution time from another perspective by comparing the elapsed per-invocation wall-clock time between the two invocation modes.  \Cref{wosc:fig:slowdown} shows the difference in request round trip time between back-to-back and interleaved executions as measured from the client. For the majority of the functions there is no significant difference in the execution time between the interleaved and back-to-back executions. We only see marked increases in execution time for very short functions  with < 1 ms median execution time. The most extreme example is the $17\times$ increase in execution time of the \emph{fib\_js\_1000} function.
 
@@ -65,19 +63,17 @@ Finally, we also observe that the execution time alone does not always explain a
 \end{figure}
 
 
-\begin{sidewaysfigure}
-  \centering
-  \includegraphics[width=\textwidth]{figures/cat-cpi.pdf}
-  \caption{\label{wosc:fig:cat-cpi} The CPI for the different components of the application.}
-  \Description{Bar chart showing the CPI for different parts of the application}
-\end{sidewaysfigure}
-
-
 
 To analyze the microarchitectural behaviour of our functions, we use the established Top-Down methodology \cite{yasin14_top_down}. The Top-Down methodology uses performance counters to estimate the fraction of pipeline slots that are stalled due to bottlenecks in specific parts of the processor. The top level of the analysis is broken down into four categories: \emph{Retiring}, \emph{Backend\_Bound}, \emph{Bad\_Speculation}, and \emph{Frontend\_Bound}. The \emph{Retiring} category covers slots containing retired instructions, that is, instructions that completed and committed their result. As such, this is the desirable category of Top-Down and we want to maximize the number of pipeline slots that fall in this category. \emph{Backend\_Bound} denotes slots that are stalled due to the execution units of the processor backend being unable to accept additional instructions. The \emph{Bad\_Speculation} category denotes slots that are stalled due to incorrect speculations, for example, branch mispredictions. Finally, the \emph{Frontend\_Bound} category contains slots that are stalled due to the frontend's inability to supply the backend with instructions at a sufficiently high rate. The identified bottlenecks can be broken down in a hierarchical fashion making it possible to identify a specific microarchitectural structure that is put under stress by the evaluated function.
 
+\begin{sidewaysfigure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{figures/topdown_level1.pdf}
+  \caption{\label{wosc:fig:topdown_level1} CPI stack for the functions broken down based on the contribution from each bottleneck category.}
+  \Description{Stacked bar chart showing the top-down bottlenecks for the analyzed functions.}
+\end{sidewaysfigure}
 
-The cycles per instruction (CPI) stacks resulting from the Top-Down analysis are shown in \Cref{wosc:fig:topdown_level1}. The CPI stack visualizes the contributions of the individual bottlenecks to the overall performance of the function. From the results, we see that there is a strong correlation between the execution time of a function and the instructions per cycle (IPC) rates that they achieve: shorter running functions achieve lower IPC rates (i.e., high CPI). Additionally, when comparing back-to-back and interleaved executions, the functions with low IPC also show the largest relative performance degradation in the interleaved execution mode. 
+The cycles per instruction (CPI) stacks resulting from the Top-Down analysis are shown in \Cref{wosc:fig:topdown_level1}. The CPI stack visualizes the contributions of the individual bottlenecks to the overall performance of the function. From the results, we see that there is a strong correlation between the execution time of a function and the instructions per cycle (IPC) rates that they achieve: shorter running functions achieve lower IPC rates (i.e., high CPI). Additionally, when comparing back-to-back and interleaved executions, the functions with low IPC also show the largest relative performance degradation in the interleaved execution mode.
 
 The figure also implies that short running functions show low IPC because of the front-end bottleneck, i.e., they are \emph{Frontend\_Bound}. These results corroborate prior work which also found serverless functions and conventional server applications to be \emph{Frontend\_Bound} and proposed diverse mechanisms to mitigate this bottleneck \cite{btbx-pact, btbx-cal, twig, shotgun, boomerang, lukewarm_serverless}. Further, prior work \cite{lukewarm_serverless} also reported that instruction cache (L1-I) misses are the principal reason for this front-end bottleneck in serverless functions. This finding suggests that the instruction working set size of the functions also has the most significant impact on their performance. To show the instruction working set of a function impacts its performance sensitivity to interleaved execution, we estimate the instruction working set of our functions in the next section.
 
@@ -101,7 +97,12 @@ Finally, our results highlight the importance of choice of programming language 
 \subsection{Category-wise performance}
 \label{wosc:subsec:cat-perf}
 
-
+\begin{sidewaysfigure}
+  \centering
+  \includegraphics[width=\textwidth]{figures/cat-cpi.pdf}
+  \caption{\label{wosc:fig:cat-cpi} The CPI for the different components of the application.}
+  \Description{Bar chart showing the CPI for different parts of the application}
+\end{sidewaysfigure}
 
 Lastly, we discuss the performance of the functions broken down by category. We divide the executed cycles into the same categories as in \Cref{wosc:subsec:time}. The results are shown in \Cref{wosc:fig:cat-cpi}. The purpose of this experiment is to assess if particular parts of the application exhibits worse performance than the average. For the back-to-back executions, no particular component diverges significantly from the average performance of the function. For the interleaved execution, a different pattern emerges. Again, only the functions with the shortest execution times are affected but the components taking the smallest part of the total execution time are disproportionally affected. For example the Linker component contributes only a negligible fraction of the executed cycles (see \Cref{wosc:fig:cyc_per_component}) of the \emph{autocomplete} function and in the back-to-back execution scenario it exhibits the same performance as the application as a whole, around 2 CPI. However, in the interleaved execution scenario, its performance deteriorates more than $2 \times$.
 % Mention the relative deterioration e.g. 4x 
