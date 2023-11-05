@@ -31,87 +31,93 @@ redesigned BTB proposal covered in Papers
 \subsubsection{Understanding FaaS}
 \label{subsub:understanding}
 \paragraph{Motivation.} Function-as-a-service (FaaS) computing is a
-rapidly growing cloud computing model that is challenging fundamental
-assumptions about how computing systems are designed. In FaaS, the
-fundamental unit of computation is a function, normally with a very
-short execution time. A FaaS function is loaded and spawned on demand
-when it is needed to respond to a event. When the FaaS function has
+rapidly growing cloud computing model that challenges fundamental
+assumptions about the design of computing systems. In FaaS, the
+fundamental unit of computation is a function, often with a very short
+execution time. A FaaS function is loaded and spawned on demand when
+it is needed to respond to an event. When the FaaS function has
 finished execution, it is shut down and the resources allocated to its
-execution are freed. To maximize server utilization, providers are
-therefore forced to co-schedule and queue a large number of different
-functions for execution on the same processor cores. Recent work has
-reported that this heavily interleaved execution leads to
-microarchitectural state thrashing causing most of FaaS function
-execution to occur on a cold microarchitectural
-state~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. This
-work, however, stops short of investigating which specific properties
-of FaaS execution that causes this poor utilization of
-microarchitectural state.
+execution are freed. This forces providers to co-schedule and queue
+thousands of different functions for execution on the same processor
+cores to maximize server utilization. This causes heavy execution
+interleaving and means that if, for example. functions A and B are
+executed in the sequence ABA, function A will not find much or any of
+its microarchitectural state left behind the second time it is
+executed. The thrashing of the microarchitectural state caused by
+interleaved execution means that most invocations of FaaS functions
+happen from a cold microarchitectural state. Recent work has noted
+this and reported that the interleaved execution of FaaS functions
+causes significant performance
+deterioration~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. However,
+no prior work investigates which specific properties FaaS functions
+have that make them particularly vulnerable to the impact of state
+thrashing. Is it, for example, dependent on the function code footprint size or the point where a function has a sufficiently long execution time to amortize the warm-up delay of the microarchitectural state?
 
 \paragraph{Approach.}
-To address this gap in the research, we perform an evaluation of FaaS
-functions executed on a processor with warm and cold
-microarchitectural states respectively. We use a representative suite
-of FaaS functions consisting of both real-world and synthetic
-workloads. Using synthetic workloads allow us to modify specific
-parameters of interest in a targeted way. To measure the impact of
-executing the functions on a warm and cold microarchitectural state we
-execute the functions in two modes: back-to-back and interleaved. In
-back-to-back execution, the functions are executed repeatedly in a
-tight loop. In the interleaved execution case, each invocation of a
-function is interleaved with an invocation of a \emph{trhasher}
-function that thrashes all existing microarchitectural state. The
-thrasher function achieves this by performing two
-actions: \begin{inparaenum}[1)]
+To address this gap in the research, we evaluate FaaS functions
+executed on a processor with warm and cold microarchitectural
+states. We use a representative suite of FaaS functions consisting of
+both real-world and synthetic workloads. Using synthetic workloads
+allows us to modify specific parameters of interest in a controlled
+way to determine their impact. To measure the impact of executing the
+functions on a warm and cold microarchitectural state we execute the
+functions in two modes: back-to-back and interleaved. In back-to-back
+execution, the functions are executed repeatedly in a tight loop. In
+the interleaved execution case, each invocation of a function is
+interleaved with an invocation of a \emph{trhasher} function that
+thrashes all existing microarchitectural state. The thrasher function
+achieves this by performing two actions: \begin{inparaenum}[1)]
 \item it invokes the x86 WBINVD
   instruction that writes back and invalidates the entire cache
   hierarchy of the processor package~\cite[Chapter 6]{intelmanual} and \item it runs a function that
-  executes a long sequence of branches in order to thrash the state of
+  executes a long sequence of branches to thrash the state of
   the BTB and the branch predictor. \end{inparaenum} We measure
 microarchitectural parameters using perf~\cite{perftool} and use the Top-Down
 methodology~\cite{yasin14_top_down} for identifying specific
 microarchitectural bottlenecks. For both the back-to-back and
-interleaved execution we measured both the wall-clock running time of
-the functions and key microarchitectural parameters.
+interleaved executions we measured both the wall-clock running time of
+the functions and relevant microarchitectural parameters.
 
 
 To support our findings (presented below) we measure the code
 footprint of each of the FaaS functions that we use in our
 analysis. Doing this using a full microarchitectural simulator is a
-slow and tedious process and it is not possible to perform this
+slow and tedious process. Further, it is impossible to perform this
 analysis statically since the dynamic instruction trace of a program
-is only known at runtime.  Therefore, we use a method described
-in~\cite{splash2} that use branch-record traces and a cache simulator
-to estimate the code footprint of a function. The branch-record traces
+is only known at runtime. Therefore, we use a method described
+in~\cite{splash2} that uses branch-record traces and a cache simulator
+to estimate the code footprint of a program. The branch-record traces
 show the branches taken by a program during execution. By feeding the
-instruction code regions demanded by these branches trough a cache
-simulator, we can measure how big the cache has to be in order to fit
-the entire code footprint of a program. More specifically this is done
-by changing the size of the simulator cache until the observed
-miss-rate reaches zero. When this is the case, the entire code
-footprint of the program fit inside the cache.
+instruction code regions demanded by these branches through a cache
+simulator, we can measure how big the cache has to be to fit the
+entire code footprint of a program.  Specifically, the method changes
+the size of the simulator cache until the observed miss-rate reaches
+zero. When this is the case, the entire code footprint of the program
+fits inside the cache.
 
 
 \paragraph{Key Results.}
-Our results show that two properties of a FaaS function impacts how
+Our results show that two properties of a FaaS function impact how
 sensitive it is to being executed on a cold microarchitectural state:
 Its execution time and its code footprint. For example, the shortest
-running function that we evaluate (0.25 ms) show a slowdown of
-17\texttimes{} when executed on a processor with a cold microarchitectural
-state. The longest running functions are largely unaffected by
-microarchitectural state thrashing. This indicates that the warm-up
-latency of microarchitectural structures is amortized for the vast
-majority of FaaS functions.
+running function that we evaluate (0.25\,ms) shows a slowdown of
+17\texttimes{} when executed on a processor with a cold
+microarchitectural state. The longest running functions are largely
+unaffected by microarchitectural state thrashing. Since 99\% of
+real-world FaaS invocations run for more than
+1\,ms~\cite{shahrad20_server_wild}, our results indicate that the
+warm-up latency of microarchitectural structures is amortized for the
+vast majority of FaaS functions.
 
-Another important observation we make from our experiments, is that
-the real-world FaaS functions we evaluate are overwhelmingly front-end
+Another important observation we make from our experiments is that the
+real-world FaaS functions we evaluate are overwhelmingly front-end
 bound. This is in line with similar observations made for general
 server
 workloads~\cite{ferdman12_clear_cloud,kanev15_profil,ayers19_asmdb}
-and corroborates similar observations made for FaaS functions specifically~\cite{lukewarm_serverless}. This
-strongly motivates further research aiming to alleviate the front-end
-bottleneck with the goal of optimizing the execution of FaaS
-functions.
+and corroborates similar observations made for FaaS functions
+specifically~\cite{lukewarm_serverless}. This strongly motivates
+further research aiming to alleviate the front-end bottleneck to
+optimize the execution of FaaS functions.
 
 
 
@@ -124,24 +130,25 @@ affecting processors executing server
 workloads~\cite{ailamaki99_dbmss_moder_proces,ferdman12_clear_cloud,kanev15_profil,ayers19_asmdb}. Compared
 to other workload classes, server workloads pose particular challenges
 for processor frontends due to their very large instruction
-footprints. These footprints, quickly overwhelms the capacities of the
-instruction cache \liningfigures{L1-I} and the Branch Target Buffer (BTB). In order to
-handle this problem, computer architects has proposed a large number
-of different approaches. \liningfigures{L1-I} prefetchers are a highly effective way
-to alleviate the front-end bottleneck as they help avoiding the
-fill-latency that follows an \liningfigures{L1-I} miss.  As detailed
-in~\Cref{sec:instr-delivery}, a particularly effective class of
-instruction prefetchers are known as Fetch Directed Instruction
-Prefetching (FDIP)~\cite{reinman99_fetch_direc_instr_prefet}. Since
-FDIP rely on the BTB to predict the control flow of a program, having
-a BTB with sufficient capacity is of crucial importance. By simply
-scaling the design of a conventional BTB design, the capacity required
-for holding realistic branch working sets of contemporary server
-workloads quickly become infeasible. To address this, previous work
-observed that all branch targets within a page share the same numbers
-and only differ in page offsets. Thus the page number can be
-deduplicated by only storing it once in a dedicated table and then
-replacing its use in a branch target address with a pointer to that
+footprints. These footprints quickly overwhelm the capacities of the
+\liningfigures{L1-I} and the Branch Target Buffer (BTB). To handle
+this problem, computer architects have proposed a large number of
+different approaches. In particular, \liningfigures{L1-I} prefetchers
+are a highly effective way to alleviate the front-end bottleneck as
+they help avoid the fill-latency that follows an \liningfigures{L1-I}
+miss.  As detailed in~\Cref{sec:instr-delivery}, a particularly
+effective class of instruction prefetchers are known as Fetch Directed
+Instruction Prefetching
+(FDIP)~\cite{reinman99_fetch_direc_instr_prefet}. Since FDIP rely on
+the BTB to predict the control flow of a program, having a BTB with
+sufficient capacity is of crucial importance. By simply scaling the
+design of a conventional BTB design, the capacity required for holding
+realistic branch working sets of contemporary server workloads quickly
+become infeasible. To address this, previous work observed that all
+branch targets within a page share the same numbers and only differ in
+page offsets. Thus the page number can be deduplicated by only storing
+it once in a dedicated table and then replacing its use in a branch
+target address with a pointer to that
 table~\cite{seznec96_dont_use_page_number_point_it}. \textcite{soundararajan21_pdede}
 extends this concept further by observing that several branch page
 numbers share a common region number which can be deduplicated
