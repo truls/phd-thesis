@@ -11,15 +11,13 @@
 
 Paper giving background on serverless computing \cite{van2018serverless}
 
-\section{Hardware}
+% \subsection{Designing a Microarchitecture for the Datacenter}
 
-Front-end problem -> what people have done
-
-\subsection{Designing a Microarchitecture for the Datacenter}
-
-
-\subsection{Instruction Delivery in the Datacenter}
+\section{Instruction Delivery in the Datacenter}
 \label{sec:instr-delivery}
+%Front-end problem -> what people have done
+Datacenter workloads are distinguished by having massive multi-megabyte instruction footprints. These workloads generally have deep, multi-layered software architectures with deep dependency stacks. For example, a request hitting a website invokes the web server, the interpreter of the backend language powering the website and a database server. All of these components also involve a large amount of system calls that perform context switches and execute a significant amount of kernel code. footprint~\cite{ferdman12_clear_cloud,ailamaki99_dbmss_moder_proces}. These large code footprints overwhelms the capacities of the instruction caches of common processors 
+
 Be sure to explain how the BTB impacts instruction delivery by aiding FDIP-backed instruction prefetching.
 
 \cite{kanev15_profil,ferdman12_clear_cloud}
