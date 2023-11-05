@@ -114,7 +114,7 @@ Recall that we are evaluating the application implemented in Go with GC disabled
 
 \subsection{Transformation Performance}
 \label{es:subsec:trans-time}
-Applying the CoFaaS transformation to our application written in Go currently takes 1s. As this step comes before compilation, it has only minimal impact on the time needed to compile the application. THe more interesting observation, is that composing CoFaaS components into an application takes just 20ms. This is important because, as stated in \Cref{es:subsec:practice}, compilation can be done ahead of time. Composing CoFaaS functions into a CoFaaS application, however, may be done at deployment time where any additional overheads are much more concerning.
+Applying the CoFaaS transformation to our application written in Go currently takes 1s. As this step comes before compilation, it has only minimal impact on the time needed to compile the application. The more interesting observation, is that composing CoFaaS components into an application takes just 20ms. This is important because, as stated in \Cref{es:subsec:practice}, compilation can be done ahead of time. Composing CoFaaS functions into a CoFaaS application, however, may be done at deployment time where any additional overheads are much more concerning.
 
 \subsection{Binary Size Implications}
 \label{es:subsec:binary-size}
