@@ -27,9 +27,37 @@ research directions.
 
 \begin{description}
 
-\item[RD-A] We began exploring this direction by answering a key question about FaaS functions: How long does a function need to run before the warm-up delay of microarchitectural structures is amortized? Our analysis show that only functions that run for a very short time (<1 ms) see performance deterioration as a result of microarchitectural warm-up latency. We furthermore observe that this effect is exacerbated for FaaS functions with a large instruction footprint and that the functions in general have a large instruction footprint. The latter observation corroborates results from previous work and means that FaaS functions are affected by the front-end bottleneck in line with general server workloads. To address this we introduce BTB-X, an optimized BTB organization that stores branch target offsets instead of full branch targets. To improve storage density, BTB-X exploits the uneven distribution of branch offset sizes in workloads. The resulting design significantly improves BTB storage capacity without increasing storage requirements. This, in turn, improves the performance of instruction cache prefetchers that rely on BTB storage capacity.
+\item[RD-A] We began exploring this direction by answering a key
+  question about FaaS functions: How long does a function need to run
+  before the warm-up delay of microarchitectural structures is
+  amortized? Our analysis show that only functions that run for a very
+  short time (<1 ms) see performance deterioration as a result of
+  microarchitectural warm-up latency. We furthermore observe that this
+  effect is exacerbated for FaaS functions with a large instruction
+  footprint and that the functions in general have a large instruction
+  footprint. The latter observation corroborates results from previous
+  work and means that FaaS functions are affected by the front-end
+  bottleneck in line with general server workloads. To address this we
+  introduce BTB-X, an optimized BTB organization that stores branch
+  target offsets instead of full branch targets. To improve storage
+  density, BTB-X exploits \texttt{}he uneven distribution of branch offset
+  sizes in workloads. The resulting design significantly improves BTB
+  storage capacity without increasing storage requirements. This, in
+  turn, improves the performance of instruction cache prefetchers that
+  rely on BTB storage capacity.
 
-\item[RD-B] To address the excessive communication overhead of FaaS applicaitons we introduce CoFaaS, a fully automated and software-based transformation of FaaS applications. Previous work targeting the same problem is able to effectively reduce the communication overhead, howver, in doing so, 
+\item[RD-B] To address the excessive communication overhead of FaaS
+  applications we introduce CoFaaS, a fully automated and
+  software-based transformation of FaaS applications. Previous work
+  targeting the same problem is able to effectively reduce the
+  communication overhead. However, all previously proposed
+  optimization sacrifices at least on of the essential properties that
+  make the FaaS programming model attractive, for example by requiring
+  that all functions in a FaaS application are written in the same
+  language. CoFaaS practically eliminates the inter-function
+  communication overhead without sacrificing any of FaaS' essential
+  properties. This uncompromising nature makes CoFaaS unique in the
+  solution space.
 
 \end{description}
 
