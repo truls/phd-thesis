@@ -60,17 +60,22 @@ execution time reducing by 2\texttimes{} from 2019 to
 
 The unique deployment model and runtime characteristics of FaaS
 functions call for investigation into how FaaS interacts with current
-hardware. Notably, performance-critical structures of computing
-systems, such as caches, work under the fundamental assumption that
-workloads exhibit temporal locality. Prior work investigating
-this~\cite{lukewarm_serverless} notes that FaaS functions have large
-code footprints and therefore exhibit a large number of
-instruction-cache misses when executed on current processors. However,
-their investigation does not identify the specific properties of
-serverless functions that cause this behavior. In particular, they do
-not identify a threshold where FaaS functions run long enough to be
-considered equivalent to general server workloads from a
-microarchitectural perspective.
+processors. Notably, performance-critical microarchitectural structures,
+such as caches, branch predictors, etc. 
+are designed to exploit the temporal locality in the access stream. 
+However, given short execution times of FaaS functions, it is not clear if such 
+microarchitectural structures get enough time to warm up before they can start 
+contributing to performance. 
+%work under the fundamental assumption that
+%workloads exhibit temporal locality. Prior work investigating
+%this~\cite{lukewarm_serverless} notes that FaaS functions have large
+%code footprints and therefore exhibit a large number of
+%instruction-cache misses when executed on current processors. However,
+%their investigation does not identify the specific properties of
+%serverless functions that cause this behavior. In particular, they do
+%not identify a threshold where FaaS functions run long enough to be
+%considered equivalent to general server workloads from a
+%microarchitectural perspective.
 
 The large code footprints and high instruction misses of FaaS
 functions brings them in line with a general trend observed for server
