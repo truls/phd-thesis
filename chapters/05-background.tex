@@ -21,7 +21,9 @@
 
 
 % Front-end problem -> what people have done
-Datacenter workloads are distinguished by having massive multi-megabyte instruction footprints. These workloads generally have deep, multi-layered software architectures with deep dependency stacks. For example, a request hitting a website invokes the web server, the interpreter of the backend language powering the website and a database server. All of these components also involve a large amount of system calls that perform context switches and execute a significant amount of kernel code. footprint~\cite{ferdman12_clear_cloud,ailamaki99_dbmss_moder_proces}. These large code footprints overwhelms the capabilities of the frontends of common processors causing a phenomenon known as the front-end bottleneck~\cite{kanev15_profil,ferdman12_clear_cloud,ayers19_asmdb,kanev15_profil,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl}.
+Datacenter workloads are distinguished by having massive multi-megabyte instruction footprints. These workloads generally have deep, multi-layered software architectures with deep dependency stacks. For example, a request hitting a website invokes the web server, the interpreter of the backend language powering the website and a database server. All of these components also involve a large amount of system calls that perform context switches and execute a significant amount of kernel code. footprint~\cite{ferdman12_clear_cloud,ailamaki99_dbmss_moder_proces}. These large code footprints overwhelms the capabilities of the frontends of common processors causing a phenomenon known as the front-end bottleneck~\cite{kanev15_profil,ferdman12_clear_cloud,ayers19_asmdb,kanev15_profil,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,spracklen05_effec_instr_prefet_chip_multip}.
+
+
 
 The front-end bottleneck occurs when the frontend of the processor is
 unable to deliver a contiguous stream of instructions to the
@@ -88,8 +90,10 @@ branch prediction unit to run ahead of the program execution and fill
 the FTQ with locations of future predicted control flow. Thus, the
 targets in the FTQ represents ideal instruction cache prefetch
 candidates since they represent future control flow of the program
-being executed. The original FDIP proposal 
-
+being executed. In spite of FDIP's alluring simplicity and requiring
+zero additional metadata, conventional wisdom long held that FDIP, and
+fetch-directed prefetchers in general, wer incapable of effectively
+covering instruction cache misses in commercial server workloads. One reason for this 
 
 
 
