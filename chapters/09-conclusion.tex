@@ -11,12 +11,12 @@
 %\section{Conclusion}
 Function-as-a-Service (FaaS) is a highly attractive programming model
 due to its ease of deployment, zero provisioning overhead for
-developers and its ability to compose functions written in multiple
+developer,s and its ability to compose functions written in multiple
 different programming languages. However, the short-running nature of
 FaaS functions challenges the assumptions underpinning the design of
-conventional microarchitectures..Additionally, the
+conventional microarchitectures. Additionally, the
 language-independence, modularity and deployment flexibility of FaaS
-functions is enabled by the use of high-overhead, network-backed RPC
+functions are enabled by the use of high-overhead, network-backed RPC
 interfaces for inter-function communications. These interfaces add
 significant overhead to inter-function communication in FaaS
 applications which cause significant performance deterioration. In
@@ -27,10 +27,11 @@ research directions.
 
 \begin{description}
 
+  
 \item[RD-A] We began exploring this direction by answering a key
   question about FaaS functions: How long does a function need to run
   before the warm-up delay of microarchitectural structures is
-  amortized? Our analysis show that only functions that run for a very
+  amortized? Our analysis shows that only functions that run for a very
   short time (<1 ms) see performance deterioration as a result of
   microarchitectural warm-up latency. We furthermore observe that this
   effect is exacerbated for FaaS functions with a large instruction
@@ -40,7 +41,7 @@ research directions.
   bottleneck in line with general server workloads. To address this we
   introduce BTB-X, an optimized BTB organization that stores branch
   target offsets instead of full branch targets. To improve storage
-  density, BTB-X exploits \texttt{}he uneven distribution of branch offset
+  density, BTB-X exploits the uneven distribution of branch offset
   sizes in workloads. The resulting design significantly improves BTB
   storage capacity without increasing storage requirements. This, in
   turn, improves the performance of instruction cache prefetchers that

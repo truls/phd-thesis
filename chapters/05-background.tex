@@ -42,9 +42,25 @@ papers outlined the technological underpinnings of a large-scale
 elastic cloud computing service powered by a large aggregation of
 commodity computing hardware.
 
-Since Amazon released the first publicly available cloud offering, EC2, in 2006~\cite{qian2009cloud} the popularity of the cloud has exploded driven by practicioners' desire for flexible, infinitibly scalable maintenance-free computing. Over time, a plethora of different cloud computing products have been released. For the hosting resoruce that providesr give to their users, the trend is to increase the level of abstraction. That is, the product offerings increasingly seek to move deployment-level decisions about how to host
+Since Amazon released the first publicly available cloud offering,
+\liningfigures{EC2}, in 2006~\cite{qian2009cloud} the popularity of the cloud has
+exploded and a plethora of products have been released to meet
+practicioners' desire for flexible, infinitely scalable
+maintenance-free and cost-effective computing. Following this trend,
+serverless computing is a recent addition to the cloud computing
+landscape that is quickly gaining popularity. Serverless computing
+promises developers quick and easy application deployment without
+having to consider how the application is hosted. Serverless is
+somewhat of a misnomer since applications developed using this model
+are still executed on a server. The name refers to the fact that the
+developer is not in charge of deploying the application on a server,
+they simply provide the application code and from there they leave it
+up the provider to decide how the code is executed. The programming
+model underpinning serverless computing is known as Function-as-a
+Service (FaaS). A FaaS function is a stateless unit of code that is
+executed on demand by the provider when it is needed to handle an
+external event, such as a HTTP request. 
 
-Following this trend, serverless computing is a recent addition to the cloud computing landscape that is quickly gaining popularity. Serverless computing promises developers quick and easy applicaiton deloyment without having to consider how the applicaiton is hosted. Serverless is somewhat of a misnomer since applications developed using this model are still executed on a server. The name refers to the fact that the developer is not in charge of deployng the applicaiton on a server, they simply provide the applicaiton code and from there they leave it up the the provider to decide how the code is executed. 
 
 
 
