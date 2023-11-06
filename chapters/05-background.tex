@@ -10,9 +10,9 @@
 \label{chap:background}
 In this chapter, we introduce the contextual background that surrounds
 this thesis. In particular, we focus on microarchitectural
-optimizations specifically targeting datacenter workloads and we give
-an in-depth introduction to serverless computing, what makes it unique
-and the challenges surrounding the execution of serverless functions
+optimizations specifically targeting data center workloads and we give
+an in-depth introduction to serverless computing, what makes it unique,
+and the challenges surrounding the execution of serverless functions.
 
 %Paper giving background on serverless computing \cite{van2018serverless}
 
@@ -45,18 +45,18 @@ commodity computing hardware.
 Since Amazon released the first publicly available cloud offering,
 \liningfigures{EC2}, in 2006~\cite{qian2009cloud} the popularity of
 the cloud has exploded and a plethora of products have been released
-to meet practicioners' desire for flexible, infinitely scalable
-maintenance-free and cost-effective computing. Following this trend,
-serverless computing is a recent addition to the cloud computing
-landscape that is quickly gaining popularity. Serverless computing
-promises developers quick and easy application deployment without
-having to consider how the application is hosted. Serverless is
-somewhat of a misnomer since applications developed using this model
-are still executed on a server. The name refers to the fact that the
-developer is not in charge of deploying the application on a server,
-they simply provide the application code and from there they leave it
-up the provider to decide how the code is executed. In other words,
-serverless abstracts away the notion of a server from the
+to meet practicioners' never-ending demand for flexible, infinitely
+scalable, maintenance-free and, cost-effective computing. Following
+this trend, serverless computing is a recent addition to the cloud
+computing landscape that is quickly gaining popularity. Serverless
+computing promises developers quick and easy application deployment
+without having to consider how the application is hosted. Serverless
+is somewhat of a misnomer since applications developed using this
+model are still executed on a server. The name refers to the fact that
+the developer is not in charge of deploying the application on a
+server, they simply provide the application code and from there they
+leave it up to the provider to decide how the code is executed. In other
+words, serverless abstracts away the notion of a server from the
 developer. The programming model that underpins serverless computing
 is known as Function-as-a Service (FaaS). A FaaS function is a
 stateless unit of code that is executed on demand by the provider when
@@ -76,7 +76,7 @@ FaaS function is received, the following sequence of events occur:
 
 FaaS functions have a number of properties that make them unique
 compared to conventional cloud workloads. First of all, they generally
-have a very short runtime. A study performed on the Microsoft Azure
+have a very short runtimes. A study performed on the Microsoft Azure
 cloud~\cite{shahrad20_server_wild} showed that half of all FaaS
 functions complete within 1 second while 90\% of all functions
 complete within 10 seconds. Another

@@ -8,25 +8,24 @@
 Serverless computing, implemented as Function-as-a-Service (FaaS), is
 an emerging and raptly growing could computing model. It attracts
 users thanks to its simple and flexible programming model,
-fine-grained billing model and zero resource-provisioning overhead for
-the developer. In FaaS, the fundamental unit
-computation is a function, defined as a stateless unit of code
-executed on-demand when triggered by an external event such as an HTTP
-request. To enable code-reuse, FaaS functions are normally small
-with a well-defined purpose and therefore they have a very short
-running time, often less than a second. Larger FaaS applications
-are built by composing multiple individual functions. To communicate,
-the functions often use high-latency network backed Remote Procedure
-Call (RPC) interfaces. This adds significant overhead to FaaS
-application execution especially as the number of functions in an
-application increase and the communication latencies compound. The
-short running time, transient resource allocation and high
-communication overhead raises the question of how to build hardware
-and software platforms for efficiently executing FaaS
-applications. This thesis addresses this question from two research
-directions.
+fine-grained billing model and, zero resource-provisioning overhead
+for the developer. In FaaS, the fundamental unit computation is a
+function, defined as a stateless unit of code executed on-demand when
+triggered by an external event such as an HTTP request. To enable
+code reuse, FaaS functions are normally small with a well-defined
+purpose and therefore they have a very short running time, often less
+than a second. Larger FaaS applications are built by composing
+multiple individual functions. To communicate, the functions often use
+high-latency network-backed Remote Procedure Call (RPC)
+interfaces. This adds significant overhead to FaaS application
+execution, especially as the number of functions in an application
+increases and the communication latencies compound. The short execution
+time, transient resource allocation, and high communication overhead
+raise the question of how to build hardware and software platforms
+for efficiently executing FaaS applications. This thesis addresses
+this question from two research directions.
 
-The fist research direction investigates the hardware perspective of
+The first research direction investigates the hardware perspective of
 serverless computing. To that end, we first examine the impact of the
 short running time on FaaS functions on microarchitectural
 structures. The driving hypothesis is that, since FaaS functions run
@@ -42,7 +41,7 @@ beneficial. However, our analysis additionally concludes that
 FaaS functions have large instruction working sets. This finding
 means that FaaS functions are affected by the widely established
 \emph{front-end bottleneck} problem. This problem is caused by large
-instruction working set overwhelming the capacities of the branch
+instruction working sets overwhelming the capacities of the branch
 target buffer (BTB) and instruction caches of processors. A long line
 of research has established that instruction cache prefetching is an
 effective way to alleviate the frontend bottleneck. Fetch-directed
@@ -53,30 +52,30 @@ constraints preclude simply increasing the size of a conventionally
 designed BTB. Therefore, to increase BTB storage density we introduce
 BTB-X, an optimized BTB organization that is based on the critical
 observation that branch target offset lengths are unevenly distributed
-in server workloads. Therefore, BTB-X propose to organize the BTB as
-an 8-way set-associative cache whee each way is sized differently to
+in server workloads. Therefore, BTB-X proposes to organize the BTB as
+an 8-way set-associative cache where each way is sized differently to
 accommodate the variably sized branch target offsets. BTB-X stores
 2.24\texttimes{} branches than a conventional BTB and 1.3\texttimes{}
 more branches than the state-of-the-art storage-optimized BTB design.
 
 
-Along the second research direction, we focus on the software aspect
-of efficiently executing FaaS functions. One of the most significant
-overheads in FaaS function execution is the excessive latency of the
-network-backed RPC interfaces often use for inter-function
-communication. Previous proposals aiming ti alleviate this
-communication latency is unattractive since it sacrifices at least one
-of the essential properties of FaaS that makes the programming model
-appealing. To address this, we introduce CoFaaS, a fully-automated
-software-based transformation for FaaS functions that does not
-sacrifice any of FaaS' essential properties. We observe for functions
-written in different languages to communicate, the RPC interfaces
-exposed by each function must be well-defined. The critical insight
-exploited by CoFaaS is that these well-defined interfaces allow us to
-transform the implementation code of a function freely as long as its
-external interface is kept unchanged. This allows CoFaaS to retarget
-the FaaS functions comprising a FaaS application to run on a single
-WebAssembly runtime. By doing this, CoFaaS alleviates the
+Following the second research direction, we focus on the software
+aspect of efficiently executing FaaS functions. One of the most
+significant overheads in FaaS function execution is the excessive
+latency of the network-backed RPC interfaces often used for
+inter-function communication. Previous proposals aiming to alleviate
+this communication latency are unattractive since they sacrifice at
+least one of the essential properties of FaaS that makes the
+programming model appealing. To address this, we introduce CoFaaS, a
+fully-automated software-based transformation for FaaS functions that
+does not sacrifice any of FaaS' essential properties. We observe that
+for functions written in different languages to communicate, the RPC
+interfaces exposed by each function must be well-defined. The critical
+insight exploited by CoFaaS is that these well-defined interfaces
+allow us to transform the implementation code of a function freely as
+long as its external interface is kept unchanged. This allows CoFaaS
+to retarget the FaaS functions comprising a FaaS application to run on
+a single WebAssembly runtime. By doing this, CoFaaS alleviates the
 inter-function communication overhead. CoFaaS reduces the application
 round-trip time by up to 6\texttimes{} and the inter-function
 communication and inter-function communication time by up to
