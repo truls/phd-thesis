@@ -88,12 +88,12 @@ is only known at runtime. Therefore, we use a method described
 in~\cite{splash2} that uses branch-record traces and a cache simulator
 to estimate the code footprint of a program. The branch-record traces
 show the branches taken by a program during execution. By feeding the
-instruction code regions demanded by these branches through a cache
-simulator, we can measure how big the cache has to be to fit the
-entire code footprint of a program.  Specifically, the method changes
-the size of the simulator cache until the observed miss-rate reaches
-zero. When this is the case, the entire code footprint of the program
-fits inside the cache.
+instruction code regions demanded by the targets of the branches in
+the trace through a cache simulator, we can measure how big the cache
+has to be to fit the entire code footprint of a program.
+Specifically, the method increase the size of the simulated cache
+until the observed miss-rate reaches zero. When this is the case, the
+entire code footprint of the program fits inside the cache.
 
 
 \paragraph{Key Results.}
