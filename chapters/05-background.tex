@@ -92,9 +92,10 @@ targets in the FTQ represents ideal instruction cache prefetch
 candidates since they represent future control flow of the program
 being executed. In spite of FDIP's alluring simplicity and requiring
 zero additional metadata, conventional wisdom long held that FDIP, and
-fetch-directed prefetchers in general, wer incapable of effectively
-covering instruction cache misses in commercial server workloads. One reason for this 
-
+fetch-directed prefetchers in general, were incapable of effectively
+covering instruction cache misses in commercial server workloads. This was considered the case for two reasons: \begin{inparaenum}  \item Realistically sized BTBs are too small to capture the entire branch working set of server workloads. This leads to frequent BTB misses and the resulting frequent pipeline flushes prevents the prefetching from working optimally. \item Branch predictor error compounds geometrically with the number of branches predicted, 
+\end{inparaenum}
+\textcite{kumar17_boomer} introduced Boomerang that disproved the conventionally held wisdom about FDIP prefetchers. Boomerang takes a twofold approach: First of all, it reduces BTB misses by proactively filling the BTB with fetched instruction cache blocks. 
 
 
 
