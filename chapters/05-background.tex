@@ -43,9 +43,9 @@ elastic cloud computing service powered by a large aggregation of
 commodity computing hardware.
 
 Since Amazon released the first publicly available cloud offering,
-\liningfigures{EC2}, in 2006~\cite{qian2009cloud} the popularity of the cloud has
-exploded and a plethora of products have been released to meet
-practicioners' desire for flexible, infinitely scalable
+\liningfigures{EC2}, in 2006~\cite{qian2009cloud} the popularity of
+the cloud has exploded and a plethora of products have been released
+to meet practicioners' desire for flexible, infinitely scalable
 maintenance-free and cost-effective computing. Following this trend,
 serverless computing is a recent addition to the cloud computing
 landscape that is quickly gaining popularity. Serverless computing
@@ -59,8 +59,45 @@ up the provider to decide how the code is executed. The programming
 model underpinning serverless computing is known as Function-as-a
 Service (FaaS). A FaaS function is a stateless unit of code that is
 executed on demand by the provider when it is needed to handle an
-external event, such as a HTTP request.
+external event, such as a HTTP request. FaaS functions are commonly
+provided by the user as a Docker~\cite{docker} container
+image~\cite{serverless_state}. When an event targeting a FaaS function
+is received, the following sequence of events occur:
+\begin{enumerate}
+\item The function is scheduled for execution on a host of available resources
+\item When the function gets to the end of the execution queue, the host executing the function must load the image containing the function
+\item The provider brings the image up in a lightweight virtual machine such as Firecracker or gVisor
+\item The function executes and returns its response
+\item The function is shut down after execution
+\end{enumerate}
 
+
+FaaS functions have a number of properties that make them unique
+compared to conventional cloud workloads. First of all, they generally
+have a very short runtime. A study performed on the Microsoft Azure
+cloud~\cite{shahrad20_server_wild} showed that half of all FaaS
+functions complete within 1 second while 90\% of all functions
+complete within 10 seconds. Another
+study~\cite{eismann20_review_server_use_cases_their_charac}
+corroborated by concluding that 67\% of functions studied ran for just
+a few seconds.  Furthermore, the runtime of functions appear to be
+decreasing with median function execution time reducing by
+2\texttimes{} from 2019 to 2020~\cite{serverless_state_21}. The reason
+for the sort execution time of FaaS functions is that developers are
+encouraged to keep functions simple and only perform a simple
+purpose. This principle is derived from microservice
+architectures~\cite{gan19_open_sourc_bench_suite_micros}, and aims to
+ensure that FaaS functions remain reusable and composable. These two
+principles are essential, as larger, more complex FaaS applications
+are constructed by composing multiple smaller single-purpose
+functions. Another essential property that makes the FaaS programming
+model attractive to developers is language neutrality. This property
+enables FaaS functions to be written in any programming language and
+ensures that functions written in different programming languages can
+be composed into a single FaaS application. As previously mentioned,
+language independence is a critically important property of FaaS as
+96\% of large organizations that use FaaS deploy functions written in
+two or more different languages\cite{serverless_state}.
 
 
 
