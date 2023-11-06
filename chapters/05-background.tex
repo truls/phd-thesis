@@ -13,6 +13,17 @@
 
 % \subsection{Designing a Microarchitecture for the Datacenter}
 
+\section{Serverless Computing}
+\label{sec:serverless}
+
+Communication problem -> what people have done
+
+% \subsection{Serverless computing: Characteristics and challenges}
+% \label{sec:serverless}
+% Serverless is cool, attractive and highly used. What are the characteristics and challenges that makes it unique?
+
+% Mention cold start latency
+
 \section{Instruction Delivery in the Datacenter}
 \label{sec:instr-delivery}
 
@@ -23,7 +34,7 @@
 % Front-end problem -> what people have done
 Datacenter workloads are distinguished by having massive
 multi-megabyte instruction footprints. These workloads generally have
-deep, multi-layered software architectures with deep dependency
+multi-layered software architectures with deep dependency
 stacks. Consider, for example, a server hosting a website. Processing
 a request to the website involves invokes the web server, the
 interpreter of the backend language powering the website and a
@@ -81,8 +92,8 @@ storage to save the recorded instruction access streams.  Proactive
 Instruction Fetch~\cite{ferdman11_proac_instr_fetch} improves on both
 the performance and metadata storage requirements of TIFS by recording
 compacted retire-order instruction streams. Still, it requires large
-amounts of metadata storage of 200KB per core.  \truls{Describe other
-  temporal streaming approaches}
+amounts of metadata storage of 200KB per core.  % \truls{Describe other
+  % temporal streaming approaches}
 
 To summarize, prefetchers based on temporal streaming are highly
 effective at eliminating L1-I misses but they do so at the cost of
@@ -159,7 +170,7 @@ storage density and accuracy of the BTB by allowing it to track a
 larger portion of the branch working set. This improves the efficiency
 and accuracy of FDIP.
 
-These contributions strongly support the viability of FDIP instruction
+These results strongly support the viability of FDIP instruction
 prefetchers and disprove conventional wisdom deeming them unsuitable
 for covering the massive instruction footprints of server
 workloads. This view is supported by a recently presented industrial
@@ -197,17 +208,6 @@ when coupled with a sufficiently large BTB.
 % Explain diffeernt approaches, prefetching, BTB, cache replacement
 
 % Add a description of the processor frontend
-
-\section{Serverless Computing}
-\label{sec:serverless}
-
-Communication problem -> what people have done
-
-% \subsection{Serverless computing: Characteristics and challenges}
-% \label{sec:serverless}
-% Serverless is cool, attractive and highly used. What are the characteristics and challenges that makes it unique?
-
-% Mention cold start latency
 
 \section{Serverless Computing and the Front-end Bottleneck}
 
