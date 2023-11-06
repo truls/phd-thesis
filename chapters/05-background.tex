@@ -24,19 +24,19 @@ and the challenges surrounding the execution of serverless functions
 %Communication problem -> what people have done
 
 Over the past couple of decades, cloud computing has revolutionized
-the way computing is performed. Traditionally, developers were in
-charge of manually provisioning the computing resources that they
-needed ahead of time. Another consequence of the traditional model for
-managing computing resources is that practitioners needed to consider
-how to handle peak application demand. Scaling an entire hosting
-infrastructure only to meet peak demand would lead to massive amounts
-of wasted resources. On the other hand, not meeting peak demand leads
-to unacceptably poor application performance when it is needed the
-most. Furthermore, features such as distributing an application across
-diverse geographical locations were out of reach of all but the
-largest companies. The foundations of cloud computing began to be
-publicly known when Google began publishing papers about their
-internal architecture around
+the way computing resources are managed. Traditionally, developers
+were in charge of manually provisioning the computing resources that
+they needed ahead of time. Further, following the traditional model
+for managing computing resources is that practitioners needed to
+consider how to handle peak application demand. Scaling an entire
+hosting infrastructure only to meet peak demand would lead to massive
+amounts of wasted resources. On the other hand, not meeting peak
+demand leads to unacceptably poor application performance when it is
+needed the most. Furthermore, features such as distributing an
+application across diverse geographical locations were out of reach of
+all but the largest companies. The foundations of cloud computing
+first became publicly known when Google began to publish papers about
+their internal architecture starting from
 2003~\cite{qian2009cloud,gfs,dean2008mapreduce,barroso03_web_searc_planet}. These
 papers outlined the technological underpinnings of a large-scale
 elastic cloud computing service powered by a large aggregation of
@@ -55,14 +55,15 @@ somewhat of a misnomer since applications developed using this model
 are still executed on a server. The name refers to the fact that the
 developer is not in charge of deploying the application on a server,
 they simply provide the application code and from there they leave it
-up the provider to decide how the code is executed. The programming
-model underpinning serverless computing is known as Function-as-a
-Service (FaaS). A FaaS function is a stateless unit of code that is
-executed on demand by the provider when it is needed to handle an
-external event, such as a HTTP request. FaaS functions are commonly
-provided by the user as a Docker~\cite{docker} container
-image~\cite{serverless_state}. When an event targeting a FaaS function
-is received, the following sequence of events occur:
+up the provider to decide how the code is executed. In other words,
+serverless abstracts away the notion of a server from the
+developer. The programming model that underpins serverless computing
+is known as Function-as-a Service (FaaS). A FaaS function is a
+stateless unit of code that is executed on demand by the provider when
+it is needed to handle an external event, such as a HTTP request. FaaS
+functions are commonly provided by the user as a Docker~\cite{docker}
+container image~\cite{serverless_state}. When an event targeting a
+FaaS function is received, the following sequence of events occur:
 \begin{enumerate}
 \item The function is scheduled for execution on a host of available resources
 \item When the function gets to the end of the execution queue, the host executing the function must load the image containing the function
@@ -118,7 +119,10 @@ advantages of the FaaS programming model they suffer from large
 communication overheads. In complex real-world FaaS applications, this
 communication overhead compounds to become the dominating source of
 execution overhead in FaaS
-applications~\cite{setllar,gan19_open_sourc_bench_suite_micros}
+applications~\cite{stellar,gan19_open_sourc_bench_suite_micros}. To
+illustrate why this is the case, we consider an example of a FaaS
+application composed from multiple FaaS functions in
+\Cref{fig:faas-app}. Each of the functions, $f_{1.56}$ are deployed in a separate container $c_{1..5}$ and they communicate via a network-backed RPC interface. The arrows denote the dependencies within the application. When the client issues a request to $f_1$ , the function subsequently issues a request to $f_2$ that again issues a request to $f_5$. Thus, we pay the communication latency penalty at least twice when issuing a request to this function. Keeping in mind that the latency of an RPC call to another function can be in excess of 1ms, it becomes clear how this communication overhead can cause significant performance deterioration for FaaS applications. Further, the example we show here is comparatively small. Real-world FaaS applications can be composed from tens or hundreds of individual FaaS applications.
 
 % \subsection{Serverless computing: Characteristics and challenges}
 % \label{sec:serverless}
