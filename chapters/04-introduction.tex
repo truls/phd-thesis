@@ -63,9 +63,13 @@ functions call for investigation into how FaaS interacts with current
 processors. Notably, performance-critical microarchitectural structures,
 such as caches, branch predictors, etc. 
 are designed to exploit the temporal locality in the access stream. 
-However, given short execution times of FaaS functions, it is not clear if such 
-microarchitectural structures get enough time to warm up before they can start 
-contributing to performance. 
+However, given the short execution times of FaaS functions, it is not clear if such 
+microarchitectural structures get enough time to warm up before the function
+execution finishes. Further, though function execution times are usually short, 
+we observe a large variance with some functions executing for less than a millisecond (ms)
+while others taking a few seconds. This thesis aims to understand how the 
+microarchitectural bottlenecks shift with the execution time variations and the large degree of
+function interleaving exhibited by real world deployments. 
 %work under the fundamental assumption that
 %workloads exhibit temporal locality. Prior work investigating
 %this~\cite{lukewarm_serverless} notes that FaaS functions have large
@@ -77,34 +81,47 @@ contributing to performance.
 %considered equivalent to general server workloads from a
 %microarchitectural perspective.
 
-The large code footprints and high instruction misses of FaaS
-functions brings them in line with a general trend observed for server
-workloads. Over the last three decades, long before the FaaS model
-emerged and attracted the attention of researchers, the shift towards
-Warehouse Scale Computing (WSC)~\cite{barroso18_datac_as_comput} has
-challenged the way computer architects conventionally designed
-systems. Since their emergence, a key feature of WSC is that they
-consist of a large aggregation of commodity computing systems
-containing commodity
-processors~\cite{barroso03_web_searc_planet}. Commodity hardware is
-favored due to its low cost and widespread availability. However,
-scholarly research revealed that commodity processors are
-fundamentally unfit for the WSC
-workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike the
-workloads typically encountered by the client-side or in scientific
-computing, WSC workloads are marked by massive, multi-megabyte code
-footprints. These massive code footprints overwhelm the capabilities
-of common processor frontends causing a well-documented phenomenon
-known as the \emph{frontend
-  bottleneck}~\cite{ailamaki99_dbmss_moder_proces,keeton98_perfor_charac_quad_pentium_pro,ranganathan98_perfor_datab_workl_shared_memor}. The
-frontend bottleneck occurs when the backend of the processor is
-starved for instructions due to inefficiencies in the frontend. In
-response to this, the academic community has proposed a myriad of
-diverse methods to mitigate the front-end
-bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,spracklen05_effec_instr_prefet_chip_multip}.
-This thesis seeks to exploit outstanding opportunities in mitigating
-the front-end bottleneck to improve the performance of FaaS
-functions and server workloads in general.
+One of the key outcomes of our FaaS microarchitectural bottleneck analysis is that
+the functions are mainly bottlenecked at the core frontend irrespective of whether they 
+execute for less than a ms or a few seconds. Notice that this frontend bottleneck is 
+a big performance limiter in conventional long running server applications as well~\cite{kanev15_profil, ferdman12_clear_cloud}.
+Therefore, any mechanism to mitigate the frontend bottleneck is likely to improve the performance 
+of both the FaaS functions and conventional server applications. The research community has 
+proposed a myriad of diverse methods to mitigate the front-end
+bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,spracklen05_effec_instr_prefet_chip_multip}. Further, prior work~\cite{rebasing_ispass, kumar17_boomer} has shown that 
+a fetch directed instruction prefetcher (FDIP), when driven by a large enough BTB, provides near ideal performance.
+However, a large BTB leads to significant storage cost with modern processors dedicating 100s KBs for it~\cite{exynos}.
+This thesis aims to maximize BTB capacity without 
+prohibitive area and storage overheads.
+
+%The large code footprints and high instruction misses of FaaS
+%functions brings them in line with a general trend observed for server
+%workloads. Over the last three decades, long before the FaaS model
+%emerged and attracted the attention of researchers, the shift towards
+%Warehouse Scale Computing (WSC)~\cite{barroso18_datac_as_comput} has
+%challenged the way computer architects conventionally designed
+%systems. Since their emergence, a key feature of WSC is that they
+%consist of a large aggregation of commodity computing systems
+%containing commodity
+%processors~\cite{barroso03_web_searc_planet}. Commodity hardware is
+%favored due to its low cost and widespread availability. However,
+%scholarly research revealed that commodity processors are
+%fundamentally unfit for the WSC
+%workloads~\cite{ferdman12_clear_cloud,kanev15_profil}. Unlike the
+%workloads typically encountered by the client-side or in scientific
+%computing, WSC workloads are marked by massive, multi-megabyte code
+%footprints. These massive code footprints overwhelm the capabilities
+%of common processor frontends causing a well-documented phenomenon
+%known as the \emph{frontend
+%  bottleneck}~\cite{ailamaki99_dbmss_moder_proces,keeton98_perfor_charac_quad_pentium_pro,ranganathan98_perfor_datab_workl_shared_memor}. The
+%frontend bottleneck occurs when the backend of the processor is
+%starved for instructions due to inefficiencies in the frontend. In
+%response to this, the academic community has proposed a myriad of
+%diverse methods to mitigate the front-end
+%bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,spracklen05_effec_instr_prefet_chip_multip}.
+%This thesis seeks to exploit outstanding opportunities in mitigating
+%the front-end bottleneck to improve the performance of FaaS
+%functions and server workloads in general.
 
 The unique modularity, compositionality, and language-independence of
 FaaS functions make the FaaS computing model highly attractive to
