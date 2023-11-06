@@ -27,7 +27,7 @@ research directions.
 
 \begin{description}
 
-  
+
 \item[RD-A] We began exploring this direction by answering a key
   question about FaaS functions: How long does a function need to run
   before the warm-up delay of microarchitectural structures is
@@ -47,21 +47,21 @@ research directions.
   turn, improves the performance of instruction cache prefetchers that
   rely on BTB storage capacity.
 
-\item[RD-B] To address the excessive communication overhead of FaaS
+\item[RD-B] To address the excessive communication overhead in FaaS
   applications we introduce CoFaaS, a fully automated and
   software-based transformation of FaaS applications. Previous work
-  targeting the same problem is able to effectively reduce the
-  communication overhead. However, all previously proposed
-  optimization sacrifices at least on of the essential properties that
-  make the FaaS programming model attractive, for example by requiring
-  that all functions in a FaaS application are written in the same
+  targeting the same problem can effectively reduce the communication
+  overhead. However, all previously proposed optimization sacrifices
+  at least one of the essential properties that make the FaaS
+  programming model attractive, for example by requiring that all
+  functions in a FaaS application be written in the same
   language. CoFaaS practically eliminates the inter-function
   communication overhead without sacrificing any of FaaS' essential
   properties. This uncompromising nature makes CoFaaS unique in the
   solution space. As CoFaaS' mechanism of action consolidates multiple
   FaaS functions onto a single runtime, it also intrinsically address
-  the performance deterioration that we observed for very short
-  running functions while working on RD-A.
+  the performance deterioration that we observed for very
+  short-running functions while working on RD-A.
 
 \end{description}
 
