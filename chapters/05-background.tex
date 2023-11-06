@@ -53,7 +53,7 @@ address this, researchers has proposed diverse hardware mechanisms for
 instruction prefetching. We generally subdivide these into two
 categories: temporal streaming and fetch-directed prefetching. We describe these in the following
 
-\subsubsection{Temporal Streaming.} Fundamentally, temporal streaming
+\subsection{Temporal Streaming} Fundamentally, temporal streaming
 based prefetching exploit the repetitiveness of program control
 flow. The intuition behind this is that even is a program can perform
 several operations, the instruction sequence executed to perform each
@@ -65,10 +65,16 @@ Temporal Instruction Fetch Streaming (TIFS), the original prefetcher
 exploiting this principle. While TIFS is effective at avoiding
 instruction cache misses it requires a massive amount of metadata
 storage to capture the recorded streams.  Proactive Instruction
-Fetch~\cite{ferdman11_proac_instr_fetch} improves on both the performance and metadata storage requirements of TIFS by recording compacted retire-order instruction streams. Still, it requires large amounts of metadata storage of 200KB per core.
-\truls{Describe other temporal streaming approaches}
+Fetch~\cite{ferdman11_proac_instr_fetch} improves on both the
+performance and metadata storage requirements of TIFS by recording
+compacted retire-order instruction streams. Still, it requires large
+amounts of metadata storage of 200KB per core.  \truls{Describe other
+  temporal streaming approaches}
 
-To summarize, prefetchers based on temporal streaming are highly effective at eliminating L1-I misses but they do so at the cost of requiring large amounts of metadata storage and complex dedicated logic.
+To summarize, prefetchers based on temporal streaming are highly
+effective at eliminating L1-I misses but they do so at the cost of
+requiring large amounts of metadata storage and complex dedicated
+logic.
 
 \begin{figure}[ht]
   \centering
@@ -76,7 +82,7 @@ To summarize, prefetchers based on temporal streaming are highly effective at el
   \caption{\label{fig:fdip} A schematic of the FDIP architecture.}
 \end{figure}
 
-\subsubsection{Fetch-directed prefetching}
+\subsection{Fetch-directed Prefetching}
 The Branch Target Buffer (BTB) has several important roles in a modern high-performance processor \truls{Write more about the BTB}
 
 \textcite{reinman99_fetch_direc_instr_prefet} proposed a prefetching
@@ -93,7 +99,13 @@ candidates since they represent future control flow of the program
 being executed. In spite of FDIP's alluring simplicity and requiring
 zero additional metadata, conventional wisdom long held that FDIP, and
 fetch-directed prefetchers in general, were incapable of effectively
-covering instruction cache misses in commercial server workloads. This was considered the case for two reasons: \begin{inparaenum}  \item Realistically sized BTBs are too small to capture the entire branch working set of server workloads. This leads to frequent BTB misses and the resulting frequent pipeline flushes prevents the prefetching from working optimally. \item Branch predictor error compounds geometrically with the number of branches predicted, \truls{finish}
+covering instruction cache misses in commercial server workloads. This
+was considered the case for two reasons: \begin{inparaenum} \item
+  Realistically sized BTBs are too small to capture the entire branch
+  working set of server workloads. This leads to frequent BTB misses
+  and the resulting frequent pipeline flushes prevents the prefetching
+  from working optimally. \item Branch predictor error compounds
+  geometrically with the number of branches predicted, \truls{finish}
 \end{inparaenum}
 
 
@@ -101,9 +113,9 @@ covering instruction cache misses in commercial server workloads. This was consi
 conventionally held wisdom about FDIP prefetchers. Boomerang takes a
 twofold approach: First of all, it reduces BTB misses by pre-decoding
 fetched instruction cache lines to identify branches in them and
-proactively pre-fill the BTB. Additionally,
-it leverages a basic-block\footnote{A basic-block is defined as a
-  sequence of straight-line instructions ending with a branch.} based
+proactively pre-fill the BTB. Additionally, it leverages a
+basic-block\footnote{A basic-block is defined as a sequence of
+  straight-line instructions ending with a branch} based
 BTB~\cite{yeh92_compr_instr_fetch_mechan_for} that increases the BTB
 storage density and reduces BTB-misses since more than one branch has
 targets that lie within the same basic
@@ -117,13 +129,37 @@ jump far from their origin as they typically represent a function
 call, possibly in a different library. Conditional branches, on the
 other hand, tend to have targets close to their origin since they
 typically represent control flow within a function, for example an
-\texttt{if} block or a loop. Furthermore, program control flow structure often follow a pattern where a (long) unconditional jump precedes a sequence of multiple (short) conditional jumps. To effectively track the code footprints referenced by conditional jumps each entry of the U-BTB tracks the spatial footprints of the code targeted by conditional jumps around the target and return addresses of the unconditional jump. When an unconditional branch in the U-BTB is predicted taken, the spatial footprints are used for prefetching into the instruction cache and pre-filling the C-BTB with branches. The Shotgun BTB organization significantly improves the storage density and accuracy of the BTB allowing it to track a larger portion of the branch working set improving the efficiency and accuracy of FDIP.
+\texttt{if} block or a loop. Furthermore, program control flow
+structure often follow a pattern where a (long) unconditional jump
+precedes a sequence of multiple (short) conditional jumps. To
+effectively track the code footprints referenced by conditional jumps
+each entry of the U-BTB tracks the spatial footprints of the code
+targeted by conditional jumps around the target and return addresses
+of the unconditional jump. When an unconditional branch in the U-BTB
+is predicted taken, the spatial footprints are used for prefetching
+into the instruction cache and pre-filling the C-BTB with
+branches. The Shotgun BTB organization significantly improves the
+storage density and accuracy of the BTB allowing it to track a larger
+portion of the branch working set improving the efficiency and
+accuracy of FDIP.
 
-These contributions strongly argue for the viability of FDIP instruction prefetchers and disprove conventional wisdom deeming them unsuitable for tracking the massive instruction footprints of server workloads. 
+These contributions strongly argue for the viability of FDIP
+instruction prefetchers and disprove conventional wisdom deeming them
+unsuitable for tracking the massive instruction footprints of server
+workloads. This is supported by recent industry observations from
+ARM. \textcite{ishii21_re_fetch_direc_instr_prefet} presents an FDIP
+prefetching mechanism and argues for its viability in commercial
+processors because it requires no additional metadata and has a
+minimal implementation complexity overhead. Notably, their mechanism
+outperforms the winner of the recent Instruction Prefetching
+Championship (IPC-1). Based on this, they argue that their FDIP
+implementation should be considered the new baseline that instruction
+prefetching research proposals are compared against. Further, they
+strongly emphasize the importance of ensuring sufficient BTB capacity
+in modern processors as FDIP-based prefetchers are superior from both
+a performance and implementation perspective when coupled with a
+sufficiently large BTB.
 
-
-
-Be sure to explain how the BTB impacts instruction delivery by aiding FDIP-backed instruction prefetching.
 
 
 
