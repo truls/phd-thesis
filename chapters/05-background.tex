@@ -68,7 +68,8 @@ is received, the following sequence of events occur:
 \item When the function gets to the end of the execution queue, the host executing the function must load the image containing the function
 \item The provider brings the image up in a lightweight virtual machine such as Firecracker or gVisor
 \item The function executes and returns its response
-\item The function is shut down after execution
+\item The function is shut down after execution and the resources
+  allocated to it are freed.
 \end{enumerate}
 
 
@@ -98,6 +99,13 @@ be composed into a single FaaS application. As previously mentioned,
 language independence is a critically important property of FaaS as
 96\% of large organizations that use FaaS deploy functions written in
 two or more different languages\cite{serverless_state}.
+
+To communicate, FaaS functions commonly use network-backed RPC interfaces. They do this for two reasons:
+
+\begin{enumerate}
+\item The network-backed interface allows a multi-function FaaS application to be distributed across more than one node
+\item Network-backed RPC interfaces are language-independent and thus they allow FaaS functions written in different language to communicate
+\end{enumerate}
 
 
 
