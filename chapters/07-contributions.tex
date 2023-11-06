@@ -133,7 +133,7 @@ for processor frontends due to their very large instruction
 footprints. These footprints quickly overwhelm the capacities of the
 \liningfigures{L1-I} and the Branch Target Buffer (BTB). To handle
 this problem, computer architects have proposed a large number of
-different approaches. In particular, \liningfigures{L1-I} prefet    chers
+different approaches. In particular, \liningfigures{L1-I} prefetchers
 are a highly effective way to alleviate the front-end bottleneck as
 they help avoid the fill-latency that follows an \liningfigures{L1-I}
 miss.  As detailed in~\Cref{sec:instr-delivery}, a particularly
@@ -152,10 +152,10 @@ table and then replacing its use in a branch target address with a
 pointer to that
 table~\cite{seznec96_dont_use_page_number_point_it}. \textcite{soundararajan21_pdede}
 extends this concept further by observing that several branch page
-numbers share a common region number which can be deduplicated
-further. The limitation of these approaches is that they add a level
-of indirection to BTB lookups, adding complexity and increasing the
-BTB access latency.
+numbers share a common region number which can be additionally
+deduplicated. The limitation of these approaches is that they add a
+level of indirection to BTB lookups, adding complexity and increasing
+the BTB access latency.
 
 
 \paragraph{Approach.}
