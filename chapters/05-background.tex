@@ -68,10 +68,27 @@ Fetch~\cite{ferdman11_proac_instr_fetch} improves on both the performance and me
 
 To summarize, prefetchers based on temporal streaming are highly effective at eliminating L1-I misses but they do so at the cost of requiring large amounts of metadata storage and complex dedicated logic.
 
-\paragraph{Fetch-directed prefetching}
-The Branch Target Buffer (BTB) is a key structure in a high-performance core.... 
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/fdip1.pdf}
+  \caption{\label{fig:fdip} A schematic of the FDIP architecture.}
+\end{figure}
 
-\textcite{reinman99_fetch_direc_instr_prefet} proposed a prefetching mechanism known as Fetch-Directed Instruction Prefetching (FDIP). The key insight of FDIP is that the 
+\paragraph{Fetch-directed prefetching}
+The Branch Target Buffer (BTB) has several important roles in a modern high-performance processor
+
+\textcite{reinman99_fetch_direc_instr_prefet} proposed a prefetching
+mechanism known as Fetch-Directed Instruction Prefetching (FDIP). The
+key insight of FDIP is that since the BTB holds branch targets in a
+program, it already contains the metadata needed for prefetching. A
+schematic of FDIP is shown in\Cref{fig:fdip}. FDIP decouples the
+branch prediction unit form the fetch unit using a dedicated queue
+known as the Fetch Target Queue (FTQ). This decoupling allows the
+branch prediction unit to run ahead of the program execution and fill
+the FTQ with locations of future predicted control flow. Thus, the
+targets in the FTQ represents ideal instruction cache prefetch
+candidates since they represent future control flow of the program
+being executed. The original FDIP proposal 
 
 
 
@@ -79,11 +96,6 @@ The Branch Target Buffer (BTB) is a key structure in a high-performance core....
 
 Be sure to explain how the BTB impacts instruction delivery by aiding FDIP-backed instruction prefetching.
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.8\textwidth]{figures/fdip1.pdf}
-  \caption{\label{fig:fdip} A schematic of the FDIP architecture.}
-\end{figure}
 
 
 % \cite{kanev15_profil,ferdman12_clear_cloud}
