@@ -23,7 +23,7 @@ and the challenges surrounding the execution of serverless functions
 
 Communication problem -> what people have done
 
-Over the past couple of decades, cloud computing has revolutionized the way computing is performed. Traditionally, 
+Over the past couple of decades, cloud computing has revolutionized the way computing is performed. Traditionally, computing resoruces were deployed statically
 
 % \subsection{Serverless computing: Characteristics and challenges}
 % \label{sec:serverless}
@@ -149,7 +149,7 @@ reasons: \begin{inparaenum}[1)] \item Realistically sized BTBs are too
 
 \textcite{kumar17_boomer} introduced Boomerang, an instruction
 prefetching approach that challenged the conventionally held wisdom
-claiming the inadequacy of FDIP prefetchers. Boomerang takes a twofold
+claiming the inadequacy of FDIP prefetchers. Boome\-rang takes a twofold
 approach: Firstly, it pre-decodes blocks fetched into the instruction
 cache to identify and extract the branches they contain. The extracted
 branches are used to pro-actively pre-fill the BTB. Secondly,
@@ -157,7 +157,7 @@ Boomerang leverages a basic-block\footnote{A basic-block is defined as
   a sequence of straight-line instructions ending with a branch} based
 BTB~\cite{yeh92_compr_instr_fetch_mechan_for}. Since more than one
 branch may have targets that lie within the same basic block, this BTB
-organization increases the BTB storage density and redues BTB
+organization increases the BTB storage density and reduces BTB
 misses. Shotgun~\cite{kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl}
 improves the miss coverage of Boomerang further by introducing an
 optimized BTB organization consisting of three structures. The U-BTB
