@@ -93,9 +93,31 @@ candidates since they represent future control flow of the program
 being executed. In spite of FDIP's alluring simplicity and requiring
 zero additional metadata, conventional wisdom long held that FDIP, and
 fetch-directed prefetchers in general, were incapable of effectively
-covering instruction cache misses in commercial server workloads. This was considered the case for two reasons: \begin{inparaenum}  \item Realistically sized BTBs are too small to capture the entire branch working set of server workloads. This leads to frequent BTB misses and the resulting frequent pipeline flushes prevents the prefetching from working optimally. \item Branch predictor error compounds geometrically with the number of branches predicted, 
+covering instruction cache misses in commercial server workloads. This was considered the case for two reasons: \begin{inparaenum}  \item Realistically sized BTBs are too small to capture the entire branch working set of server workloads. This leads to frequent BTB misses and the resulting frequent pipeline flushes prevents the prefetching from working optimally. \item Branch predictor error compounds geometrically with the number of branches predicted, \truls{finish}
 \end{inparaenum}
-\textcite{kumar17_boomer} introduced Boomerang that disproved the conventionally held wisdom about FDIP prefetchers. Boomerang takes a twofold approach: First of all, it reduces BTB misses by proactively filling the BTB with fetched instruction cache blocks. 
+
+
+\textcite{kumar17_boomer} introduced Boomerang that disproved the
+conventionally held wisdom about FDIP prefetchers. Boomerang takes a
+twofold approach: First of all, it reduces BTB misses by pre-decoding
+detched instruciton cache lines to identify branches in them and
+proactively fill the BTB with the identified branches. Additionally,
+it leverages a basic-block\footnote{A basic-block is defined as a
+  sequence of straight-line instructions ending with a branch.} based
+BTB~\cite{yeh92_compr_instr_fetch_mechan_for} that increases the BTB
+storage density and reduces BTB-misses since more than one branch has
+targets that lie within the same basic
+block. Shotgun~\cite{kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl}
+imporves the miss coverage of Boomerang further by introducing an
+optimized BTB organization constiting of three structures. The U-BTB
+for storing unconditional branches, the Return Instruction Buffer
+(RIB) and the C-BTB for storing conditional branches. The key insight
+behind this BTB organization is that unconditional branches tend to
+jump far from their origin as they typically represent a function
+call, possibly in a different library. Conditional branches, on the
+other hand, tend to have targets close to their origin since they
+typically represent control flow within a function, for example an
+\texttt{if} block or a loop. Furthermore, program control flow structure often follow a pattern where a (long) unconditional jump precedes a sequence of multiple (short) conditional jumps. TO
 
 
 
