@@ -8,22 +8,28 @@
 
 \chapter{Concluding Remarks}
 \label{chap:conclusions}
-\section{Conclusion}
+%\section{Conclusion}
 Function-as-a-Service (FaaS) is a highly attractive programming model
 due to its ease of deployment, zero provisioning overhead for
 developers and its ability to compose functions written in multiple
 different programming languages. However, the short-running nature of
-FaaS functions challenges the assumptions that conventional
-microarchitecture are designed under which makes them perform less
-efficiently. In this thesis, we have explored the analysis and
-optimization of serverless functions from the hardware and software
-perspective. In doing so, we made the following key contributions to each of our research directions.
+FaaS functions challenges the assumptions underpinning the design of
+conventional microarchitectures..Additionally, the
+language-independence, modularity and deployment flexibility of FaaS
+functions is enabled by the use of high-overhead, network-backed RPC
+interfaces for inter-function communications. These interfaces add
+significant overhead to inter-function communication in FaaS
+applications which cause significant performance deterioration. In
+this thesis, we have explored the analysis and optimization of
+serverless functions from the hardware and software perspective. In
+doing so, we made the following key contributions to each of our
+research directions.
 
 \begin{description}
 
-\item[RD-A] We began exploring this direction by answering a key question about FaaS functions: 
+\item[RD-A] We began exploring this direction by answering a key question about FaaS functions: How long does a function need to run before the warm-up delay of microarchitectural structures is amortized? Our analysis show that only functions that run for a very short time (<1 ms) see performance deterioration as a result of microarchitectural warm-up latency. We furthermore observe that this effect is exacerbated for FaaS functions with a large instruction footprint and that the functions in general have a large instruction footprint. The latter observation corroborates results from previous work and means that FaaS functions are affected by the front-end bottleneck in line with general server workloads. To address this we introduce BTB-X, an optimized BTB organization that stores branch target offsets instead of full branch targets. To improve storage density, BTB-X exploits the uneven distribution of branch offset sizes in workloads. The resulting design significantly improves BTB storage capacity without increasing storage requirements. This, in turn, improves the performance of instruction cache prefetchers that rely on BTB storage capacity.
 
-\item[RD-B] CoFaaS is a software transformation for FaaS applicaiton that eliminates communication overhea dby 
+\item[RD-B] To address the excessive communication overhead of FaaS applicaitons we introduce CoFaaS, a fully automated and software-based transformation of FaaS applications. Previous work targeting the same problem is able to effectively reduce the communication overhead, howver, in doing so, 
 
 \end{description}
 
