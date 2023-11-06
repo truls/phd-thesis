@@ -108,8 +108,8 @@ BTB~\cite{yeh92_compr_instr_fetch_mechan_for} that increases the BTB
 storage density and reduces BTB-misses since more than one branch has
 targets that lie within the same basic
 block. Shotgun~\cite{kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl}
-imporves the miss coverage of Boomerang further by introducing an
-optimized BTB organization constiting of three structures. The U-BTB
+improves the miss coverage of Boomerang further by introducing an
+optimized BTB organization consisting of three structures. The U-BTB
 for storing unconditional branches, the Return Instruction Buffer
 (RIB) and the C-BTB for storing conditional branches. The key insight
 behind this BTB organization is that unconditional branches tend to
@@ -117,7 +117,7 @@ jump far from their origin as they typically represent a function
 call, possibly in a different library. Conditional branches, on the
 other hand, tend to have targets close to their origin since they
 typically represent control flow within a function, for example an
-\texttt{if} block or a loop. Furthermore, program control flow structure often follow a pattern where a (long) unconditional jump precedes a sequence of multiple (short) conditional jumps. TO
+\texttt{if} block or a loop. Furthermore, program control flow structure often follow a pattern where a (long) unconditional jump precedes a sequence of multiple (short) conditional jumps. To effectively track the code footprints referenced by conditional jumps each entry of the U-BTB tracks the spatial footprints of the code targeted by conditional jumps around the target and return addresses of the unconditional jump. When an unconditional branch in the U-BTB is predicted taken, the spatial footprints are used for prefetching into the instruction cache and pre-filling the C-BTB with branches. By doing this, Shotgun significantly improves the storage density of the BTB and thereby it improves the 
 
 
 
