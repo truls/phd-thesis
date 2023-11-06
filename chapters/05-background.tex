@@ -95,8 +95,8 @@ functions. Another essential property that makes the FaaS programming
 model attractive to developers is language neutrality. This property
 enables FaaS functions to be written in any programming language and
 ensures that functions written in different programming languages can
-be composed into a single FaaS application. As previously mentioned,
-language independence is a critically important property of FaaS as
+be composed into a single FaaS application. As mentioned in the
+introduction, language independence is a treasured property of FaaS as
 96\% of large organizations that use FaaS deploy functions written in
 two or more different languages\cite{serverless_state}.
 
@@ -107,19 +107,24 @@ To communicate, FaaS functions commonly use network-backed RPC interfaces. They 
 \item Network-backed RPC interfaces are language-independent and thus they allow FaaS functions written in different language to communicate
 \end{enumerate}
 
+\begin{figure}[ht]
+  \centering
+\includegraphics[width=0.8\textwidth]{papers/paper5-cofaas/figures/faas_application.pdf}
+\caption{\label{fig:faas-app} A schematic of the execution of a multi-function FaaS application.}
+\end{figure}
+
 Even though the network-backed RPC interface facilitate many of the
-advantages of the FaaS programming model they suffer from large communication overheads 
+advantages of the FaaS programming model they suffer from large
+communication overheads. In complex real-world FaaS applications, this
+communication overhead compounds to become the dominating source of
+execution overhead in FaaS
+applications~\cite{setllar,gan19_open_sourc_bench_suite_micros}
 
 % \subsection{Serverless computing: Characteristics and challenges}
 % \label{sec:serverless}
 % Serverless is cool, attractive and highly used. What are the characteristics and challenges that makes it unique?
 
 % Mention cold start latency
-\begin{figure}[ht]
-  \centering
-\includegraphics[width=0.8\textwidth]{papers/paper5-cofaas/figures/faas_application.pdf}
-\caption{\label{fig:faas-app} A schematic of the execution of a multi-function FaaS application.}
-\end{figure}
 
 \section{Instruction Delivery in the Datacenter}
 \label{sec:instr-delivery}
@@ -268,8 +273,8 @@ larger portion of the branch working set. This improves the efficiency
 and accuracy of FDIP.
 
 These results strongly support the viability of FDIP instruction
-prefetchers and disprove conventional wisdom deeming them unsuitable
-for covering the massive instruction footprints of server
+prefetchers and disprove the conventional wisdom deeming them
+unsuitable for covering the massive instruction footprints of server
 workloads. This view is supported by a recently presented industrial
 perspective from ARM. \textcite{ishii21_re_fetch_direc_instr_prefet}
 presents an FDIP prefetching mechanism and argues for its viability in
@@ -284,7 +289,7 @@ sufficient BTB capacity in modern processors as FDIP-based prefetchers
 are superior from both a performance and implementation perspective
 when coupled with a sufficiently large BTB.
 
-\subsection{Serverless Computing and the Front-end Bottleneck}
+% \subsection{Serverless Computing and the Front-end Bottleneck}
 
 
 
