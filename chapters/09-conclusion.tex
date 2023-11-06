@@ -11,19 +11,19 @@
 %\section{Conclusion}
 Function-as-a-Service (FaaS) is a highly attractive programming model
 due to its ease of deployment, zero provisioning overhead for
-developer,s and its ability to compose functions written in multiple
-different programming languages. However, the short-running nature of
-FaaS functions challenges the assumptions underpinning the design of
-conventional microarchitectures. Additionally, the
-language-independence, modularity and deployment flexibility of FaaS
-functions are enabled by the use of high-overhead, network-backed RPC
-interfaces for inter-function communications. These interfaces add
-significant overhead to inter-function communication in FaaS
-applications which cause significant performance deterioration. In
-this thesis, we have explored the analysis and optimization of
-serverless functions from the hardware and software perspective. In
-doing so, we made the following key contributions to each of our
-research directions.
+developers and its ability to compose applications from functions
+written in multiple different programming languages. However, the
+short-running nature of FaaS functions challenges the assumptions
+underpinning the design of conventional
+microarchitectures. Additionally, the language-independence,
+modularity and deployment flexibility of FaaS functions are enabled by
+the use of high-overhead, network-backed RPC interfaces for
+inter-function communications. These interfaces add significant
+overhead to inter-function communication in FaaS applications which
+cause significant performance deterioration. In this thesis, we have
+analyzed and optimized the execution of serverless functions from both
+the hardware and software perspective. In doing so, we made the
+following key contributions to each of our research directions.
 
 \begin{description}
 
@@ -57,10 +57,12 @@ research directions.
   functions in a FaaS application be written in the same
   language. CoFaaS practically eliminates the inter-function
   communication overhead without sacrificing any of FaaS' essential
-  properties. This uncompromising nature makes CoFaaS unique in the
-  solution space. As CoFaaS' mechanism of action consolidates multiple
-  FaaS functions onto a single runtime, it also intrinsically address
-  the performance deterioration that we observed for very
+  properties. The key insight exploited by CoFaaS is that we can use
+  the well-defined RPC interfaces of FaaS functions to make code
+  transformations that alleviate the inter-function communication
+  overhead. As CoFaaS' mechanism of action consolidates multiple FaaS
+  functions onto a single WebAssembly runtime, it also intrinsically
+  address the performance deterioration that we observed for very
   short-running functions while working on RD-A.
 
 \end{description}

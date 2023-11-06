@@ -122,7 +122,19 @@ execution overhead in FaaS
 applications~\cite{stellar,gan19_open_sourc_bench_suite_micros}. To
 illustrate why this is the case, we consider an example of a FaaS
 application composed from multiple FaaS functions in
-\Cref{fig:faas-app}. Each of the functions, $f_{1.56}$ are deployed in a separate container $c_{1..5}$ and they communicate via a network-backed RPC interface. The arrows denote the dependencies within the application. When the client issues a request to $f_1$ , the function subsequently issues a request to $f_2$ that again issues a request to $f_5$. Thus, we pay the communication latency penalty at least twice when issuing a request to this function. Keeping in mind that the latency of an RPC call to another function can be in excess of 1ms, it becomes clear how this communication overhead can cause significant performance deterioration for FaaS applications. Further, the example we show here is comparatively small. Real-world FaaS applications can be composed from tens or hundreds of individual FaaS applications.
+\Cref{fig:faas-app}. Each of the functions, $f_{1.5}$ are deployed in
+a separate container $c_{1..5}$ and they communicate via a
+network-backed RPC interface. The arrows denote the dependencies
+within the application. When the client issues a request to $f_1$ ,
+the function subsequently issues a request to $f_2$ that again issues
+a request to $f_5$. Thus, we pay the communication latency penalty at
+least twice when issuing a request to this function. Keeping in mind
+that the latency of an RPC call to another function can be in excess
+of 1ms, it becomes clear how this communication overhead can cause
+significant performance deterioration for FaaS applications. Further,
+the example we show here is comparatively small. Real-world FaaS
+applications can be composed from tens or hundreds of individual FaaS
+applications.
 
 % \subsection{Serverless computing: Characteristics and challenges}
 % \label{sec:serverless}
