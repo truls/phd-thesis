@@ -21,52 +21,66 @@
 
 
 % Front-end problem -> what people have done
-Datacenter workloads are distinguished by having massive multi-megabyte instruction footprints. These workloads generally have deep, multi-layered software architectures with deep dependency stacks. For example, a request hitting a website invokes the web server, the interpreter of the backend language powering the website and a database server. All of these components also involve a large amount of system calls that perform context switches and execute a significant amount of kernel code. footprint~\cite{ferdman12_clear_cloud,ailamaki99_dbmss_moder_proces}. These large code footprints overwhelms the capabilities of the frontends of common processors causing a phenomenon known as the front-end bottleneck~\cite{kanev15_profil,ferdman12_clear_cloud,ayers19_asmdb,kanev15_profil,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,spracklen05_effec_instr_prefet_chip_multip}.
+Datacenter workloads are distinguished by having massive
+multi-megabyte instruction footprints. These workloads generally have
+deep, multi-layered software architectures with deep dependency
+stacks. Consider, for example, a server hosting a website. Processing
+a request to the website involves invokes the web server, the
+interpreter of the backend language powering the website and a
+database server. All of these components also involve a large amount
+of system calls that perform context switches and execute a
+significant amount of kernel
+code~\cite{ferdman12_clear_cloud,ailamaki99_dbmss_moder_proces}. These
+large code footprints overwhelms the capabilities of current processor
+frontends causing a well-documented phenomenon known as the frontend
+bottleneck~\cite{kanev15_profil,ferdman12_clear_cloud,ayers19_asmdb,kanev15_profil,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,spracklen05_effec_instr_prefet_chip_multip}.
 
 
 
-The front-end bottleneck occurs when the frontend of the processor is
-unable to deliver a contiguous stream of instructions to the
-backend.
+The frontend bottleneck occurs when the frontend of the processor is
+unable to deliver a continuous stream of instructions to the backend.
 % Write about what happens when the pipeline fills an instruction
-For every Instruction delivery interruptions from the front-end can
-occur for two reasons: \begin{inparaenum}[1)] \item the frontend
-  mispredicts the next instruction due to a branch misprediction or a
-  branch target miss or \item the frontend encounters a L1-I
-  miss.\end{inparaenum}. Recovering from either of these events is
-extremely expensive due to an extensive number of pipeline stall
-cycles where the processor core is prevented from making
-progress. When a branch misprediction occurs, the execution core must
-be resteered onto the right-path execution. Doing this requires a
+Instruction delivery interruptions from the frontend can occur for two
+reasons: \begin{inparaenum}[1)] \item the frontend mispredicts the
+  next instruction due to a branch misprediction or a branch target
+  miss or \item the frontend encounters an instruction cache
+  miss.\end{inparaenum}. Recovering from either of these events cause
+significant performance deterioration by causing long pipeline stalls
+that prevents the processor from making progress for tens of
+cycles. When a branch misprediction occurs, the instruction stream
+must be resteered onto the right-path execution. Doing this requires a
 pipeline flush, exposing the core to a pipeline fill latency of tens
 of cycles. L1-I cache misses are even more expensive exposing the core
-to the cache fill delay occurring while the right-path instruction is
-loaded into the cache.
+to the cache fill delay occurring while the right-path instructions are
+fetched into the instruction cache.
 
 Traditionally, the instruction cache prefetching capabilities of
 processor frontends consisted of only next-line prefetching
 (NLP)~\cite{nextline_pref}. In NLP, the next instruction cache block
-is prefetched unconditionally. While this provide effective coverage
-for linear code execution in covering the discontiguous control flows
-with large spatial footprints that are common in server processors. To
-address this, researchers has proposed diverse hardware mechanisms for
-instruction prefetching. We generally subdivide these into two
-categories: temporal streaming and fetch-directed prefetching. We describe these in the following
+is prefetched unconditionally. While this technique provide miss
+coverage for linear code execution, it is incapable of covering the
+discontinuous control flows with large spatial footprints that are
+common in server processors. To address this, researchers have
+proposed numerous hardware mechanisms for instruction prefetching. We
+generally subdivide these into two categories: temporal streaming and
+fetch-directed prefetching. We describe these in the following two
+sections.
 
 \subsection{Temporal Streaming} Fundamentally, temporal streaming
 based prefetching exploit the repetitiveness of program control
-flow. The intuition behind this is that even is a program can perform
-several operations, the instruction sequence executed to perform each
-operation is similar. This principles enables instruction prefetching
-through a record and replay approach, where streams of instructions
-are recorded and subsequently and replayed when a prerecorded pattern
-of instruction accesses is seen. \textcite{ferdman08_tempor} proposed
-Temporal Instruction Fetch Streaming (TIFS), the original prefetcher
-exploiting this principle. While TIFS is effective at avoiding
+flow. The intuition behind this is that even if a program can perform
+several operations, the instruction sequence executed to perform a
+particular operation is highly repetitive. This principle enables
+instruction prefetching through a record and replay
+approach. Essentially, this approach records streams of instructions
+and subsequently replays them to generate prefetching targets when a
+starting instruction is accessed. \textcite{ferdman08_tempor} proposed
+Temporal Instruction Fetch Streaming (TIFS), the first prefetcher to
+exploit this principle. While TIFS is effective at avoiding
 instruction cache misses it requires a massive amount of metadata
-storage to capture the recorded streams.  Proactive Instruction
-Fetch~\cite{ferdman11_proac_instr_fetch} improves on both the
-performance and metadata storage requirements of TIFS by recording
+storage to save the recorded instruction access streams.  Proactive
+Instruction Fetch~\cite{ferdman11_proac_instr_fetch} improves on both
+the performance and metadata storage requirements of TIFS by recording
 compacted retire-order instruction streams. Still, it requires large
 amounts of metadata storage of 200KB per core.  \truls{Describe other
   temporal streaming approaches}
@@ -87,20 +101,22 @@ The Branch Target Buffer (BTB) has several important roles in a modern high-perf
 
 \textcite{reinman99_fetch_direc_instr_prefet} proposed a prefetching
 mechanism known as Fetch-Directed Instruction Prefetching (FDIP). The
-key insight of FDIP is that since the BTB holds branch targets in a
-program, it already contains the metadata needed for prefetching. A
-schematic of FDIP is shown in\Cref{fig:fdip}. FDIP decouples the
-branch prediction unit form the fetch unit using a dedicated queue
-known as the Fetch Target Queue (FTQ). This decoupling allows the
-branch prediction unit to run ahead of the program execution and fill
-the FTQ with locations of future predicted control flow. Thus, the
-targets in the FTQ represents ideal instruction cache prefetch
-candidates since they represent future control flow of the program
-being executed. In spite of FDIP's alluring simplicity and requiring
-zero additional metadata, conventional wisdom long held that FDIP, and
-fetch-directed prefetchers in general, were incapable of effectively
-covering instruction cache misses in commercial server workloads. This
-was considered the case for two reasons: \begin{inparaenum} \item
+key insight of FDIP is that the BTB captures program control flow by
+storing branches and their targets,.Therefore, it already contains the
+metadata needed to identify program control flow divergences and
+perform instruction prefetching accordingly. A schematic of FDIP is
+shown in \Cref{fig:fdip}. FDIP decouples the branch prediction unit
+form the fetch unit using a dedicated queue known as the Fetch Target
+Queue (FTQ). This decoupling allows the branch prediction unit to run
+ahead of program execution and fill the FTQ with locations of the
+future predicted control flow. Thus, the targets in the FTQ represents
+suitable instruction cache prefetch candidates since they correspond
+to future control flow of the program being executed. In spite of
+FDIP's alluring simplicity and absence of dedicated metadata storage,
+conventional wisdom long held that FDIP, and fetch-directed
+prefetchers in general, were incapable of effectively covering
+instruction cache misses in commercial server workloads. This was
+considered the case for two reasons: \begin{inparaenum} \item
   Realistically sized BTBs are too small to capture the entire branch
   working set of server workloads. This leads to frequent BTB misses
   and the resulting frequent pipeline flushes prevents the prefetching
@@ -109,16 +125,16 @@ was considered the case for two reasons: \begin{inparaenum} \item
 \end{inparaenum}
 
 
-\textcite{kumar17_boomer} introduced Boomerang that disproved the
-conventionally held wisdom about FDIP prefetchers. Boomerang takes a
-twofold approach: First of all, it reduces BTB misses by pre-decoding
-fetched instruction cache lines to identify branches in them and
-proactively pre-fill the BTB. Additionally, it leverages a
-basic-block\footnote{A basic-block is defined as a sequence of
-  straight-line instructions ending with a branch} based
-BTB~\cite{yeh92_compr_instr_fetch_mechan_for} that increases the BTB
-storage density and reduces BTB-misses since more than one branch has
-targets that lie within the same basic
+\textcite{kumar17_boomer} introduced Boomerang, an instruction
+prefetching approach that challenged the conventionally held wisdom
+about FDIP prefetchers. Boomerang takes a twofold approach: First of
+all, it reduces BTB misses by pre-decoding fetched instruction cache
+lines to identify branches in them and proactively pre-fill the
+BTB. Additionally, it leverages a basic-block\footnote{A basic-block
+  is defined as a sequence of straight-line instructions ending with a
+  branch} based BTB~\cite{yeh92_compr_instr_fetch_mechan_for} that
+increases the BTB storage density and reduces BTB-misses since more
+than one branch has targets that lie within the same basic
 block. Shotgun~\cite{kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl}
 improves the miss coverage of Boomerang further by introducing an
 optimized BTB organization consisting of three structures. The U-BTB
