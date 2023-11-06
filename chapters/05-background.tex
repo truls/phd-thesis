@@ -8,6 +8,11 @@
 
 \chapter{Background}
 \label{chap:background}
+In this chapter, we introduce the contextual background that surrounds
+this thesis. In particular, we focus on microarchitectural
+optimizations specifically targeting datacenter workloads and we give
+an in-depth introduction to serverless computing, what makes it unique
+and the challenges surrounding the execution of serverless functions
 
 %Paper giving background on serverless computing \cite{van2018serverless}
 
@@ -23,6 +28,11 @@ Communication problem -> what people have done
 % Serverless is cool, attractive and highly used. What are the characteristics and challenges that makes it unique?
 
 % Mention cold start latency
+\begin{figure}[ht]
+  \centering
+\includegraphics[width=0.8\textwidth]{papers/paper5-cofaas/figures/faas_application.pdf}
+\caption{\label{fig:faas-app} A schematic of a multi-function }
+\end{figure}
 
 \section{Instruction Delivery in the Datacenter}
 \label{sec:instr-delivery}
@@ -187,6 +197,7 @@ sufficient BTB capacity in modern processors as FDIP-based prefetchers
 are superior from both a performance and implementation perspective
 when coupled with a sufficiently large BTB.
 
+\subsection{Serverless Computing and the Front-end Bottleneck}
 
 
 
@@ -209,7 +220,6 @@ when coupled with a sufficiently large BTB.
 
 % Add a description of the processor frontend
 
-\section{Serverless Computing and the Front-end Bottleneck}
 
 \ifx\chapincluded\undefined
   \printbibliography
