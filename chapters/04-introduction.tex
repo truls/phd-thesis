@@ -21,7 +21,7 @@ The emergence of cloud computing has driven a landslide change in the
 computing landscape where computing resources are increasingly
 centralized in the hands of a few global providers. The cloud
 computing revolution is driven by the developers' desire for
-simple, flexible and scalable hosting with no up-front
+simple, flexible, and scalable hosting with no up-front
 investment. Function-as-a-service (FaaS) computing, the core
 technology powering serverless computing, is a cloud programming model
 that is currently seeing rapid growth. FaaS promises simplicity,
@@ -52,7 +52,7 @@ services is that their running time is often very short, with 67\% of
 functions studied
 in~\cite{eismann20_review_server_use_cases_their_charac} having a
 runtime in the order of seconds. Furthermore, the current trend
-indicates that functions are getting shorter with median function
+indicates that functions are getting shorter with the median function
 execution time reducing by 2\texttimes{} from 2019 to
 2020~\cite{serverless_state_21}.
 
@@ -89,7 +89,7 @@ of both the FaaS functions and conventional server applications. The research co
 proposed a myriad of diverse methods to mitigate the front-end
 bottleneck~\cite{reinman99_fetch_direc_instr_prefet,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,ferdman08_tempor,ferdman11_proac_instr_fetch,kaynak13_shift,kaynak15_confl,ayers19_asmdb,ajorpaz18_explor_predic_replac_polic_instr,khan20_i_spy,soundararajan21_pdede,ansari20_divid,khan21_rippl,spracklen05_effec_instr_prefet_chip_multip}. Further, prior work~\cite{ishii21_re_fetch_direc_instr_prefet,kumar17_boomer} has shown that 
 a fetch directed instruction prefetcher (FDIP), when driven by a large enough BTB, provides near ideal performance.
-However, a large BTB leads to significant storage cost with modern processors dedicating 100s of KBs for it~\cite{exynos}.
+However, a large BTB leads to significant storage costs with modern processors dedicating 100s of KBs for it~\cite{exynos}.
 This thesis aims to maximize BTB reach, without 
 prohibitive area and storage overheads, to mitigate the frontend bottleneck.
 
@@ -134,8 +134,7 @@ function, developers also have a strong monetary incentive to keep the
 running time of functions short~\cite{yu20_charac_server_platf_server}.  Larger and more
 complex FaaS applications are built by composing multiple smaller FaaS
 functions. Since a FaaS function can be written in any language
-depending on what best fits its purpose, the functions comprising a FaaS application normally communicate using network-backed Remote
-Procedure Call (RPC)
+depending on what best fits its purpose, the functions comprising a FaaS application normally communicate using network-backed Remote Procedure Calls (RPC)
 interfaces~\cite{gan19_open_sourc_bench_suite_micros}. In addition to
 facilitating language-independence, these loosely-coupled RPC-backed
 communication interfaces also make it possible to transparently

@@ -25,14 +25,12 @@ analyzed and optimized the execution of serverless functions from both
 the hardware and software perspective. In doing so, we made the
 following key contributions to each of our research directions.
 
-\begin{description}
 
-
-\item[RD-A] We began exploring this direction by answering a key
+\paragraph{RD-A.} We began exploring this direction by answering a key
   question about FaaS functions: How long does a function need to run
   before the warm-up delay of microarchitectural structures is
   amortized? Our analysis shows that only functions that run for a very
-  short time (<1 ms) see performance deterioration as a result of
+  short time 1 ms) see performance deterioration as a result of
   microarchitectural warm-up latency. We furthermore observe that this
   effect is exacerbated for FaaS functions with a large instruction
   footprint and that the functions in general have a large instruction
@@ -47,7 +45,7 @@ following key contributions to each of our research directions.
   turn, improves the performance of instruction cache prefetchers that
   rely on BTB storage capacity.
 
-\item[RD-B] To address the excessive communication overhead in FaaS
+\paragraph{RD-B.} To address the excessive communication overhead in FaaS
   applications we introduce CoFaaS, a fully automated and
   software-based transformation of FaaS applications. Previous work
   targeting the same problem can effectively reduce the communication
@@ -65,7 +63,6 @@ following key contributions to each of our research directions.
   addresses the performance deterioration that we observed for very
   short-running functions while working on RD-A.
 
-\end{description}
 
 % \section{Future Work}
 
