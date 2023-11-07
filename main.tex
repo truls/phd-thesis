@@ -53,13 +53,13 @@
 \usepackage{dblfloatfix}
 \usepackage{fontaxes}
 \usepackage[english]{babel}
-\RequirePackage[backend=biber,sorting=nyt, style=numeric-comp,eprint=false, url=false,natbib,backref=true]{biblatex}
+\RequirePackage[backend=biber,sorting=nyt, style=numeric-comp,eprint=false, url=false,isbn=false,doi=false,natbib,backref=true]{biblatex}
 \usepackage[pdfauthor={\docauthor},
             pdftitle={\doctitle}]{hyperref}
             \def\UrlBreaks{\do\/\do-}
 \usepackage[nameinlink,sort]{cleveref}
 
-
+%\DeclareFieldFormat{pages}{}
 
 \renewcommand\chaptermark[1]{\markboth{\MakeUppercase{\liningfigures{\thechapter}.~#1}}{}}
 
