@@ -45,7 +45,7 @@ commodity computing hardware.
 Since Amazon released the first publicly available cloud offering,
 \liningfigures{EC2}, in 2006~\cite{qian2009cloud} the popularity of
 the cloud has exploded and a plethora of products have been released
-to meet practicioners' never-ending demand for flexible, infinitely
+to meet practitioners' never-ending demand for flexible, infinitely
 scalable, maintenance-free and, cost-effective computing. Following
 this trend, serverless computing is a recent addition to the cloud
 computing landscape that is quickly gaining popularity. Serverless
@@ -58,12 +58,12 @@ server, they simply provide the application code and from there they
 leave it up to the provider to decide how the code is executed. In other
 words, serverless abstracts away the notion of a server from the
 developer. The programming model that underpins serverless computing
-is known as Function-as-a Service (FaaS). A FaaS function is a
+is known as Function-as-a-Service (FaaS). A FaaS function is a
 stateless unit of code that is executed on demand by the provider when
-it is needed to handle an external event, such as a HTTP request. FaaS
+it is needed to handle an external event, such as an HTTP request. FaaS
 functions are commonly provided by the user as a Docker~\cite{docker}
 container image~\cite{serverless_state}. When an event targeting a
-FaaS function is received, the following sequence of events occur:
+FaaS function is received, the following sequence of events occurs:
 \begin{enumerate}
 \item The function is scheduled for execution on a host of available resources
 \item When the function gets to the end of the execution queue, the host executing the function must load the image containing the function
@@ -76,20 +76,13 @@ FaaS function is received, the following sequence of events occur:
 
 
 FaaS functions have a number of properties that make them unique
-compared to conventional cloud workloads. First of all, they generally
-have a very short runtimes. A study performed on the Microsoft Azure
-cloud~\cite{shahrad20_server_wild} showed that half of all FaaS
-functions complete within 1 second while 90\% of all functions
-complete within 10 seconds. Another
+compared to conventional cloud workloads. First of all, they generally have very short runtimes. A study performed on the Microsoft Azure cloud~\cite{shahrad20_server_wild} showed that half of all FaaS functions executed within 1 second while 90\% of all functions executed within 10 seconds. Another
 study~\cite{eismann20_review_server_use_cases_their_charac}
-corroborated by concluding that 67\% of functions studied ran for just
-a few seconds.  Furthermore, the runtime of functions appear to be
-decreasing with median function execution time reducing by
-2\texttimes{} from 2019 to 2020~\cite{serverless_state_21}. The reason
+corroborated by concluding that 67\% of functions studied ran for just a few seconds.  Furthermore, the runtime of functions appears to be decreasing with the median function execution time reduced by 2\texttimes{} from 2019 to 2020~\cite{serverless_state_21}. The reason
 for the sort execution time of FaaS functions is that developers are
 encouraged to keep functions simple and only perform a single
 purpose. This principle is derived from microservice
-architectures~\cite{gan19_open_sourc_bench_suite_micros}, and aims to
+architectures~\cite{gan19_open_sourc_bench_suite_micros} and aims to
 ensure that FaaS functions remain reusable and composable. These two
 principles are essential, as larger, more complex FaaS applications
 are constructed by composing multiple smaller single-purpose
@@ -106,7 +99,7 @@ To communicate, FaaS functions commonly use network-backed RPC interfaces. They 
 
 \begin{enumerate}
 \item The network-backed interface allows a multi-function FaaS application to be distributed across more than one node
-\item Network-backed RPC interfaces are language-independent and thus they allow FaaS functions written in different language to communicate
+\item Network-backed RPC interfaces are language-independent and thus they allow FaaS functions written in different languages to communicate
 \end{enumerate}
 
 \begin{figure}[ht]
@@ -115,14 +108,14 @@ To communicate, FaaS functions commonly use network-backed RPC interfaces. They 
 \caption{\label{fig:faas-app} A schematic of the execution of a multi-function FaaS application.}
 \end{figure}
 
-Even though the network-backed RPC interface facilitate many of the
+Even though the network-backed RPC interface facilitates many of the
 advantages of the FaaS programming model they suffer from large
 communication overheads. In complex real-world FaaS applications, this
 communication overhead compounds to become the dominating source of
 execution overhead in FaaS
 applications~\cite{stellar,gan19_open_sourc_bench_suite_micros}. To
 illustrate why this is the case, we consider an example of a FaaS
-application composed from multiple FaaS functions in
+application composed of multiple FaaS functions in
 \Cref{fig:faas-app}. Each of the functions, $f_{1.5}$ are deployed in
 a separate container $c_{1..5}$ and they communicate via a
 network-backed RPC interface. The arrows denote the dependencies
@@ -131,10 +124,10 @@ the function subsequently issues a request to $f_2$ that again issues
 a request to $f_5$. Thus, we pay the communication latency penalty at
 least twice when issuing a request to this function. Keeping in mind
 that the latency of an RPC call to another function can be in excess
-of 1ms, it becomes clear how this communication overhead can cause
+of 1~ms, it becomes clear how this communication overhead can cause
 significant performance deterioration for FaaS applications. Further,
 the example we show here is comparatively small. Real-world FaaS
-applications can be composed from tens or hundreds of individual FaaS
+applications can be composed of tens or hundreds of individual FaaS
 applications.
 
 % In order to eliminate this communication overhead, previous work proposed numerous different solutions. These generally fall into two 
@@ -156,15 +149,12 @@ applications.
 Datacenter workloads are distinguished by having massive
 multi-megabyte instruction footprints. These workloads generally have
 multi-layered software architectures with deep dependency
-stacks. Consider, for example, a server hosting a website. Processing
-a request to the website involves invokes the web server, the
-interpreter of the backend language powering the website and a
+stacks. Consider, for example, a server hosting a website. Processing a request to the website involves invoking the web server, the
+interpreter of the backend language powering the website, and a
 database server. All of these components also involve a large amount
 of system calls that perform context switches and execute a
 significant amount of kernel
-code~\cite{ferdman12_clear_cloud,ailamaki99_dbmss_moder_proces}. These
-large code footprints overwhelms the capabilities of current processor
-frontends causing a well-documented phenomenon known as the frontend
+code~\cite{ferdman12_clear_cloud,ailamaki99_dbmss_moder_proces}. These large code footprints overwhelm the capabilities of current processor frontends causing a well-documented phenomenon known as the frontend
 bottleneck~\cite{kanev15_profil,ferdman12_clear_cloud,ayers19_asmdb,kanev15_profil,kumar17_boomer,kumar18_blast_throug_front_end_bottl_with_shotg,kumar20_shoot_down_server_front_end_bottl,spracklen05_effec_instr_prefet_chip_multip}.
 
 
@@ -175,11 +165,7 @@ Instruction delivery interruptions from the frontend can occur for two
 reasons: \begin{inparaenum}[1)] \item the frontend mispredicts the
   next instruction due to a branch misprediction or a branch target
   miss or \item the frontend encounters an instruction cache
-  miss.\end{inparaenum}. Recovering from either of these events cause
-significant performance deterioration by causing long pipeline stalls
-that prevents the processor from making progress for tens of
-cycles. When a branch misprediction occurs, the instruction stream
-must be resteered onto the right-path execution. Doing this requires a
+  miss.\end{inparaenum} Recovering from either of these events causes significant performance deterioration by causing long pipeline stalls that prevent the processor from making progress for tens of cycles. When a branch misprediction occurs, the instruction stream must be resteered onto the right-path execution. Doing this requires a
 pipeline flush, exposing the core to a pipeline fill latency of tens
 of cycles. L1-I cache misses are even more expensive exposing the core
 to the cache fill delay occurring while the right-path instructions are
@@ -188,7 +174,7 @@ fetched into the instruction cache.
 Traditionally, the instruction cache prefetching capabilities of
 processor frontends consisted of only next-line prefetching
 (NLP)~\cite{nextline_pref}. In NLP, the next instruction cache block
-is prefetched unconditionally. While this technique provide miss
+is prefetched unconditionally. While this technique provides miss
 coverage for linear code execution, it is incapable of covering the
 discontinuous control flows with large spatial footprints that are
 common in server processors. To address this, researchers have
@@ -197,8 +183,7 @@ generally subdivide these into two categories: temporal streaming and
 fetch-directed prefetching. We describe these in the following two
 sections.
 
-\subsection{Temporal Streaming} Fundamentally, temporal streaming
-based prefetching exploit the repetitiveness of program control
+\subsection{Temporal Streaming} Fundamentally, temporal streaming-based prefetching exploits the repetitiveness of program control
 flow. The intuition behind this is that even if a program can perform
 several operations, the instruction sequence executed to perform a
 particular operation is highly repetitive. This principle enables
@@ -238,7 +223,7 @@ storing branches and their targets. Therefore, it already contains the
 metadata needed to identify program control flow divergences and
 perform instruction prefetching accordingly. A schematic of FDIP is
 shown in \Cref{fig:fdip}. FDIP decouples the branch prediction unit
-form the fetch unit using a dedicated queue known as the Fetch Target
+from the fetch unit using a dedicated queue known as the Fetch Target
 Queue (FTQ). This decoupling allows the branch prediction unit to run
 ahead of program execution and fill the FTQ with locations of the
 future predicted control flow. Thus, the targets in the FTQ are
@@ -251,12 +236,10 @@ commercial server workloads. This was considered the case for two
 reasons: \begin{inparaenum}[1)] \item Realistically sized BTBs are too
   small to capture the entire branch working set of server
   workloads. This causes frequent BTB misses and the resulting
-  frequent pipeline flushes prevents the prefetching from working
+  frequent pipeline flushes prevent the prefetching from working
   optimally. \item Branch predictor error compounds geometrically with
   the number of branches predicted. Thus, it is infeasible that future
-  control flow predictions generated by the branch predictor would
-  stay on path for long enough to cover the large LLC fetch delay
-  encountered in modern processors.
+  control flow predictions generated by the branch predictor would stay on the right path for long enough to cover the large LLC fetch delay encountered in modern processors.
 \end{inparaenum}
 
 
@@ -281,10 +264,7 @@ jump far from their origin as they typically represent function calls,
 possibly spanning different libraries. Conditional branches, on the
 other hand, tend to have targets close to their origin since they
 typically represent control flow within a function, such as an
-\texttt{if} block or a loop. Furthermore, program control flow often
-follow a pattern where a (long) unconditional jump precedes a sequence
-of multiple (short) conditional jumps. To effectively track the code
-footprints referenced by conditional jumps, each entry of the U-BTB
+\texttt{if} block or a loop. Furthermore, program control flow often follows a pattern where a (long) unconditional jump precedes a sequence of multiple (short) conditional jumps. To effectively track the code footprints referenced by conditional jumps, each entry of the U-BTB
 tracks the spatial footprints of instructions accessed by conditional
 jumps around the target and return addresses of the unconditional
 jump. When an unconditional branch in the U-BTB is predicted taken,

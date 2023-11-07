@@ -21,7 +21,7 @@ The emergence of cloud computing has driven a landslide change in the
 computing landscape where computing resources are increasingly
 centralized in the hands of a few global providers. The cloud
 computing revolution is driven by the developers' desire for
-simple,flexible and scalable hosting with no up-front
+simple, flexible and scalable hosting with no up-front
 investment. Function-as-a-service (FaaS) computing, the core
 technology powering serverless computing, is a cloud programming model
 that is currently seeing rapid growth. FaaS promises simplicity,
@@ -39,17 +39,15 @@ deployment-level decisions to the provider.
 % FaaS functions is that they are stateless, meaning that they produce
 % deterministic output when executed repeatedly with the same
 % inputs.
-When an event associated with a FaaS function is triggered, the
-provider must allocate resources and spawn the target function in
+When an event associated with a FaaS function is triggered, the provider must allocate resources and spawn the target function in
 order to handle the request. When the FaaS function finishes its
-execution, it is torn down and the resources allocated for its
+execution, it is torn down, and the resources allocated for its
 execution are freed, possibly after the expiry of a grace period to
 prevent repeatedly starting the function in case it receives requests
 with a short inter-arrival time. This ephemeral deployment structure
 makes FaaS fundamentally different from the conventional cloud
 computing model where computing resources are provisioned in advance
-by the developer and services run as persistent daemons. Another
-aspect that distinguishes FaaS functions from conventional cloud
+by the developer and services run as persistent daemons. Another aspect that distinguishes FaaS functions from conventional cloud
 services is that their running time is often very short, with 67\% of
 functions studied
 in~\cite{eismann20_review_server_use_cases_their_charac} having a
@@ -60,7 +58,7 @@ execution time reducing by 2\texttimes{} from 2019 to
 
 
 The unique deployment model and runtime characteristics of FaaS
-functions call for investigation into how FaaS interacts with current
+functions call for an investigation into how FaaS interacts with current
 processors. Notably, performance-critical microarchitectural structures,
 such as caches, branch predictors, etc. 
 are designed to exploit the temporal locality in the access stream. 
@@ -68,9 +66,9 @@ However, given the short execution times of FaaS functions, it is not clear if s
 microarchitectural structures get enough time to warm up before the function
 execution finishes. Further, though function execution times are usually short, 
 we observe a large variance with some functions executing for less than a millisecond (ms)
-while others taking a few seconds. This thesis aims to understand how the 
+while others take a few seconds. This thesis aims to understand how the 
 microarchitectural bottlenecks shift with the execution time variations and the large degree of
-function interleaving exhibited by real world deployments. 
+function interleaving exhibited by real-world deployments. 
 %work under the fundamental assumption that
 %workloads exhibit temporal locality. Prior work investigating
 %this~\cite{lukewarm_serverless} notes that FaaS functions have large
@@ -85,7 +83,7 @@ function interleaving exhibited by real world deployments.
 One of the key outcomes of our FaaS microarchitectural bottleneck analysis is that
 the functions are mainly bottlenecked at the core frontend irrespective of whether they 
 execute for less than a ms or a few seconds. Notice that this frontend bottleneck is 
-a big performance limiter in conventional long running server applications as well~\cite{kanev15_profil, ferdman12_clear_cloud}.
+a big performance limiter in conventional long-running server applications as well~\cite{kanev15_profil, ferdman12_clear_cloud}.
 Therefore, any mechanism to mitigate the frontend bottleneck is likely to improve the performance 
 of both the FaaS functions and conventional server applications. The research community has 
 proposed a myriad of diverse methods to mitigate the front-end
@@ -136,14 +134,12 @@ function, developers also have a strong monetary incentive to keep the
 running time of functions short~\cite{yu20_charac_server_platf_server}.  Larger and more
 complex FaaS applications are built by composing multiple smaller FaaS
 functions. Since a FaaS function can be written in any language
-depending on what best fits its purpose, the functions comprising a
-FaaS application normally communicate using network-backed Remote
+depending on what best fits its purpose, the functions comprising a FaaS application normally communicate using network-backed Remote
 Procedure Call (RPC)
 interfaces~\cite{gan19_open_sourc_bench_suite_micros}. In addition to
 facilitating language-independence, these loosely-coupled RPC-backed
 communication interfaces also make it possible to transparently
-replace parts of an application and rewrite it piece-by-piece
-without discarding tested and reliable components. Language
+replace parts of an application and rewrite it piece by piece without discarding tested and reliable components. Language
 independence is a critically important property of FaaS as 96\% of
 large organizations that use FaaS deploy functions written in two or
 more different languages\cite{serverless_state}. While this RPC-backed
@@ -173,7 +169,7 @@ complex and multi-faceted. Software optimizations can only go so far
 until they are fundamentally limited by hardware
 restrictions. Likewise, hardware optimizations cannot alleviate
 fundamental overheads in software. Furthermore, introducing
-workload-tailored hardware optimizations is always a trade off between
+workload-tailored hardware optimizations is always a trade-off between
 the ensuing increase in complexity and the scope of workloads that
 benefit from the optimization.
 
@@ -213,21 +209,19 @@ introducing a software-level transformation.
 \subsection{Research direction A: Hardware Optimizations for Serverless Computing}
 \label{sec:rda}
 
-The first step of solving a problem is to gain an in-depth
+The first step in solving a problem is to gain an in-depth
 understanding of its characteristics. We begin approaching this
-research direction with a study that performs an in-depths
-characterization of how one of the unique features of FaaS functions,
-their very short running times, interacts with current
-processors. Previous work has investigated the impact of FaaS on
+research direction with a study that performs an in-depth
+characterization of how one of the unique features of FaaS functions, their very short running times, interact with current processors. Previous work has investigated the impact of FaaS on
 current processors and concluded that FaaS has a significant negative
 impact on current
 microarchitectures~\cite{shahrad19_archit_implic_funct_servic_comput,lukewarm_serverless}. In
 particular, \textcite{lukewarm_serverless} finds that
-microarchitectural state thrashing occurs due to the short running
+microarchitectural state thrashing occurs due to the short-running
 time of FaaS functions and the heavy interleaving that occurs when
 many different functions are queued for execution on a single
 processor core. However, they stop short of investigating \emph{why}
-FaaS functions has this impact on common microarchitectures. To
+FaaS functions have this impact on common microarchitectures. To
 address this, we investigate which properties of FaaS functions make
 them susceptible to the negative effects of microarchitectural state
 thrashing.
@@ -264,13 +258,13 @@ thrashing.
 %    FaaS applications in software allowing them to execute more efficiently on current hardware.
 %  \end{description}
 
-From this work, we learn that only functions with a very short
+From this work, we learn that only functions with very short
 execution times (<1 ms) benefit from being executed on a processor
-with a warm microarchitectural state. In real-world workloads such
+with a warm microarchitectural state. In real-world workloads, such
 functions are uncommon~\cite{shahrad20_server_wild,mahgoub22_wisef}
 and therefore, adding a specialized hardware optimization to
 accommodate them would not be worthwhile. Furthermore, the analysis
-show that FaaS functions are heavily frontend bound. This corroborates
+shows that FaaS functions are heavily frontend-bound. This corroborates
 similar observations made in previous work
 \cite{lukewarm_serverless,gan19_open_sourc_bench_suite_micros}. Thus,
 to improve execution performance in the general case for
@@ -286,7 +280,7 @@ vast branch working sets of contemporary server workloads, industry
 has responded by allocating large amounts of storage to the
 BTB~\cite{neoverse,IBMz,zen2} with resulting sizes reaching up to
 500KB of on-chip storage~\cite{exynos}. This amount of space means
-that large chunks of chip area and power budget is dedicated to the
+that large chunks of chip area and power budget are dedicated to the
 BTB. Further, considering that instruction set sizes show no sign of
 slowing down with Google observing 20\% annualized growth
 rates~\cite{kanev15_profil}, it is infeasible to respond to this
@@ -301,15 +295,13 @@ the BTB. We further observe large variability in the target offset
 sizes, i.e., some offsets are much larger/smaller than others. Thus, a
 BTB design should be able to accommodate this variability to maximize
 storage efficiency. The resulting design improves the state of the art
-in terms of branch storage density, lookup latency and power
+in terms of branch storage density, lookup latency, and power
 requirements. Since BTB-X increases the branch working set coverage of
 the BTB, it also improves instruction prefetching performance (see
-\Cref{sec:instr-delivery}). Thereby, it helps alleviating the
-front-end bottleneck and improves the performance of, particularly,
-server workloads.
+\Cref{sec:instr-delivery}). Thereby, it helps alleviate the front-end bottleneck and improves the performance of, particularly, server workloads.
 
 The motivating analysis is presented in Paper \liningfigures{A1} (\Cref{chap:wosc-paper}).
-The design of BTB-X evolved over time and is described in three paper. The first version of BTB-X is described in paper \liningfigures{A2}
+The design of BTB-X evolved over time and is described in three papers. The first version of BTB-X is described in paper \liningfigures{A2}
 (\Cref{chap:cal-paper}), an improved version is presented in the
 short paper \liningfigures{A3} (\Cref{chap:pact-paper}) and the final design is
 presented in the full length paper \liningfigures{A4} (\Cref{chap:hpca-paper}).
@@ -361,11 +353,8 @@ previous work has addressed this issue~\cite{kotni21_faast,
   mahgoub22_wisef,
   barcelona-pons19_faas_track,sreekanti20_cloud,shillaker20_faasm,jia21_night}. These
 proposals are all effective at reducing the FaaS inter-function
-communication overhead to varying degrees. However, we observe that
-each of these approaches compromise with at least one of the critical
-properties that make FaaS attractive to developers. Some approaches,
-require all functions in a FaaS application to be written in a
-specific language, compromising the developers' ability to freely mix
+communication overhead to varying degrees. However, we observe that each of these approaches compromises with at least one of the critical
+properties that make FaaS attractive to developers. Some approaches require all functions in a FaaS application to be written in a specific language, compromising the developers' ability to freely mix
 and match implementation languages of functions.  Other approaches
 require existing functions to be rewritten to use a specialized,
 non-standard API for communication. Finally, some approaches propose
@@ -382,7 +371,7 @@ interface in order to preserve the modularity of FaaS and support
 composition with other functions. This means that, as long as we
 preserve a function's external interface, we can freely transform
 it. CoFaaS exploits this to retarget FaaS functions to a
-platform-neutral and language independent bytecode language known as
+platform-neutral and language-independent bytecode language known as
 WebAssembly (Wasm)~\cite{rossberg22_webas_core_specif}. The CoFaaS
 transformation turns each FaaS function into a CoFaaS
 component. Multiple CoFaaS components can then be composed, yielding a
@@ -410,7 +399,7 @@ This thesis is structured in two parts. \Cref{part:one} introduces the
 topic matter of the thesis and positions its
 contribution. \Cref{chap:intro} introduces the topic of the thesis,
 \Cref{chap:background} provides background material that aides
-understanding and contextualizes the topics of the included paper,
+understanding and contextualizing the topics of the included paper,
 \Cref{chap:rcontrib} summarizes the research contributions of the
 thesis in more details and finally \Cref{chap:conclusions} presents
 the thesis' conclusions. \Cref{part:two} contains the scientific
