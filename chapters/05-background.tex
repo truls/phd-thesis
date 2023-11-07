@@ -167,7 +167,7 @@ reasons: \begin{inparaenum}[1)] \item the frontend mispredicts the
   miss or \item the frontend encounters an instruction cache
   miss.\end{inparaenum} Recovering from either of these events causes significant performance deterioration by causing long pipeline stalls that prevent the processor from making progress for tens of cycles. When a branch misprediction occurs, the instruction stream must be resteered onto the right-path execution. Doing this requires a
 pipeline flush, exposing the core to a pipeline fill latency of tens
-of cycles. L1-I cache misses are even more expensive exposing the core
+of cycles. \liningfigures{L1-I} cache misses are even more expensive exposing the core
 to the cache fill delay occurring while the right-path instructions are
 fetched into the instruction cache.
 
@@ -202,7 +202,7 @@ amounts of metadata storage of 200KB per core.  % \truls{Describe other
   % temporal streaming approaches}
 
 To summarize, prefetchers based on temporal streaming are highly
-effective at eliminating L1-I misses but they do so at the cost of
+effective at eliminating \liningfigures{L1-I} misses but they do so at the cost of
 requiring large amounts of metadata storage and complex dedicated
 logic.
 
@@ -284,7 +284,7 @@ presents an FDIP prefetching mechanism and argues for its viability in
 commercial processors because it requires no additional metadata and
 has a minimal implementation complexity overhead. Notably, their
 mechanism outperforms the winner of the recent Instruction Prefetching
-Championship (IPC-1)~\cite{ipc1}. Based on this, they argue that their
+Championship (\liningfigures{IPC-1})~\cite{ipc1}. Based on this, they argue that their
 FDIP implementation should be considered the new baseline that
 instruction prefetching research proposals are compared
 against. Further, they strongly emphasize the importance of ensuring
